@@ -13,6 +13,7 @@
 		32211B80287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32211B7E287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld */; };
 		32211B82287EFD6B00A9F3B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32211B81287EFD6B00A9F3B1 /* Assets.xcassets */; };
 		32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32211B83287EFD6B00A9F3B1 /* LaunchScreen.storyboard */; };
+		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		32211B81287EFD6B00A9F3B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32211B84287EFD6B00A9F3B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32211B86287EFD6B00A9F3B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		32211B8C287EFE1B00A9F3B1 /* Memo */ = {
 			isa = PBXGroup;
 			children = (
+				32CD93AF287F0AE300D8E155 /* MainMemoView.swift */,
 			);
 			path = Memo;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			files = (
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
+				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
 				32211B78287EFD6B00A9F3B1 /* SceneDelegate.swift in Sources */,
 				32211B80287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld in Sources */,
 			);

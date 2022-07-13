@@ -27,7 +27,16 @@ class RoomViewController: UIViewController {
         memoImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
         memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-       
+        // MARK: 메모사진이 터치 가능하도록 함
+        memoImageView.isUserInteractionEnabled = true
+        memoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(memoViewTapped(_:))))
+    }
+    
+    @objc func memoViewTapped(_ sender: UITapGestureRecognizer) {
+        // 객체 인스턴스 생성
+        let memoVC = MainMemoView()
+        // 푸쉬한다
+        self.navigationController?.pushViewController(memoVC, animated: true)
     }
     
 }
