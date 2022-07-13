@@ -15,6 +15,7 @@
 		32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32211B83287EFD6B00A9F3B1 /* LaunchScreen.storyboard */; };
 		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
 		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
+		32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		32211B86287EFD6B00A9F3B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
 		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				32CD93AF287F0AE300D8E155 /* MainMemoView.swift */,
+				32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */,
 			);
 			path = Memo;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */,
 				32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
