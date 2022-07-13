@@ -42,3 +42,63 @@ class CoreDataManager {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
+    func readCoreData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // Entity의 fetchRequest 생성
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Entity")
+        
+        do {
+            // fetchRequest를 통해 managedContext로부터 결과 배열을 가져오기
+            let resultCDArray = try managedContext.fetch(fetchRequest)
+            self.resultArray = resultCDArray
+
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteCoreData(id: UUID) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "entity")
+        
+        // 아이디를 삭제 기준으로 설정
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            let objectToDelete = result[0] as! NSManagedObject
+            managedContext.delete(objectToDelete)
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
+            return false
+        }
+    }
+    
+    func updateCoreData(id: UUID, title: String, memo: String) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Diffuser")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            let object = result[0] as! NSManagedObject
+            
+            object.setValue(title, forKey: "title")
+            object.setValue(memo, forKey: "memo")
+            
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
+            return false
+        }
+    }
+    
+}
