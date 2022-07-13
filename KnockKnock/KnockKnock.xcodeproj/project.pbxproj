@@ -14,6 +14,7 @@
 		32211B82287EFD6B00A9F3B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32211B81287EFD6B00A9F3B1 /* Assets.xcassets */; };
 		32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32211B83287EFD6B00A9F3B1 /* LaunchScreen.storyboard */; };
 		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
+		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		32211B84287EFD6B00A9F3B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32211B86287EFD6B00A9F3B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
+		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +44,7 @@
 		32211B69287EFD6B00A9F3B1 = {
 			isa = PBXGroup;
 			children = (
+				32CD93B1287F0ECD00D8E155 /* CoreData */,
 				32211B74287EFD6B00A9F3B1 /* KnockKnock */,
 				32211B73287EFD6B00A9F3B1 /* Products */,
 			);
@@ -65,7 +68,6 @@
 				32211B81287EFD6B00A9F3B1 /* Assets.xcassets */,
 				32211B83287EFD6B00A9F3B1 /* LaunchScreen.storyboard */,
 				32211B86287EFD6B00A9F3B1 /* Info.plist */,
-				32211B7E287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld */,
 			);
 			path = KnockKnock;
 			sourceTree = "<group>";
@@ -76,6 +78,15 @@
 				32CD93AF287F0AE300D8E155 /* MainMemoView.swift */,
 			);
 			path = Memo;
+			sourceTree = "<group>";
+		};
+		32CD93B1287F0ECD00D8E155 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				32211B7E287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld */,
+				32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
 				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
