@@ -42,10 +42,6 @@ class MainMemoView: UIViewController {
         tableView.delegate = self
         tableView.layer.cornerRadius = 20
         
-        
-        //        self.tableView.clipsToBounds = true
-        //        self.tableView.layer.cornerRadius = 140
-        
     }
     
     private func applyConstraints() {
@@ -89,16 +85,21 @@ extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
         guard let result = CoreDataManager.shared.resultArray?.reversed()[indexPath.item] else { return UITableViewCell() }
         cell.setUI(result: result)
         
-        //        cell.backgroundColor = UIColor.systemGreen
-        //        cell.layer.borderColor = UIColor.black.cgColor
-        //        cell.layer.borderWidth = 1
-        //        cell.layer.cornerRadius = 8
-        //        cell.clipsToBounds = true
-        
-        
-        
-        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+//            _ = CoreDataManager.shared.deleteCoreData(object: CoreDataManager.shared.resultArray!.reversed()[indexPath.item])
+//            do {
+//                CoreDataManager.shared.resultArray = try CoreDataManager.shared.readCoreData() as!
+//            } catch {
+//                print(error)
+//            }
+            CoreDataManager.shared.deleteCoreData(object: CoreDataManager.shared.resultArray!.reversed()[indexPath.item])
+            CoreDataManager.shared.readCoreData()
+            tableView.reloadData()
+        }
     }
     
     
