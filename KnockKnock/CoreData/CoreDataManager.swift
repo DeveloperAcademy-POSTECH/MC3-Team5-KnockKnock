@@ -60,18 +60,13 @@ class CoreDataManager {
         }
     }
     
-    func deleteCoreData(id: UUID) -> Bool {
+    func deleteCoreData(object: NSManagedObject) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "entity")
         
-        // 아이디를 삭제 기준으로 설정
-        fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
-        
+        // 객체를 넘기고 바로 삭제
+        managedContext.delete(object)
         do {
-            let result = try managedContext.fetch(fetchRequest)
-            let objectToDelete = result[0] as! NSManagedObject
-            managedContext.delete(objectToDelete)
             try managedContext.save()
             return true
         } catch let error as NSError {
