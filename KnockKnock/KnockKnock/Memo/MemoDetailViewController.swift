@@ -104,6 +104,7 @@ class MemoDetailViewController: UIViewController {
             CoreDataManager.shared.saveCoreData(title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
             
             navigationController?.popViewController(animated: true)
+            print("test")
             
             
         }
