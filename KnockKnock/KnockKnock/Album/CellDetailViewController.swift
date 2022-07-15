@@ -28,6 +28,9 @@ class CellDetailViewController: UIViewController {
         detailImageView.image = self.getimage
         view.addSubview(detailImageView)
         
+        //NavigationBar에 삭제 버튼 생성
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: nil)
+        
         //ImageView 레이아웃
         detailImageView.translatesAutoresizingMaskIntoConstraints = false
         detailImageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
