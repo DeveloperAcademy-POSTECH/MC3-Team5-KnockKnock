@@ -29,7 +29,7 @@ class MainAlbumViewController: UIViewController {
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = true
         view.contentInset = .zero
-        view.backgroundColor = .gray
+        view.backgroundColor = .systemGray6
         view.clipsToBounds = true
         view.register(albumImageCell.self, forCellWithReuseIdentifier: "albumImageCell")
         view.translatesAutoresizingMaskIntoConstraints = false
