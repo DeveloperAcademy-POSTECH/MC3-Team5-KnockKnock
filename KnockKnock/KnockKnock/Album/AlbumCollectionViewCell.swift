@@ -47,3 +47,4 @@ final class albumImageCell: UICollectionViewCell {
         self.imageView.image = image
     }
 }
+

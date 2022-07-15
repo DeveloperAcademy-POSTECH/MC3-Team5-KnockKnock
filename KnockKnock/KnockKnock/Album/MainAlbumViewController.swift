@@ -125,3 +125,12 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
         return cell
       }
 }
+
+extension MainAlbumViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let dcVC = CellDetailViewController()
+        // 푸쉬한다
+        self.navigationController?.pushViewController(dcVC,animated: true)
+        return true
+    }
+}
