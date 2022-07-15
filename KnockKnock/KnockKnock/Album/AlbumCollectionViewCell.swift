@@ -38,11 +38,11 @@ final class albumImageCell: UICollectionViewCell {
         ])
     }
     
+    //이미지 할당
     override func prepareForReuse() {
         super.prepareForReuse()
         self.prepare(image:nil)
     }
-    
     func prepare(image: UIImage?){
         self.imageView.image = image
     }

@@ -116,11 +116,11 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
       }
 }
 
-//CollectionView의 이미지 클릭시 디테일뷰 표시
+//CollectionView의 이미지 클릭시 CellDetailView 표시
 extension MainAlbumViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cellDetailVC = CellDetailViewController()
-        cellDetailVC.image = self.imageArray[indexPath.item]
+        cellDetailVC.getimage = self.imageArray[indexPath.item]
         self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }
 }
