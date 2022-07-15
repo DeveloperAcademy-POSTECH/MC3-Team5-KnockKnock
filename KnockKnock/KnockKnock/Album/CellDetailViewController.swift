@@ -17,21 +17,16 @@ class CellDetailViewController: UIViewController {
         
         return label
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(slabel)
+        view.backgroundColor = .white
         slabel.translatesAutoresizingMaskIntoConstraints = false
         slabel.widthAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
         slabel.heightAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
         slabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         slabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        
-        
-
-        
     }
-
-
 }

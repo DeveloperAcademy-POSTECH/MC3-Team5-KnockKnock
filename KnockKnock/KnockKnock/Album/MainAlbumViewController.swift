@@ -36,19 +36,6 @@ class MainAlbumViewController: UIViewController {
         return view
     }()
 
-    //ImagePicker 함수
-    @objc func presentPicker(_ sender: Any) {
-        //ImagePicker 기본 설정
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        configuration.selectionLimit = 0
-        
-        //Picker 표시
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        present(picker, animated: true)
-     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -67,16 +54,19 @@ class MainAlbumViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    //ImagePicker 함수
+    @objc func presentPicker(_ sender: Any) {
+        //ImagePicker 기본 설정
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 0
+        
+        //Picker 표시
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
+     }
 }
 
 
@@ -127,10 +117,8 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
 }
 
 extension MainAlbumViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let dcVC = CellDetailViewController()
-        // 푸쉬한다
-        self.navigationController?.pushViewController(dcVC,animated: true)
-        return true
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellDetailVC = CellDetailViewController()
+        self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }
 }
