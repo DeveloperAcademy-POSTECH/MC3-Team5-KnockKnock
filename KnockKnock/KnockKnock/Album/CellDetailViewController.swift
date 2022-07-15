@@ -8,25 +8,30 @@
 import UIKit
 
 class CellDetailViewController: UIViewController {
-
-    var slabel: UILabel = {
-        var label = UILabel()
-        label.text = "성공"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .cyan
-        
-        return label
+    //받아오는 이미지
+    var getimage: UIImage?
+    //이미지뷰
+    var simageView: UIImageView = {
+        var imgView = UIImageView()
+        imgView.adjustsImageSizeForAccessibilityContentSizeCategory = false
+        imgView.contentMode = .scaleAspectFit
+        return imgView
     }()
-    
+    //MARK: - 뷰디드로드
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(slabel)
         view.backgroundColor = .white
-        slabel.translatesAutoresizingMaskIntoConstraints = false
-        slabel.widthAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
-        slabel.heightAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
-        slabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        slabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        //이미지뷰의 이미지를 받아온 이미지 넣기
+        simageView.image = self.getimage
+        view.addSubview(simageView)
+        
+        //이미지뷰 레이아웃
+        simageView.translatesAutoresizingMaskIntoConstraints = false
+        simageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        simageView.heightAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        simageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        simageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
     }
 }
