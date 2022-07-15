@@ -12,17 +12,6 @@ class MainAlbumViewController: UIViewController {
     
     var itemProviders: [NSItemProvider] = []
     var imageArray: [UIImage] = []
-    
-    //ImagePicker 작동 버튼
-    lazy var pickerButton: UIButton! = {
-        let button = UIButton(type:.system)
-        button.setTitle("Image", for:.normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(presentPicker(_:)), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
 
     //ImagePicker 함수
     @objc func presentPicker(_ sender: Any) {
@@ -40,14 +29,10 @@ class MainAlbumViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(pickerButton)
         
-        //pickerButton AutoLayout
-        pickerButton.adjustsImageSizeForAccessibilityContentSizeCategory = false
-        pickerButton.topAnchor.constraint(equalTo: view.topAnchor, constant:100).isActive = true
-        pickerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        pickerButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier:CGFloat(0.04)).isActive = true
-        pickerButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: CGFloat(0.15)).isActive = true
+        //NavigationBar에 ImagePicker 버튼 생성
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(presentPicker))
+        
     }
     
 

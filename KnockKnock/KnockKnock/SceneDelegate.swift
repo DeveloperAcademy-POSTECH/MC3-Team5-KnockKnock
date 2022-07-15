@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // scene = 화면 객체
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navVC = UINavigationController(rootViewController: RoomViewController())
+        let navVC = UINavigationController(rootViewController: MainAlbumViewController())
         
         //제일 처음 시작하는 뷰
         window?.rootViewController = navVC
