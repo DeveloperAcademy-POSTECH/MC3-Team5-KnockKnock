@@ -17,6 +17,7 @@
 		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
 		32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */; };
 		6F182F062880BA100083131C /* MainAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F182F052880BA100083131C /* MainAlbumViewController.swift */; };
+		6F2F7453288139A400BC2E7B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 		6F182F052880BA100083131C /* MainAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAlbumViewController.swift; sourceTree = "<group>"; };
+		6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				6F182F052880BA100083131C /* MainAlbumViewController.swift */,
+				6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F2F7453288139A400BC2E7B /* AlbumCollectionViewCell.swift in Sources */,
 				32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */,
 				32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
