@@ -9,34 +9,65 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
-    let memoImageView: UIImageView = {
+    let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
     }()
-
+    
+    let memoImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "memo")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
+    //MARK: - 뷰디드로드
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
         view.addSubview(memoImageView)
+        view.addSubview(albumImageView)
+        setupLayout()
         
-        memoImageView.translatesAutoresizingMaskIntoConstraints = false
-        memoImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
-        memoImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
-        memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        // MARK: 메모사진이 터치 가능하도록 함
+        //메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
         memoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(memoViewTapped(_:))))
+        
+        //앨범 사진 터치 가능하도록 설정
+        albumImageView.isUserInteractionEnabled = true
+        albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
     }
     
+    func setupLayout(){
+        NSLayoutConstraint.activate([
+            //memoImageView layout
+            memoImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            memoImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            //albumIamgeView layout
+            albumImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 4),
+            albumImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 4),
+            albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            albumImageView.topAnchor.constraint(equalTo: memoImageView.bottomAnchor, constant: 20)
+        ])
+    }
+    
+    //메모 버튼 터치 함수
     @objc func memoViewTapped(_ sender: UITapGestureRecognizer) {
-        // 객체 인스턴스 생성
         let memoVC = MainMemoView()
-        // 푸쉬한다
         self.navigationController?.pushViewController(memoVC, animated: true)
+    }
+    
+    //앨범 버튼 터치 함수
+    @objc func albumViewTapped(_ sender: UITapGestureRecognizer) {
+        let albumVC = MainAlbumViewController()
+        self.navigationController?.pushViewController(albumVC, animated: true)
     }
     
 }
