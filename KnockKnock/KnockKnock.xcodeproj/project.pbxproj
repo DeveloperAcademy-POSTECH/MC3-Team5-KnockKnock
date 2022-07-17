@@ -16,6 +16,7 @@
 		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
 		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
 		32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */; };
+		32CD93B82883C7F600D8E155 /* MainLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B72883C7F600D8E155 /* MainLetterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
 		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
+		32CD93B72883C7F600D8E155 /* MainLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLetterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		32211B74287EFD6B00A9F3B1 /* KnockKnock */ = {
 			isa = PBXGroup;
 			children = (
+				32CD93B62883C7DA00D8E155 /* Letter */,
 				32211B8C287EFE1B00A9F3B1 /* Memo */,
 				32211B75287EFD6B00A9F3B1 /* AppDelegate.swift */,
 				32211B77287EFD6B00A9F3B1 /* SceneDelegate.swift */,
@@ -90,6 +93,14 @@
 				32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		32CD93B62883C7DA00D8E155 /* Letter */ = {
+			isa = PBXGroup;
+			children = (
+				32CD93B72883C7F600D8E155 /* MainLetterViewController.swift */,
+			);
+			path = Letter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +178,7 @@
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
 				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
+				32CD93B82883C7F600D8E155 /* MainLetterViewController.swift in Sources */,
 				32211B78287EFD6B00A9F3B1 /* SceneDelegate.swift in Sources */,
 				32211B80287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld in Sources */,
 			);

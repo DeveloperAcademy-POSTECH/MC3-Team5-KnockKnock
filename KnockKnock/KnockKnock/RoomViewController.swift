@@ -15,12 +15,20 @@ class RoomViewController: UIViewController {
         imageView.image = myImage
         return imageView
     }()
+    
+    let letterImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "letter")!
+        imageView.image = myImage
+        return imageView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
         view.addSubview(memoImageView)
+        view.addSubview(letterImageView)
         
         memoImageView.translatesAutoresizingMaskIntoConstraints = false
         memoImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2).isActive = true
@@ -30,6 +38,14 @@ class RoomViewController: UIViewController {
         // MARK: 메모사진이 터치 가능하도록 함
         memoImageView.isUserInteractionEnabled = true
         memoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(memoViewTapped(_:))))
+        
+        letterImageView.translatesAutoresizingMaskIntoConstraints = false
+        letterImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        letterImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor).isActive = true
+        letterImageView.isUserInteractionEnabled = true
+        letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
+        
     }
     
     @objc func memoViewTapped(_ sender: UITapGestureRecognizer) {
@@ -37,6 +53,13 @@ class RoomViewController: UIViewController {
         let memoVC = MainMemoView()
         // 푸쉬한다
         self.navigationController?.pushViewController(memoVC, animated: true)
+    }
+    
+    @objc func letterViewTapped(_ sender: UITapGestureRecognizer) {
+        let letterVC = MainLetterViewController()
+        letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
+        
+        self.present(letterVC, animated: true, completion: nil)
     }
     
 }
