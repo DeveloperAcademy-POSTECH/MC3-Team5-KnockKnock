@@ -75,10 +75,10 @@ class CoreDataManager {
         }
     }
     
-    func updateCoreData(id: UUID, title: String, memo: String) -> Bool {
+    func updateCoreData(id: UUID, title: String, memo: String, image: Data) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Diffuser")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Entity")
         fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
         
         do {
@@ -87,6 +87,7 @@ class CoreDataManager {
             
             object.setValue(title, forKey: "title")
             object.setValue(memo, forKey: "memo")
+            object.setValue(image, forKey: "image")
             
             try managedContext.save()
             return true
