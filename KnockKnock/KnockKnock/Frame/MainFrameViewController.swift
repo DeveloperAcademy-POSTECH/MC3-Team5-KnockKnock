@@ -44,7 +44,7 @@ class MainFrameViewController: UIViewController {
         //ActionSheet 버튼 추가
         let cancelAction = UIAlertAction(title:"돌아가기", style: UIAlertAction.Style.cancel, handler: nil)
         let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: nil)
-        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: nil)
+        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: { _ in self.frameImageView.image = UIImage(systemName:"photo")})
         alert.addAction(cancelAction)
         alert.addAction(changeAction)
         alert.addAction(defaultAction)
