@@ -17,6 +17,7 @@ class MemoDetailViewController: UIViewController {
     let textViewPlaceHolder = "메모를 입력해주세요."
     let date = NSDate() // 현재 시간 가져오기
     let formatter = DateFormatter()
+    private var memoId: UUID?
     
     // 키보드 아무화면이나 누르면 내려가게
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -71,8 +72,13 @@ class MemoDetailViewController: UIViewController {
     
     
     func memoTextView() {
-        textView.text = textViewPlaceHolder
-        textView.textColor = .lightGray
+        if textView.text == "메모를 입력해주세요." {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .lightGray
+        } else {
+            textView.textColor = .black
+        }
+        
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.delegate = self
         textView.backgroundColor = .clear
@@ -107,7 +113,11 @@ class MemoDetailViewController: UIViewController {
             present(alert, animated: false, completion: nil)
             
         } else {
-            CoreDataManager.shared.saveCoreData(title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
+            if let memoId = memoId {
+                CoreDataManager.shared.updateCoreData(id: memoId, title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
+            } else {
+                CoreDataManager.shared.saveCoreData(title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
+            }
             
             navigationController?.popViewController(animated: true)
             print("test")
