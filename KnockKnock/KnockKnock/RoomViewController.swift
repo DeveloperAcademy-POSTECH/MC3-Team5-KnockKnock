@@ -13,9 +13,11 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     
-    let letterImageView: UIImageView = {
+    //메모 버튼 ImageView
+    let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "letter")!
+        let myImage: UIImage = UIImage(named: "memo")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
     }()
@@ -29,7 +31,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-
+    
     
     //액자 버튼 ImageView
     let frameImageView: UIImageView = {
