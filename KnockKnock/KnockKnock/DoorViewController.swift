@@ -13,6 +13,11 @@ class DoorViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "doorBackground")
         doorSetup()
+        
+        // 뷰 전체에 더블탭 제스처 기능 추가
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+            tap.numberOfTapsRequired = 2
+            view.addGestureRecognizer(tap)
     }
     
     private func doorSetup() {
@@ -34,6 +39,12 @@ class DoorViewController: UIViewController {
             doorImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width / 10),
             doorImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 10)
         ])
+    }
+    
+    // 더블 탭하면 DoorViewController dismiss
+    @objc private func doubleTapped() {
+        
+        self.dismiss(animated: false)
     }
     
 

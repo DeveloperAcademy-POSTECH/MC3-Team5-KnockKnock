@@ -9,6 +9,10 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
+    // DoorViewController실행 되었는지 확인
+    var isDoorView: Bool = true
+    let doorViewController = DoorViewController()
+    
     let letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "letter")!
@@ -56,6 +60,18 @@ class RoomViewController: UIViewController {
         letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor).isActive = true
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
+    }
+    
+    // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
+    override func viewDidAppear(_ animated: Bool) {
+        let doorViewController = DoorViewController()
+        doorViewController.modalPresentationStyle = .overFullScreen
+        
+        if isDoorView {
+            present(doorViewController, animated: false, completion: nil)
+            isDoorView = false
+        }
+        
     }
     
     func setupLayout(){
