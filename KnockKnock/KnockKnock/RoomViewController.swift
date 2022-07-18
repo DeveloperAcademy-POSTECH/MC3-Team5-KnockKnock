@@ -9,6 +9,14 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
+    let letterImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "letter")!
+        imageView.image = myImage
+        return imageView
+    }()
+    
+    
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
@@ -31,6 +39,7 @@ class RoomViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
+        view.addSubview(letterImageView)
         setupLayout()
         
         //메모 사진 터치 가능하도록 설정
@@ -40,6 +49,13 @@ class RoomViewController: UIViewController {
         //앨범 사진 터치 가능하도록 설정
         albumImageView.isUserInteractionEnabled = true
         albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
+        
+        letterImageView.translatesAutoresizingMaskIntoConstraints = false
+        letterImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        letterImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor).isActive = true
+        letterImageView.isUserInteractionEnabled = true
+        letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
     }
     
     func setupLayout(){
@@ -69,6 +85,14 @@ class RoomViewController: UIViewController {
         let albumVC = MainAlbumViewController()
         self.navigationController?.pushViewController(albumVC, animated: true)
     }
+    
+    @objc func letterViewTapped(_ sender: UITapGestureRecognizer) {
+        let letterVC = MainLetterViewController()
+        letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
+        
+        self.present(letterVC, animated: true, completion: nil)
+    }
+    
     
 }
 
