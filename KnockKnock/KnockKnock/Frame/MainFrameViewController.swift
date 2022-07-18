@@ -13,6 +13,7 @@ class MainFrameViewController: UIViewController {
     var frameImageView: UIImageView = {
         let frameView = UIImageView()
         frameView.adjustsImageSizeForAccessibilityContentSizeCategory = false
+        frameView.translatesAutoresizingMaskIntoConstraints = false
         frameView.contentMode = .scaleAspectFit
         return frameView
     }()
@@ -25,24 +26,14 @@ class MainFrameViewController: UIViewController {
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         
-        frameImageView.image = nil
+        frameImageView.image = UIImage(named:"letter")
+        
+        //frameImageView AutoLayout
         NSLayoutConstraint.activate([
               self.frameImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
               self.frameImageView.heightAnchor.constraint(equalTo: view.heightAnchor),
-              self.frameImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-              self.frameImageView.topAnchor.constraint(equalTo: view.topAnchor)
+              self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+              self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
