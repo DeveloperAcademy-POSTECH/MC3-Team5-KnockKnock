@@ -72,13 +72,17 @@ class MemoDetailViewController: UIViewController {
     
     
     func memoTextView() {
-        if textView.text == "메모를 입력해주세요." {
+        if memoId != nil {
+            if textView.text == "메모를 입력해주세요." {
+                textView.text = textViewPlaceHolder
+                textView.textColor = .lightGray
+            } else {
+                textView.textColor = .black
+            }
+        } else {
             textView.text = textViewPlaceHolder
             textView.textColor = .lightGray
-        } else {
-            textView.textColor = .black
         }
-        
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.delegate = self
         textView.backgroundColor = .clear
