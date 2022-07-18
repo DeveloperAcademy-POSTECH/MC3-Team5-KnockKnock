@@ -6,8 +6,7 @@
 //
 
 import UIKit
-
-import UIKit
+import CoreData
 
 class MemoDetailViewController: UIViewController {
     let imageView = UIImageView(image: nil)
@@ -84,6 +83,13 @@ class MemoDetailViewController: UIViewController {
         textView.heightAnchor.constraint(equalToConstant: view.bounds.height / 4.5).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         textView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 10).isActive = true
+    }
+    
+    func set(result: NSManagedObject) {
+        memoId = result.value(forKey: "id") as? UUID
+        field.text = result.value(forKey: "title") as? String
+        textView.text = result.value(forKey: "memo") as? String
+        imageView.image = UIImage(data: result.value(forKey: "image") as! Data)
     }
     
     
