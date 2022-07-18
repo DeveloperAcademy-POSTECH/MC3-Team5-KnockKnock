@@ -9,14 +9,16 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
-    let letterImageView: UIImageView = {
+    //메모 버튼 ImageView
+    let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "letter")!
+        let myImage: UIImage = UIImage(named: "memo")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
     }()
     
-    
+    //앨범 버튼 ImageView
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
@@ -25,9 +27,19 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    let memoImageView: UIImageView = {
+    //액자 버튼 ImageView
+    let frameImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "memo")!
+        let myImage: UIImage = UIImage(named: "letter")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
+    //편지 버튼 ImageView
+    let letterImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "letter")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
@@ -39,6 +51,7 @@ class RoomViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
+        view.addSubview(frameImageView)
         view.addSubview(letterImageView)
         setupLayout()
         
@@ -50,10 +63,11 @@ class RoomViewController: UIViewController {
         albumImageView.isUserInteractionEnabled = true
         albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
         
-        letterImageView.translatesAutoresizingMaskIntoConstraints = false
-        letterImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        letterImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor).isActive = true
+        //액자 사진 터치 가능하도록 설정
+        frameImageView.isUserInteractionEnabled = true
+        frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
+        
+        //편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
     }
@@ -66,11 +80,22 @@ class RoomViewController: UIViewController {
             memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            //albumIamgeView layout
+            //albumImageView layout
             albumImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 4),
             albumImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 4),
             albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            albumImageView.topAnchor.constraint(equalTo: memoImageView.bottomAnchor, constant: 20)
+            albumImageView.topAnchor.constraint(equalTo: memoImageView.bottomAnchor, constant: 20),
+            
+            //frameImageView layout
+            frameImageView.widthAnchor.constraint(equalToConstant: 100),
+            frameImageView.heightAnchor.constraint(equalToConstant: 100),
+            frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            frameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant:100),
+            
+            //letterImageView layout
+            letterImageView.widthAnchor.constraint(equalToConstant: 100),
+            letterImageView.heightAnchor.constraint(equalToConstant: 100),
+            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
         ])
     }
     
@@ -86,13 +111,18 @@ class RoomViewController: UIViewController {
         self.navigationController?.pushViewController(albumVC, animated: true)
     }
     
+    //액자 버튼 터치 함수
+    @objc func frameViewTapped(_ sender: UITapGestureRecognizer) {
+        let frameVC = MainFrameViewController()
+        self.navigationController?.pushViewController(frameVC, animated: true)
+    }
+    
+    //편지 버튼 터치 함수
     @objc func letterViewTapped(_ sender: UITapGestureRecognizer) {
         let letterVC = MainLetterViewController()
         letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
         
         self.present(letterVC, animated: true, completion: nil)
     }
-    
-    
 }
 
