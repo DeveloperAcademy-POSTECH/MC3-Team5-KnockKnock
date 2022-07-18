@@ -24,7 +24,7 @@ class MainFrameViewController: UIViewController {
         view.addSubview(frameImageView)
 
         //NavigationBar에 설정 버튼 생성
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         
         frameImageView.image = UIImage(named:"letter")
         
@@ -36,4 +36,19 @@ class MainFrameViewController: UIViewController {
               self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
+    
+    //ActionSheet 함수
+    @objc func actionSheet (_ sender: Any) {
+        let alert = UIAlertController(title:nil, message:nil, preferredStyle: UIAlertController.Style.actionSheet)
+            
+        //ActionSheet 버튼 추가
+        let cancelAction = UIAlertAction(title:"돌아가기", style: UIAlertAction.Style.cancel, handler: nil)
+        let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: nil)
+        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: nil)
+        alert.addAction(cancelAction)
+        alert.addAction(changeAction)
+        alert.addAction(defaultAction)
+        
+        present(alert, animated:true)
+     }
 }
