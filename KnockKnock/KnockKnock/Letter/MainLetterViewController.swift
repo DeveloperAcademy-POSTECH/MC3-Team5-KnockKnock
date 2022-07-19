@@ -65,11 +65,16 @@ class MainLetterViewController: UIViewController {
         textView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        textView.text = textViewPlaceHolder
+        // 텍스트뷰 커스텀(행간)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 8
+        let attributes = [NSAttributedString.Key.paragraphStyle : style]
+        textView.attributedText = NSAttributedString(string: textViewPlaceHolder, attributes: attributes)
         textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.delegate = self
-
+        // 마진
+        textView.textContainer.lineFragmentPadding = 20
     }
     
 }
