@@ -64,11 +64,12 @@ class RoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(memoImageView)
-        view.addSubview(albumImageView)
-        view.addSubview(frameImageView)
-        view.addSubview(letterImageView)
         view.addSubview(roomImageView)
+        roomImageView.addSubview(memoImageView)
+        roomImageView.addSubview(albumImageView)
+        roomImageView.addSubview(frameImageView)
+        roomImageView.addSubview(letterImageView)
+        
         setupLayout()
         
         //배경화면 크기 AspectFill로 맞춤
