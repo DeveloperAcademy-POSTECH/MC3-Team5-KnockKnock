@@ -29,18 +29,20 @@ class MainLetterViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground
         
+        
+        createTextView()
+        
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5).isActive = true
-        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        paperPlainImageView.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+//        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
         
         // MARK: 메모사진이 터치 가능하도록 함
         paperPlainImageView.isUserInteractionEnabled = true
         paperPlainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touchUpDismissModalButton)))
-        
-        createTextView()
     }
     
     
@@ -62,7 +64,7 @@ class MainLetterViewController: UIViewController {
         textView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
         textView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         textView.text = textViewPlaceHolder
         textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
