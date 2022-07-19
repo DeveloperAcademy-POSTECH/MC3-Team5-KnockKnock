@@ -20,6 +20,8 @@
 		6F182F062880BA100083131C /* MainAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F182F052880BA100083131C /* MainAlbumViewController.swift */; };
 		6F2F7453288139A400BC2E7B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */; };
 		6F7FCCFE288541A70044F591 /* MainFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FCCFD288541A70044F591 /* MainFrameViewController.swift */; };
+		6FDE05212886EF2300F4252C /* FrameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDE051F2886EF2300F4252C /* FrameCollectionViewCell.swift */; };
+		6FDE05222886EF2300F4252C /* FrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDE05202886EF2300F4252C /* FrameViewController.swift */; };
 		BF94253E288143E500CB8653 /* CellDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94253D288143E500CB8653 /* CellDetailViewController.swift */; };
 		D7A17DB428853F5300D7B10E /* DoorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A17DB328853F5300D7B10E /* DoorViewController.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		6F182F052880BA100083131C /* MainAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAlbumViewController.swift; sourceTree = "<group>"; };
 		6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F7FCCFD288541A70044F591 /* MainFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameViewController.swift; sourceTree = "<group>"; };
+		6FDE051F2886EF2300F4252C /* FrameCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCollectionViewCell.swift; sourceTree = "<group>"; };
+		6FDE05202886EF2300F4252C /* FrameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameViewController.swift; sourceTree = "<group>"; };
 		BF94253D288143E500CB8653 /* CellDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDetailViewController.swift; sourceTree = "<group>"; };
 		D7A17DB328853F5300D7B10E /* DoorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +133,8 @@
 		6F7FCCFC2885418A0044F591 /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				6FDE051F2886EF2300F4252C /* FrameCollectionViewCell.swift */,
+				6FDE05202886EF2300F4252C /* FrameViewController.swift */,
 				6F7FCCFD288541A70044F591 /* MainFrameViewController.swift */,
 			);
 			path = Frame;
@@ -210,8 +216,10 @@
 				32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */,
 				32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
+				6FDE05222886EF2300F4252C /* FrameViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
 				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
+				6FDE05212886EF2300F4252C /* FrameCollectionViewCell.swift in Sources */,
 				6F7FCCFE288541A70044F591 /* MainFrameViewController.swift in Sources */,
 				6F182F062880BA100083131C /* MainAlbumViewController.swift in Sources */,
 				BF94253E288143E500CB8653 /* CellDetailViewController.swift in Sources */,
