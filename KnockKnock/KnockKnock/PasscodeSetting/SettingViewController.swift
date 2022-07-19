@@ -9,6 +9,8 @@ import UIKit
 
 class SettingViewController: UIViewController {
     
+    let keyChainManager = KeychainManager()
+    
     // tasks set 할 때 saveTasks함수 호출
     var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
         didSet {
@@ -22,10 +24,13 @@ class SettingViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
+        
         title = "비밀번호 설정"
         view.backgroundColor = .red
         self.tableViewSetup()
@@ -44,7 +49,7 @@ class SettingViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        
+            
         ])
     }
     // tasks를 userDefaults에 저장
@@ -84,8 +89,8 @@ class SettingViewController: UIViewController {
             return false
         }
     }
-
-
+    
+    
 }
 
 
@@ -103,16 +108,25 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(task.isSwitchOn, animated: true)
-                                switchView.tag = indexPath.row
-                                switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        switchView.tag = indexPath.row
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
         if task.isSwitch {
             cell.accessoryView = switchView
         } else {
             cell.accessoryView = nil
         }
-                                
+        
         
         return cell
+    }
+    
+    @objc func fatchTable() {
+        tasks[0].isSwitchOn = false
+        if self.tasks.count == 3 {
+            self.tasks.removeLast()
+            self.tasks.removeLast()
+            tableView.reloadData()
+        }
     }
     
     @objc private func switchChanged(_ sender: UISwitch!) {
@@ -122,10 +136,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         // 화면 잠금 스위치 작동
         if sender.tag == 0 {
             if sender.isOn {
-                print("추가 시작")
                 let registerPasscode = PasscodeViewController()
                 registerPasscode.modalPresentationStyle = .fullScreen
                 present(registerPasscode, animated: true)
+                
                 let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
                 let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
                 tasks.append(task1)
@@ -134,11 +148,16 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 
             } else {
-                print("식제 시작")
-                self.tasks.removeLast()
-                self.tasks.removeLast()
-                print("남은 배열\(tasks)")
-                tableView.reloadData()
+                // 키체인 삭제
+                if keyChainManager.deleteItem(key: "passcode") {
+                    if self.tasks.count == 3 {
+                        self.tasks.removeLast()
+                        self.tasks.removeLast()
+                        tableView.reloadData()
+                    }
+                }
+                
+                
             }
         }
         
@@ -148,12 +167,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 if isBiometry() {
                     tasks[1].isSwitchOn = true
                 } else {
-                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.", preferredStyle: .alert)
-                    
+                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가",
+                                                  message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.",
+                                                  preferredStyle: .alert)
                     let alertAction = UIAlertAction(title: "확인", style: .cancel)
-                    
                     alert.addAction(alertAction)
-                    
                     present(alert, animated: true)
                     tasks[1].isSwitchOn = false
                     sender.isOn = false
@@ -171,14 +189,18 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     // 3번째 셀 '비밀번호 변경 누렀을때 작동'
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-            switch indexPath.row {
-            case 0: return
-            case 1: return
-            case 2: print("비밀번호 변경")
-            default:
-                return
-            }
+        
+        switch indexPath.row {
+        case 0: return
+        case 1: return
+        case 2: print("비밀번호 변경")
+        default:
+            return
+        }
     }
     
+}
+
+extension Notification.Name {
+    static let fatchLabel = Notification.Name("fatchTable")
 }

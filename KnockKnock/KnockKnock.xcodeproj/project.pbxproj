@@ -24,6 +24,7 @@
 		D70267AA288685EB00EFDABE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267A9288685EB00EFDABE /* SettingViewController.swift */; };
 		D70267AC2886877B00EFDABE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267AB2886877B00EFDABE /* Task.swift */; };
 		D70267AF2886915300EFDABE /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267AE2886915300EFDABE /* PasscodeViewController.swift */; };
+		D70267B128869B6200EFDABE /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267B028869B6200EFDABE /* KeychainManager.swift */; };
 		D7A17DB428853F5300D7B10E /* DoorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A17DB328853F5300D7B10E /* DoorViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		D70267A9288685EB00EFDABE /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D70267AB2886877B00EFDABE /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D70267AE2886915300EFDABE /* PasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
+		D70267B028869B6200EFDABE /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		D7A17DB328853F5300D7B10E /* DoorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +149,7 @@
 			children = (
 				D70267A9288685EB00EFDABE /* SettingViewController.swift */,
 				D70267AB2886877B00EFDABE /* Task.swift */,
+				D70267B028869B6200EFDABE /* KeychainManager.swift */,
 			);
 			path = PasscodeSetting;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */,
 				32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */,
 				D70267AA288685EB00EFDABE /* SettingViewController.swift in Sources */,
+				D70267B128869B6200EFDABE /* KeychainManager.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				D70267AC2886877B00EFDABE /* Task.swift in Sources */,
 				D70267AF2886915300EFDABE /* PasscodeViewController.swift in Sources */,

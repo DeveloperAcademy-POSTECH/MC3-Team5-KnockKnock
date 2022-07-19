@@ -8,9 +8,15 @@
 import LocalAuthentication
 import UIKit
 
+
 class PasscodeViewController: UIViewController {
     
     var passcodes = [Int]()
+    var newPasscodes = [Int]()
+    let settingViewController = SettingViewController()
+    let keychainManager = KeychainManager()
+    var isRegister: Bool? = false
+    
     var userPasscodes = [5, 9, 5, 9]
     
     
@@ -45,13 +51,47 @@ class PasscodeViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        //            label.font = UIFont(name: label.font.fontName, size: 35)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.text = "암호 입력"
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "암호를 입력해 주세요."
+        label.textColor = .systemFill
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 모달 닫힐때
+        if let firstVC = presentingViewController as? SettingViewController {
+                    DispatchQueue.main.async {
+                        firstVC.tableView.reloadData()
+                    }
+                }
 
         view.backgroundColor = UIColor(named: "doorBackground")
+        loadTasks()
         passcodeField()
         setupNumberPad()
+    }
+    
+
+
+    
+    private func loadTasks() {
+        isRegister = keychainManager.getItem(key: "passcode") == nil ? true : false
     }
     
     
@@ -59,24 +99,24 @@ class PasscodeViewController: UIViewController {
         
         let passcodeButtonHeight = (view.frame.size.width / 12) * 3.5
         
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            //            label.font = UIFont(name: label.font.fontName, size: 35)
-            label.font = UIFont.boldSystemFont(ofSize: 25)
-            label.text = "암호 입력"
-            label.textColor = .label
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        let subTitleLabel: UILabel = {
-            let label = UILabel()
-            label.text = "암호를 입력해 주세요."
-            label.textColor = .systemFill
-            label.font = UIFont.boldSystemFont(ofSize: 15)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
+//        let titleLabel: UILabel = {
+//            let label = UILabel()
+//            //            label.font = UIFont(name: label.font.fontName, size: 35)
+//            label.font = UIFont.boldSystemFont(ofSize: 25)
+//            label.text = "암호 입력"
+//            label.textColor = .label
+//            label.translatesAutoresizingMaskIntoConstraints = false
+//            return label
+//        }()
+//
+//        let subTitleLabel: UILabel = {
+//            let label = UILabel()
+//            label.text = "암호를 입력해 주세요."
+//            label.textColor = .systemFill
+//            label.font = UIFont.boldSystemFont(ofSize: 15)
+//            label.translatesAutoresizingMaskIntoConstraints = false
+//            return label
+//        }()
         
         let vStackView: UIStackView = {
             let stackView = UIStackView()
@@ -139,9 +179,14 @@ class PasscodeViewController: UIViewController {
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.label, for: .normal)
 //        faceButton.backgroundColor = .white
-        faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
+        if isRegister! {
+            faceButton.setTitle("취소", for: .normal)
+        } else {
+            faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
+        }
         faceButton.tintColor = .label
         faceButton.tag = 11
+        faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
         view.addSubview(faceButton)
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
@@ -169,6 +214,22 @@ class PasscodeViewController: UIViewController {
         
     }
     
+    @objc private func facePressed(_ sender: UIButton) {
+        if isRegister! {
+            
+            settingViewController.tasks[0].isSwitchOn = false
+            
+//            settingViewController.tasks.removeLast()
+//            settingViewController.tasks.removeLast()
+            
+            print("hi")
+            NotificationCenter.default.post(name: .fatchTable, object: nil)
+            self.dismiss(animated: true)
+        } else {
+            // biometry 다시 띄우기
+        }
+    }
+    
     @objc private func deletePressed(_ sender: UIButton) {
         passcodes.removeLast()
         print(passcodes)
@@ -179,13 +240,35 @@ class PasscodeViewController: UIViewController {
         print(passcodes)
         
         if passcodes.count == 4 {
-            if passcodes == userPasscodes {
-                print("비밀번호 정답")
-                self.dismiss(animated: false)
+
+            if isRegister! {
+                if newPasscodes == passcodes {
+                    var pwd = ""
+                    for n in newPasscodes {
+                        pwd += String(n)
+                    }
+                    if keychainManager.addItem(key: "passcode", pwd: pwd) {
+                        self.dismiss(animated: true)
+                    }
+                    print("비밀번호 등록")
+                } else {
+                    newPasscodes = passcodes
+                    passcodes.removeAll()
+                    subTitleLabel.text = "확인을 위해 다시 입력해주세요."
+                    print("다시 입력")
+                }
+                
+                
             } else {
-                print("비밀번호 오답")
-                passcodes.removeAll()
+//                if passcodes == userPasscodes {
+//                    print("비밀번호 정답")
+//                    self.dismiss(animated: false)
+//                } else {
+//                    print("비밀번호 오답")
+//                    passcodes.removeAll()
+//                }
             }
+            
             
         }
         passcodeImage1.image = UIImage(systemName: passcodes.count > 0 ? "circle.fill" : "minus")
@@ -194,16 +277,9 @@ class PasscodeViewController: UIViewController {
         passcodeImage4.image = UIImage(systemName: passcodes.count > 3 ? "circle.fill" : "minus")
         
     }
-    
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+extension Notification.Name {
+    static let fatchTable = Notification.Name("fatchTable")
 }
