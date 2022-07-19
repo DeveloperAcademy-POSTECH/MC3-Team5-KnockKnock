@@ -121,26 +121,26 @@ class RoomViewController: UIViewController {
           
             
             //memoImageView layout
-            memoImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
-            memoImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            memoImageView.widthAnchor.constraint(equalToConstant: 124),
+            memoImageView.heightAnchor.constraint(equalToConstant: 79),
             memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             //albumImageView layout
-            albumImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 4),
-            albumImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 4),
+            albumImageView.widthAnchor.constraint(equalToConstant: 73),
+            albumImageView.heightAnchor.constraint(equalToConstant: 92),
             albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             albumImageView.topAnchor.constraint(equalTo: memoImageView.bottomAnchor, constant: 20),
             
             //frameImageView layout
-            frameImageView.widthAnchor.constraint(equalToConstant: 100),
+            frameImageView.widthAnchor.constraint(equalToConstant: 68),
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             frameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant:100),
             
             //letterImageView layout
-            letterImageView.widthAnchor.constraint(equalToConstant: 100),
-            letterImageView.heightAnchor.constraint(equalToConstant: 100),
+            letterImageView.widthAnchor.constraint(equalToConstant: 77),
+            letterImageView.heightAnchor.constraint(equalToConstant: 66),
             letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
         ])
     }
