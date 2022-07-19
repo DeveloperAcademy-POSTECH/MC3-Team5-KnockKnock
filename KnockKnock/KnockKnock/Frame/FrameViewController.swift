@@ -60,11 +60,11 @@ class FrameViewController: UIViewController {
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            cancelButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 45),
-            cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15)
+            cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -25),
+            cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15)
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -112,9 +112,23 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 //CollectionView의 이미지 클릭
 extension FrameViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let mainframeVC = MainFrameViewController()
-        mainframeVC.getindex = indexPath.item
-        mainframeVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
+        
+        //        mainframeVC.getindex = indexPath.item
+        //        mainframeVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
+        print("사진 클릭함1")
+//        guard let image = CoreDataManager.shared.frameImage?.first else {return}
+//        if image != nil {
+//            CoreDataManager.shared.deleteFrameCoreData(object: image)
+//        }
+            
+        CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
+        print("사진 클릭함2")
+        if CoreDataManager.shared.frameImage!.count > 0{
+            CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
+        } else {
+            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
+            
+        }
         dismiss(animated:true)
     }
 }
