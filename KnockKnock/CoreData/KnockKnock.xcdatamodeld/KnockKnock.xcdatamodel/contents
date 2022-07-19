@@ -12,8 +12,13 @@
         <attribute name="memo" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Frame" representedClassName="Frame" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+    </entity>
     <elements>
-        <element name="Entity" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="Album" positionX="-54" positionY="27" width="128" height="74"/>
+        <element name="Entity" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Frame" positionX="-54" positionY="27" width="128" height="59"/>
     </elements>
 </model>
