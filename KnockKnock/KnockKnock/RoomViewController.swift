@@ -65,10 +65,10 @@ class RoomViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(roomImageView)
-        roomImageView.addSubview(memoImageView)
-        roomImageView.addSubview(albumImageView)
-        roomImageView.addSubview(frameImageView)
-        roomImageView.addSubview(letterImageView)
+        view.addSubview(frameImageView)
+        view.addSubview(memoImageView)
+        view.addSubview(albumImageView)
+        view.addSubview(letterImageView)
         
         setupLayout()
         
@@ -123,25 +123,28 @@ class RoomViewController: UIViewController {
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
             memoImageView.heightAnchor.constraint(equalToConstant: 79),
-            memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -90),
+            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40),
             
             //albumImageView layout
             albumImageView.widthAnchor.constraint(equalToConstant: 73),
             albumImageView.heightAnchor.constraint(equalToConstant: 92),
-            albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            albumImageView.topAnchor.constraint(equalTo: memoImageView.bottomAnchor, constant: 20),
+            albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant:  -115),
+            albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -120),
             
             //frameImageView layout
             frameImageView.widthAnchor.constraint(equalToConstant: 68),
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
-            frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            frameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant:100),
+            frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
+            frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             
             //letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
-            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
+//            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
+            letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
+            letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
         ])
     }
     
