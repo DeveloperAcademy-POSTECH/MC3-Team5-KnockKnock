@@ -92,6 +92,7 @@ class RoomViewController: UIViewController {
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
         
+        //모달 닫히는 것 감지하여 토스트 수행
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
         
     }
@@ -146,12 +147,11 @@ class RoomViewController: UIViewController {
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
             let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-//            toastLabel.sizeToFit()
             toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
             toastLabel.textColor = UIColor.white
             toastLabel.font = font
             toastLabel.textAlignment = .center;
-            toastLabel.text = "편지가 하늘에 잘 전달되었어요 ^~^"
+            toastLabel.text = "편지가 하늘에 잘 전달되었어요"
             toastLabel.alpha = 1.0
             toastLabel.layer.cornerRadius = 10;
             toastLabel.clipsToBounds  =  true
@@ -162,7 +162,11 @@ class RoomViewController: UIViewController {
                 toastLabel.removeFromSuperview()
             })
         }
-        showToast()
+        if letterCloseCheck {
+            showToast()
+            letterCloseCheck = false
+        }
+        
     }
     
     //메모 버튼 터치 함수
@@ -192,6 +196,8 @@ class RoomViewController: UIViewController {
     }
 }
 
+
+// 감지하는 기능 추가
 extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
 }
