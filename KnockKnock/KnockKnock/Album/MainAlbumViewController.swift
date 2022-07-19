@@ -88,7 +88,6 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                 item.loadObject(ofClass: UIImage.self) { image, error in
                     DispatchQueue.main.async {
                         guard let image = image as? UIImage else { return }
-//                        self.imageArray.append(image)
                         CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
                         CoreDataManager.shared.readAlbumCoreData()
                         self.collectionView.reloadData()
