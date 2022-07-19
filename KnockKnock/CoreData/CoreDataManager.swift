@@ -141,9 +141,21 @@ class CoreDataManager {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
-    
-    
+    //[Delete]
+    func deleteAlbumCoreData(object: NSManagedObject) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // 객체를 넘기고 바로 삭제
+        managedContext.delete(object)
+        do {
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
+            return false
+        }
+    }
     
     
 }

@@ -29,7 +29,7 @@ class CellDetailViewController: UIViewController {
         view.addSubview(detailImageView)
         
         //NavigationBar에 삭제 버튼 생성
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(trashTapped))
         
         //ImageView 레이아웃
         detailImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,5 +37,13 @@ class CellDetailViewController: UIViewController {
         detailImageView.heightAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         detailImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
+    }
+    @objc func trashTapped() {
+        print("fdafsdfadsfadsf")
+        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray![0])
+        CoreDataManager.shared.readAlbumCoreData()
+        navigationController?.popViewController(animated: true)
+        print("dafjhjkdshgkjadshfk")
+        
     }
 }

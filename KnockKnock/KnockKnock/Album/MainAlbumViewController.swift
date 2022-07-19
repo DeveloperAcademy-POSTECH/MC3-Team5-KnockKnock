@@ -36,6 +36,11 @@ class MainAlbumViewController: UIViewController {
         return view
     }()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        CoreDataManager.shared.readAlbumCoreData()
+        collectionView.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -86,13 +91,15 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
 //                        self.imageArray.append(image)
                         CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
                         print("gdghd")
-                        
+                        CoreDataManager.shared.readAlbumCoreData()
+                        self.collectionView.reloadData()
                     }
                 }
             }
         }
-        CoreDataManager.shared.readAlbumCoreData()
-        self.collectionView.reloadData()
+        
+        
+       
     }
 }
 
@@ -120,8 +127,8 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
 //        cell.prepare(image: self.imageArray[indexPath.])
-        let idx = indexPath.item
-        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray![idx].value(forKey: "image") as! Data))
+        
+        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray![indexPath.item].value(forKey: "image") as! Data))
                      
         return cell
       }
@@ -131,7 +138,8 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
 extension MainAlbumViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cellDetailVC = CellDetailViewController()
-        cellDetailVC.getimage = self.imageArray[indexPath.item]
+        
+        cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray![indexPath.item].value(forKey: "image") as! Data)
         self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }
 }
