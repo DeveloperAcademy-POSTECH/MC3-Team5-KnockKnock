@@ -29,6 +29,8 @@ class SettingViewController: UIViewController {
         title = "비밀번호 설정"
         view.backgroundColor = .red
         self.tableViewSetup()
+        self.tableViewSetup()
+        self.loadTasks()
     }
     
     private func tableViewSetup() {
@@ -134,6 +136,44 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
             }
         }
+        
+        // 생체인증 스위치 작동
+        if sender.tag == 1 {
+            if sender.isOn {
+                if isBiometry() {
+                    tasks[1].isSwitchOn = true
+                } else {
+                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.", preferredStyle: .alert)
+                    
+                    let alertAction = UIAlertAction(title: "확인", style: .cancel)
+                    
+                    alert.addAction(alertAction)
+                    
+                    present(alert, animated: true)
+                    tasks[1].isSwitchOn = false
+                    sender.isOn = false
+                }
+                
+                print("생체인식 사용 o")
+            } else {
+                tasks[1].isSwitchOn = false
+                print("생체인식 사용 x")
+            }
+        }
+        
+    }
+    
+    // 3번째 셀 '비밀번호 변경 누렀을때 작동'
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+            switch indexPath.row {
+            case 0: return
+            case 1: return
+            case 2: print("비밀번호 변경")
+            default:
+                return
+            }
     }
     
 }
