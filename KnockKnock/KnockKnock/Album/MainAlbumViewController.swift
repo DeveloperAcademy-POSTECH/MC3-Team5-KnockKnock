@@ -90,7 +90,7 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                         guard let image = image as? UIImage else { return }
 //                        self.imageArray.append(image)
                         CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
-                        print("gdghd")
+                        print("추가 성공")
                         CoreDataManager.shared.readAlbumCoreData()
                         self.collectionView.reloadData()
                     }
@@ -138,7 +138,7 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
 extension MainAlbumViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cellDetailVC = CellDetailViewController()
-        
+        cellDetailVC.getindex = indexPath.item
         cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray![indexPath.item].value(forKey: "image") as! Data)
         self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }

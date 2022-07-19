@@ -10,6 +10,7 @@ import UIKit
 class CellDetailViewController: UIViewController {
     //해당 셀의 이미지 받아오기
     var getimage: UIImage?
+    var getindex: Int?
     
     //ImageView
     var detailImageView: UIImageView = {
@@ -39,11 +40,10 @@ class CellDetailViewController: UIViewController {
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
     }
     @objc func trashTapped() {
-        print("fdafsdfadsfadsf")
-        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray![0])
+        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray![getindex!])
         CoreDataManager.shared.readAlbumCoreData()
         navigationController?.popViewController(animated: true)
-        print("dafjhjkdshgkjadshfk")
+        print("삭제 성공")
         
     }
 }
