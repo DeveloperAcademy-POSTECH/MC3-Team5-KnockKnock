@@ -40,7 +40,7 @@ class CellDetailViewController: UIViewController {
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
     }
     @objc func trashTapped() {
-        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray![getindex!])
+        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
         CoreDataManager.shared.readAlbumCoreData()
         navigationController?.popViewController(animated: true)
         print("삭제 성공")

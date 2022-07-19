@@ -128,7 +128,7 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
 //        cell.prepare(image: self.imageArray[indexPath.])
         
-        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray![indexPath.item].value(forKey: "image") as! Data))
+        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
                      
         return cell
       }
@@ -139,7 +139,7 @@ extension MainAlbumViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cellDetailVC = CellDetailViewController()
         cellDetailVC.getindex = indexPath.item
-        cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray![indexPath.item].value(forKey: "image") as! Data)
+        cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
         self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }
 }
