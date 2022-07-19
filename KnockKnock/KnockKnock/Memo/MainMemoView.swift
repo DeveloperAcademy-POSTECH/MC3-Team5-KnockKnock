@@ -102,6 +102,20 @@ extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // cell 클릭 create by JERRY
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(tableView.cellForRow(at: indexPath) as! MainTableViewCell)
+        let resultArraySize = CoreDataManager.shared.resultArray?.count
+        let index = resultArraySize! - indexPath.row - 1
+        let cell = CoreDataManager.shared.resultArray![index]
+        
+        
+        let memoVC = MemoDetailViewController()
+        memoVC.set(result: cell)
+        navigationController?.pushViewController(memoVC, animated: true)
+        
+    }
+    
     
 }
 
