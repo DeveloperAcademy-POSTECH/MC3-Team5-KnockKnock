@@ -39,11 +39,12 @@ class CellDetailViewController: UIViewController {
         detailImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
     }
+    
+    //앨범 사진 삭제 함수
     @objc func trashTapped() {
         CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
         CoreDataManager.shared.readAlbumCoreData()
         navigationController?.popViewController(animated: true)
-        print("삭제 성공")
         
     }
 }

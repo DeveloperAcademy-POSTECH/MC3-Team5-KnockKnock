@@ -13,7 +13,11 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     
     var resultArray: [NSManagedObject]?
+    var albumImageArray: [NSManagedObject]? = []
     
+    //MARK: - 메모 부분 CoreData
+    
+    //데이터 저장
     func saveCoreData(title: String, memo: String, image: Data) {
         // App Delegate 호출
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -43,6 +47,7 @@ class CoreDataManager {
         }
     }
     
+    //데이터 불러오기
     func readCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -75,6 +80,7 @@ class CoreDataManager {
         }
     }
     
+    //데이터 업데이트
     func updateCoreData(id: UUID, title: String, memo: String) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -95,8 +101,8 @@ class CoreDataManager {
             return false
         }
     }
-    // MARK: - ALBUM
-    var albumImageArray: [NSManagedObject]? = []
+    
+    // MARK: - 앨범 부분 CoreData
     //[CREATE]
     func saveAlbumCoreData(image: Data) {
         // App Delegate 호출
@@ -124,6 +130,7 @@ class CoreDataManager {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     //[READ]
     func readAlbumCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -141,7 +148,8 @@ class CoreDataManager {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    //[Delete]
+    
+    //[DELETE]
     func deleteAlbumCoreData(object: NSManagedObject) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext

@@ -90,7 +90,6 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                         guard let image = image as? UIImage else { return }
 //                        self.imageArray.append(image)
                         CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
-                        print("추가 성공")
                         CoreDataManager.shared.readAlbumCoreData()
                         self.collectionView.reloadData()
                     }
@@ -126,7 +125,6 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     //CollectionView의 각 cell에 이미지 표시
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
-//        cell.prepare(image: self.imageArray[indexPath.])
         
         cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
                      
