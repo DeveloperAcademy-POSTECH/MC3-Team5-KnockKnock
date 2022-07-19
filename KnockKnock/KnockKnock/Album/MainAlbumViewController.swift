@@ -53,6 +53,9 @@ class MainAlbumViewController: UIViewController {
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        CoreDataManager.shared.readAlbumCoreData()
+        collectionView.reloadData()
     }
     
     //ImagePicker 함수
@@ -80,12 +83,16 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                 item.loadObject(ofClass: UIImage.self) { image, error in
                     DispatchQueue.main.async {
                         guard let image = image as? UIImage else { return }
-                        self.imageArray.append(image)
-                        self.collectionView.reloadData()
+//                        self.imageArray.append(image)
+                        CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
+                        print("gdghd")
+                        
                     }
                 }
             }
         }
+        CoreDataManager.shared.readAlbumCoreData()
+        self.collectionView.reloadData()
     }
 }
 
@@ -105,13 +112,17 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     
     //CollectionView에 표시되는 Item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.imageArray.count
+//        self.imageArray.count
+        return CoreDataManager.shared.albumImageArray!.count
     }
     
     //CollectionView의 각 cell에 이미지 표시
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
-        cell.prepare(image: self.imageArray[indexPath.item])
+//        cell.prepare(image: self.imageArray[indexPath.])
+        let idx = indexPath.item
+        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray![idx].value(forKey: "image") as! Data))
+                     
         return cell
       }
 }
