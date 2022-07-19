@@ -26,7 +26,7 @@ class MainFrameViewController: UIViewController {
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         
-        frameImageView.image = UIImage(named:"letter")
+        frameImageView.image = UIImage(named:"photo")
         
         //frameImageView AutoLayout
         NSLayoutConstraint.activate([
@@ -43,7 +43,9 @@ class MainFrameViewController: UIViewController {
             
         //ActionSheet 버튼 생성 및 추가
         let cancelAction = UIAlertAction(title:"돌아가기", style: UIAlertAction.Style.cancel, handler: nil)
-        let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: nil)
+        let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: { action in
+            self.frameTapped()
+        })
         let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: {action in self.frameImageView.image = UIImage(systemName:"photo")})
         alert.addAction(cancelAction)
         alert.addAction(changeAction)
@@ -51,4 +53,11 @@ class MainFrameViewController: UIViewController {
         
         present(alert, animated:true)
      }
+    func frameTapped() {
+        let frame = FrameViewController()
+        frame.modalPresentationStyle = UIModalPresentationStyle.automatic
+        
+        self.present(frame, animated:true)
+    }
+   
 }
