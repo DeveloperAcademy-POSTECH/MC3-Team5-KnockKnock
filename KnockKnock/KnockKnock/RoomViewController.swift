@@ -34,7 +34,7 @@ class RoomViewController: UIViewController {
     
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "memo")!
+        let myImage: UIImage = UIImage(named: "album")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
@@ -45,7 +45,7 @@ class RoomViewController: UIViewController {
     //액자 버튼 ImageView
     let frameImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "letter")!
+        let myImage: UIImage = UIImage(named: "frame")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
