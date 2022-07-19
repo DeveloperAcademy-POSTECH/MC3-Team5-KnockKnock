@@ -145,18 +145,23 @@ class RoomViewController: UIViewController {
     }
     
     @objc func rotate(_ sender: UITapGestureRecognizer) {
-        func showToast(font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
-            let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
+            let toastLabel = UILabel()
+            self.view.addSubview(toastLabel)
+            toastLabel.translatesAutoresizingMaskIntoConstraints = false
+            toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+            toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+            toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+            toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
             toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
             toastLabel.textColor = UIColor.white
             toastLabel.font = font
             toastLabel.textAlignment = .center;
             toastLabel.text = "편지가 하늘에 잘 전달되었어요"
-            toastLabel.alpha = 1.0
             toastLabel.layer.cornerRadius = 10;
             toastLabel.clipsToBounds  =  true
-            self.view.addSubview(toastLabel)
-            UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
                 toastLabel.alpha = 0.0
             }, completion: {(isCompleted) in
                 toastLabel.removeFromSuperview()
