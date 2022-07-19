@@ -7,6 +7,8 @@
 
 import UIKit
 
+var letterCloseCheck: Bool = false
+
 class MainLetterViewController: UIViewController {
 
     let paperPlainImageView: UIImageView = {
@@ -19,6 +21,10 @@ class MainLetterViewController: UIViewController {
     let textView = UITextView()
     
     let textViewPlaceHolder = "편지를 입력해주세요."
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .rotateBack, object: nil)
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground
@@ -44,6 +50,8 @@ class MainLetterViewController: UIViewController {
             
         } else {
             self.dismiss(animated: true, completion: nil)
+            letterCloseCheck = true
+            RoomViewController().reloadInputViews()
         }
         
     }
