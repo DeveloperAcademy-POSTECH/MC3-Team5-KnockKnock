@@ -71,4 +71,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    @objc private func switchChanged(_ Sender: UISwitch) {
+        
+    }
+    
 }

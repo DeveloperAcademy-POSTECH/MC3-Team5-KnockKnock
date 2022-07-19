@@ -13,6 +13,15 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     
+    // 셋팅뷰 버튼 ImageView
+    let settingImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "door")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
     //메모 버튼 ImageView
     let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -55,11 +64,16 @@ class RoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubview(settingImageView)
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(frameImageView)
         view.addSubview(letterImageView)
         setupLayout()
+        
+        //셋팅 사진 터치 가능하도록 설정
+        settingImageView.isUserInteractionEnabled = true
+        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
         
         //메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
@@ -90,8 +104,16 @@ class RoomViewController: UIViewController {
         
     }
     
+    
     func setupLayout(){
         NSLayoutConstraint.activate([
+            
+            //settingImageView
+            settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            settingImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            settingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 200),
+            settingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300),
+            
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
             memoImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
@@ -115,6 +137,12 @@ class RoomViewController: UIViewController {
             letterImageView.heightAnchor.constraint(equalToConstant: 100),
             letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
         ])
+    }
+    
+    //셋팅ㅂ 버튼 터치 함수
+    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
+        let settingVC = SettingViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     //메모 버튼 터치 함수
