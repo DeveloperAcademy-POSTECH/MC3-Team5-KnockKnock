@@ -9,6 +9,9 @@ import UIKit
 
 class MainFrameViewController: UIViewController {
     
+    var getimage: UIImage?
+    var getindex: Int?
+    
     //액자 사진 ImageView
     var frameImageView: UIImageView = {
         let frameView = UIImageView()
@@ -18,15 +21,19 @@ class MainFrameViewController: UIViewController {
         return frameView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        frameImageView.image = (getimage == nil ? UIImage(systemName:"photo") : self.getimage)
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        frameImageView.image = (getimage == nil ? UIImage(systemName:"photo") : self.getimage)
         view.addSubview(frameImageView)
 
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
-        
-        frameImageView.image = UIImage(named:"photo")
         
         //frameImageView AutoLayout
         NSLayoutConstraint.activate([
@@ -46,17 +53,17 @@ class MainFrameViewController: UIViewController {
         let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: { action in
             self.frameTapped()
         })
-        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: {action in self.frameImageView.image = UIImage(systemName:"photo")})
+        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: {action in self.getimage = nil})
         alert.addAction(cancelAction)
         alert.addAction(changeAction)
         alert.addAction(defaultAction)
         
         present(alert, animated:true)
      }
+    
     func frameTapped() {
         let frame = FrameViewController()
         frame.modalPresentationStyle = UIModalPresentationStyle.automatic
-        
         self.present(frame, animated:true)
     }
    

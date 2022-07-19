@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PhotosUI
 
 class FrameViewController: UIViewController {
     
@@ -15,10 +14,20 @@ class FrameViewController: UIViewController {
     private let cancelButton : UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .red
-        button.setTitle("버튼입니당", for: .normal)
-        button.tintColor = .cyan
+        button.backgroundColor = .clear
+        button.setTitle("취소", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private let completeButton : UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitle("완료", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(completeTapped), for: .touchUpInside)
         return button
     }()
     
@@ -50,20 +59,26 @@ class FrameViewController: UIViewController {
         CoreDataManager.shared.readAlbumCoreData()
         collectionView.reloadData()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(cancelButton)
+        view.addSubview(completeButton)
+        
         //CollectionView AutoLayout
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: 10),
-            cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            cancelButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 45),
+            cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15),
+            
+            completeButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 45),
+            completeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15)
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -72,44 +87,15 @@ class FrameViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    //ImagePicker 함수
-    @objc func presentPicker(_ sender: Any) {
-        //ImagePicker 기본 설정
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        configuration.selectionLimit = 0
-        
-        //Picker 표시
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        present(picker, animated: true)
-     }
+    //취소 버튼 함수
     @objc func cancelTapped(_ sender: Any) {
         dismiss(animated:true)
     }
-}
-
-
-extension FrameViewController: PHPickerViewControllerDelegate {
-    //받아온 이미지를 imageArray 배열에 추가
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]){
+    
+    //완료 버튼 함수
+    @objc func completeTapped(_ sender: Any) {
+        
         dismiss(animated:true)
-        itemProviders = results.map(\.itemProvider)
-        for item in itemProviders {
-            if item.canLoadObject(ofClass: UIImage.self) {
-                item.loadObject(ofClass: UIImage.self) { image, error in
-                    DispatchQueue.main.async {
-                        guard let image = image as? UIImage else { return }
-                        CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
-                        CoreDataManager.shared.readAlbumCoreData()
-                        self.collectionView.reloadData()
-                    }
-                }
-            }
-        }
-        
-        
-       
     }
 }
 
@@ -143,12 +129,12 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
       }
 }
 
-//CollectionView의 이미지 클릭시 CellDetailView 표시
+//CollectionView의 이미지 클릭
 extension FrameViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cellDetailVC = CellDetailViewController()
-        cellDetailVC.getindex = indexPath.item
-        cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
-        self.navigationController?.pushViewController(cellDetailVC,animated: true)
+        let mainframeVC = MainFrameViewController()
+        mainframeVC.getindex = indexPath.item
+        mainframeVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
+        dismiss(animated:true)
     }
 }
