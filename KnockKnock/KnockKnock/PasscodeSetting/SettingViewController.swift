@@ -123,11 +123,16 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if sender.tag == 0 {
             if sender.isOn {
                 print("추가 시작")
+                let registerPasscode = PasscodeViewController()
+                registerPasscode.modalPresentationStyle = .fullScreen
+                present(registerPasscode, animated: true)
                 let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
                 let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
                 tasks.append(task1)
                 tasks.append(task2)
                 tableView.reloadData()
+                
+                
             } else {
                 print("식제 시작")
                 self.tasks.removeLast()

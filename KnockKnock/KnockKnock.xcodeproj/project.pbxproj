@@ -23,6 +23,7 @@
 		BF94253E288143E500CB8653 /* CellDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94253D288143E500CB8653 /* CellDetailViewController.swift */; };
 		D70267AA288685EB00EFDABE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267A9288685EB00EFDABE /* SettingViewController.swift */; };
 		D70267AC2886877B00EFDABE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267AB2886877B00EFDABE /* Task.swift */; };
+		D70267AF2886915300EFDABE /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70267AE2886915300EFDABE /* PasscodeViewController.swift */; };
 		D7A17DB428853F5300D7B10E /* DoorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A17DB328853F5300D7B10E /* DoorViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		BF94253D288143E500CB8653 /* CellDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDetailViewController.swift; sourceTree = "<group>"; };
 		D70267A9288685EB00EFDABE /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D70267AB2886877B00EFDABE /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		D70267AE2886915300EFDABE /* PasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
 		D7A17DB328853F5300D7B10E /* DoorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 		32211B74287EFD6B00A9F3B1 /* KnockKnock */ = {
 			isa = PBXGroup;
 			children = (
+				D70267AD2886912200EFDABE /* Passcode */,
 				D70267A8288685C100EFDABE /* PasscodeSetting */,
 				6F7FCCFC2885418A0044F591 /* Frame */,
 				3266FFEC2883D91200B6D6A6 /* Letter */,
@@ -146,6 +149,14 @@
 				D70267AB2886877B00EFDABE /* Task.swift */,
 			);
 			path = PasscodeSetting;
+			sourceTree = "<group>";
+		};
+		D70267AD2886912200EFDABE /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				D70267AE2886915300EFDABE /* PasscodeViewController.swift */,
+			);
+			path = Passcode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +237,7 @@
 				D70267AA288685EB00EFDABE /* SettingViewController.swift in Sources */,
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				D70267AC2886877B00EFDABE /* Task.swift in Sources */,
+				D70267AF2886915300EFDABE /* PasscodeViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
 				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
 				6F7FCCFE288541A70044F591 /* MainFrameViewController.swift in Sources */,
