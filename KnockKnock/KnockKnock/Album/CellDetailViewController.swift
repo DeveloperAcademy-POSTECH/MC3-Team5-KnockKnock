@@ -10,6 +10,7 @@ import UIKit
 class CellDetailViewController: UIViewController {
     //해당 셀의 이미지 받아오기
     var getimage: UIImage?
+    var getindex: Int?
     
     //ImageView
     var detailImageView: UIImageView = {
@@ -29,7 +30,7 @@ class CellDetailViewController: UIViewController {
         view.addSubview(detailImageView)
         
         //NavigationBar에 삭제 버튼 생성
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(trashTapped))
         
         //ImageView 레이아웃
         detailImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,5 +38,12 @@ class CellDetailViewController: UIViewController {
         detailImageView.heightAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         detailImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
+    }
+    @objc func trashTapped() {
+        CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
+        CoreDataManager.shared.readAlbumCoreData()
+        navigationController?.popViewController(animated: true)
+        print("삭제 성공")
+        
     }
 }
