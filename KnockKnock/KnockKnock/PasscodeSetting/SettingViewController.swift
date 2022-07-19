@@ -9,7 +9,12 @@ import UIKit
 
 class SettingViewController: UIViewController {
     
-    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)]
+    // tasks set 할 때 saveTasks함수 호출
+    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
+        didSet {
+            self.saveTasks()
+        }
+    }
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -39,6 +44,30 @@ class SettingViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         
         ])
+    }
+    // tasks를 userDefaults에 저장
+    func saveTasks() {
+        let data = self.tasks.map {
+            [
+                "title": $0.title,
+                "isSwitch": $0.isSwitch,
+                "isSwitchOn": $0.isSwitchOn
+            ]
+        }
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(data, forKey: "tasks")
+    }
+    
+    // userDefaults에 저장된 내용을 tasks에 불러오기
+    func loadTasks() {
+        let userDefaults = UserDefaults.standard
+        guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
+        self.tasks = data.compactMap {
+            guard let title = $0["title"] as? String else {return nil}
+            guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
+            guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
+            return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+        }
     }
 
 
@@ -71,8 +100,27 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    @objc private func switchChanged(_ Sender: UISwitch) {
+    @objc private func switchChanged(_ sender: UISwitch!) {
         
+        tasks[sender.tag].isSwitchOn = sender.isOn
+        
+        // 화면 잠금 스위치 작동
+        if sender.tag == 0 {
+            if sender.isOn {
+                print("추가 시작")
+                let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: true)
+                let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
+                tasks.append(task1)
+                tasks.append(task2)
+                tableView.reloadData()
+            } else {
+                print("식제 시작")
+                self.tasks.removeLast()
+                self.tasks.removeLast()
+                print("남은 배열\(tasks)")
+                tableView.reloadData()
+            }
+        }
     }
     
 }
