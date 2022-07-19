@@ -4,7 +4,7 @@
 //
 //  Created by KoJeongseok on 2022/07/19.
 //
-
+import LocalAuthentication
 import UIKit
 
 class SettingViewController: UIViewController {
@@ -69,6 +69,19 @@ class SettingViewController: UIViewController {
             return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
         }
     }
+    
+    func isBiometry() -> Bool {
+        let authContext = LAContext()
+        var error: NSError?
+        // Touch ID와 Face ID를 지원하는 기기인지 확인
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            print("생체 인식 사용가능")
+            return true
+        } else {
+            print("생체 인식 사용불가능")
+            return false
+        }
+    }
 
 
 }
@@ -108,7 +121,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if sender.tag == 0 {
             if sender.isOn {
                 print("추가 시작")
-                let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: true)
+                let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
                 let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
                 tasks.append(task1)
                 tasks.append(task2)
