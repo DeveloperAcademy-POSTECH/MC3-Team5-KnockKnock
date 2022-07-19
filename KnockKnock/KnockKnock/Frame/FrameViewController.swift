@@ -21,16 +21,6 @@ class FrameViewController: UIViewController {
         return button
     }()
     
-    private let completeButton : UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .clear
-        button.setTitle("완료", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(completeTapped), for: .touchUpInside)
-        return button
-    }()
-    
     //CollectionView 기본 설정
     private let gridFlowLayout : UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -65,7 +55,6 @@ class FrameViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(cancelButton)
-        view.addSubview(completeButton)
         
         //CollectionView AutoLayout
         NSLayoutConstraint.activate([
@@ -75,10 +64,7 @@ class FrameViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             cancelButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 45),
-            cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15),
-            
-            completeButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 45),
-            completeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15)
+            cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15)
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -89,12 +75,6 @@ class FrameViewController: UIViewController {
     
     //취소 버튼 함수
     @objc func cancelTapped(_ sender: Any) {
-        dismiss(animated:true)
-    }
-    
-    //완료 버튼 함수
-    @objc func completeTapped(_ sender: Any) {
-        
         dismiss(animated:true)
     }
 }
