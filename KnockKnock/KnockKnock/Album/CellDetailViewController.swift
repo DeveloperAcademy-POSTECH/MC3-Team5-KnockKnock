@@ -45,6 +45,5 @@ class CellDetailViewController: UIViewController {
         CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
         CoreDataManager.shared.readAlbumCoreData()
         navigationController?.popViewController(animated: true)
-        
     }
 }

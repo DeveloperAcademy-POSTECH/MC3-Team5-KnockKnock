@@ -9,13 +9,12 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
-    // DoorViewController실행 되었는지 확인
+    //DoorViewController 실행 되었는지 확인
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
-    
-    
-    // 셋팅뷰 버튼 ImageView
+   
+    //세팅 버튼 ImageView
     let settingImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "door")!
@@ -24,7 +23,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    // 배경화면
+    //배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "roomImage")!
@@ -33,7 +32,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    // 메모 버튼 ImageView
+    //메모 버튼 ImageView
     let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
@@ -42,7 +41,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    
+    //앨범 버튼 ImageView
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "album")!
@@ -51,14 +50,24 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    
-    
     //액자 버튼 ImageView
     let frameImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "frame")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
+        return imageView
+    }()
+    
+    //액자 사진 버튼 ImageView
+    let frameHasImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        CoreDataManager.shared.readFrameCoreData()
+        if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {
+            imageView.image = UIImage(data: frameImageData)
+        }
         return imageView
     }()
     
@@ -71,7 +80,13 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //MARK: - 뷰디드로드
+    //MARK: - viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        imageInput()
+    }
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -82,14 +97,13 @@ class RoomViewController: UIViewController {
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
+        view.addSubview(frameHasImageView)
         view.addSubview(settingImageView)
         
         setupLayout()
+        imageInput()
         
-
-
-        
-        //셋팅 사진 터치 가능하도록 설정
+        //세팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
         settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
 
@@ -97,7 +111,6 @@ class RoomViewController: UIViewController {
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
 
-        
         //메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
         memoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(memoViewTapped(_:))))
@@ -109,34 +122,29 @@ class RoomViewController: UIViewController {
         //액자 사진 터치 가능하도록 설정
         frameImageView.isUserInteractionEnabled = true
         frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
+        frameHasImageView.isUserInteractionEnabled = true
+        frameHasImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         
         //편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
         
         //모달 닫히는 것 감지하여 토스트 수행
-        NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)  
     }
     
-    // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
+    //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
-        
         let doorViewController = DoorViewController()
         doorViewController.modalPresentationStyle = .overFullScreen
-        
         if isDoorView {
             present(doorViewController, animated: false, completion: nil)
             isDoorView = false
         }
     }
     
-
-    
-    
     func setupLayout(){
         NSLayoutConstraint.activate([
-            
 
             //settingImageView
             settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
@@ -144,11 +152,8 @@ class RoomViewController: UIViewController {
             settingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 200),
             settingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300),
 
-            
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
-            
-
             
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
@@ -168,23 +173,37 @@ class RoomViewController: UIViewController {
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
+            //frameHasImageView layout
+            frameHasImageView.widthAnchor.constraint(equalToConstant: 53),
+            frameHasImageView.heightAnchor.constraint(equalToConstant: 85),
+            frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
+            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             //letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
-            //            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
         ])
     }
     
+    //CoreData를 읽어와서 이미지를 전달하는 함수
+    func imageInput(){
+        CoreDataManager.shared.readFrameCoreData()
+        if let image = CoreDataManager.shared.frameImage?.last {
+            if let frameImageData = image.value(forKey: "image") as? Data {
+                frameHasImageView.image = UIImage(data: frameImageData)
+            }
+        }
+    }
 
-    //셋팅ㅂ 버튼 터치 함수
+    //세팅 버튼 터치 함수
     @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
         let settingVC = SettingViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
 
+    //토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
             let toastLabel = UILabel()
@@ -212,8 +231,6 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
-        
-
     }
     
     //메모 버튼 터치 함수
@@ -242,7 +259,6 @@ class RoomViewController: UIViewController {
         self.present(letterVC, animated: true, completion: nil)
     }
 }
-
 
 // 감지하는 기능 추가
 extension Notification.Name {

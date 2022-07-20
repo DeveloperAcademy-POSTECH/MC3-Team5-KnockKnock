@@ -36,11 +36,14 @@ class MainAlbumViewController: UIViewController {
         return view
     }()
 
+    //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         CoreDataManager.shared.readAlbumCoreData()
         collectionView.reloadData()
     }
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -77,11 +80,35 @@ class MainAlbumViewController: UIViewController {
      }
 }
 
-
 extension MainAlbumViewController: PHPickerViewControllerDelegate {
+    //토스트 알림 함수
+    func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
+        let toastLabel = UILabel()
+        self.view.addSubview(toastLabel)
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+        toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center;
+        toastLabel.text = "사진 추가가 완료되었습니다."
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    }
+    
     //받아온 이미지를 imageArray 배열에 추가
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]){
         dismiss(animated:true)
+        showToast()
         itemProviders = results.map(\.itemProvider)
         for item in itemProviders {
             if item.canLoadObject(ofClass: UIImage.self) {
@@ -95,9 +122,6 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
-        
-        
-       
     }
 }
 
@@ -117,14 +141,12 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     
     //CollectionView에 표시되는 Item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        self.imageArray.count
         return CoreDataManager.shared.albumImageArray!.count
     }
     
     //CollectionView의 각 cell에 이미지 표시
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
-        
         cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
                      
         return cell
