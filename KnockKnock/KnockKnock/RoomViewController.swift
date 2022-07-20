@@ -12,6 +12,8 @@ class RoomViewController: UIViewController {
     // DoorViewController실행 되었는지 확인
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
+    let keychainManager = KeychainManager()
+    
     
     // 셋팅뷰 버튼 ImageView
     let settingImageView: UIImageView = {
@@ -71,6 +73,8 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         setupLayout()
         
+
+        
         //셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
         settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
@@ -94,6 +98,7 @@ class RoomViewController: UIViewController {
     
     // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
+        
         let doorViewController = DoorViewController()
         doorViewController.modalPresentationStyle = .overFullScreen
         
@@ -103,6 +108,8 @@ class RoomViewController: UIViewController {
         }
         
     }
+    
+
     
     
     func setupLayout(){

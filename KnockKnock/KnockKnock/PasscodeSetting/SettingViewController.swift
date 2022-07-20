@@ -33,9 +33,10 @@ class SettingViewController: UIViewController {
         
         title = "비밀번호 설정"
         view.backgroundColor = .red
-        self.tableViewSetup()
-        self.tableViewSetup()
-        self.loadTasks()
+        tableViewSetup()
+        tableViewSetup()
+        loadTasks()
+        
     }
     
     private func tableViewSetup() {

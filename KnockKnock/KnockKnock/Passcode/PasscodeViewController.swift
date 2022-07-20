@@ -77,6 +77,11 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
+        if !isRegister! && tasks[1].isSwitchOn {
+            biometry()
+        }
+        
+        
     }
     
     
@@ -262,6 +267,73 @@ class PasscodeViewController: UIViewController {
         passcodeImage3.image = UIImage(systemName: passcodes.count > 2 ? "circle.fill" : "minus")
         passcodeImage4.image = UIImage(systemName: passcodes.count > 3 ? "circle.fill" : "minus")
         
+    }
+    
+    private func biometry() {
+        
+        // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
+        let authContext = LAContext()
+        
+        var error: NSError?
+        
+        // 각 상황별 안내 문구
+        var description: String!
+        
+        // Touch ID와 Face ID를 지원하는 기기인지 확인
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            
+            // 스위치 문을 통해 인증 타입을 확인하여 보여줄 안내 문구 설정
+            switch authContext.biometryType {
+            case .faceID:
+                description = "소중한 정보를 보호하기 위해서 Face ID로 인증해주세요."
+            case .touchID:
+                description = "소중한 정보를 보호하기 위해서 Touch ID를 인증해주세요."
+            case .none:
+                description = "소중한 정보를 보호하기 위해서 로그인 해주세요"
+                break
+            default:
+                break
+            }
+            
+            // Touch ID와 Face ID 인증 시작
+            // authContext를 이용하여 인증을 요청하면 인증 성공 여부와 인증 실패시 결과가 에러를 통해 값으로 내려온다.
+            // 위의 두 결과를 통해 여러가지 인증 처리를 하면 된다.
+            authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
+                DispatchQueue.main.async {
+                    guard success, error == nil else {
+                        // 실패
+
+                        return
+                    }
+
+                    
+                    self.dismiss(animated: false)
+                }
+                
+            }
+        } else {
+            // Touch ID와 Face ID를 사용할 수 없는 겨우
+//
+//            let errorDescription = error?.userInfo["NSLocalizedDescription"] ?? ""
+//            print(errorDescription)
+//            description = "계정 정보를 열람하기 위해서 로그인 해주세요"
+//
+//            let alertController = UIAlertController(title: "Authentication Required", message: description, preferredStyle: .alert)
+//            weak var usernameTextField: UITextField!
+//            alertController.addTextField(configurationHandler: { textField in
+//                textField.placeholder = "User ID"
+//                usernameTextField = textField
+//            })
+//            weak var passwordTextField: UITextField!
+//            alertController.addTextField(configurationHandler: { textField in
+//                textField.placeholder = "Password"
+//                passwordTextField = textField
+//            })
+//            alertController.addAction(UIAlertAction(title: "Log In", style: .destructive, handler: { action in
+//                print(usernameTextField.text! + "\n" + passwordTextField.text!)
+//            }))
+//            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
 }
