@@ -25,8 +25,8 @@ class KeychainManager {
         //kSecValueData : 저장될 데이터를 Data Type으로 형변환하여 전달
         
         let addQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                   kSecAttrAccount: key,
-                                     kSecValueData: (pwd as AnyObject).data(using: String.Encoding.utf8.rawValue) as Any]
+                                         kSecAttrAccount: key,
+                                         kSecValueData: (pwd as AnyObject).data(using: String.Encoding.utf8.rawValue) as Any]
         
         let result: Bool = {
             let status = SecItemAdd(addQuery as CFDictionary, nil)
@@ -47,9 +47,9 @@ class KeychainManager {
     // 키체인 읽기
     func getItem(key: Any) -> Any? {
         let getQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                   kSecAttrAccount: key,
-                              kSecReturnAttributes: true,
-                                    kSecReturnData: true]
+                                      kSecAttrAccount: key,
+                                      kSecReturnAttributes: true,
+                                      kSecReturnData: true]
         var item: CFTypeRef?
         let result = SecItemCopyMatching(getQuery as CFDictionary, &item)
         
@@ -69,7 +69,7 @@ class KeychainManager {
     // 키체인 업데이트
     func updateItem(value: Any, key: Any) -> Bool {
         let prevQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                    kSecAttrAccount: key]
+                                              kSecAttrAccount: key]
         let updateQuery: [CFString: Any] = [kSecValueData: (value as AnyObject).data(using: String.Encoding.utf8.rawValue) as Any]
         
         let result: Bool = {
@@ -88,7 +88,7 @@ class KeychainManager {
     // 키체인 삭제
     func deleteItem(key: String) -> Bool {
         let deleteQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                      kSecAttrAccount: key]
+                                            kSecAttrAccount: key]
         let status = SecItemDelete(deleteQuery as CFDictionary)
         if status == errSecSuccess { return true }
         

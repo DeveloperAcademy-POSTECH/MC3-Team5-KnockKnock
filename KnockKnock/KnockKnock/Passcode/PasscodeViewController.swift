@@ -305,38 +305,13 @@ class PasscodeViewController: UIViewController {
             authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
                 DispatchQueue.main.async {
                     guard success, error == nil else {
-                        // 실패
-
                         return
                     }
-
-                    
                     self.dismiss(animated: false)
                 }
-                
             }
         } else {
-            // Touch ID와 Face ID를 사용할 수 없는 겨우
-//
-//            let errorDescription = error?.userInfo["NSLocalizedDescription"] ?? ""
-//            print(errorDescription)
-//            description = "계정 정보를 열람하기 위해서 로그인 해주세요"
-//
-//            let alertController = UIAlertController(title: "Authentication Required", message: description, preferredStyle: .alert)
-//            weak var usernameTextField: UITextField!
-//            alertController.addTextField(configurationHandler: { textField in
-//                textField.placeholder = "User ID"
-//                usernameTextField = textField
-//            })
-//            weak var passwordTextField: UITextField!
-//            alertController.addTextField(configurationHandler: { textField in
-//                textField.placeholder = "Password"
-//                passwordTextField = textField
-//            })
-//            alertController.addAction(UIAlertAction(title: "Log In", style: .destructive, handler: { action in
-//                print(usernameTextField.text! + "\n" + passwordTextField.text!)
-//            }))
-//            self.present(alertController, animated: true, completion: nil)
+
         }
     }
     

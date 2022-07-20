@@ -84,8 +84,6 @@ class SettingViewController: UIViewController {
         } else {
             tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)]
         }
-        
-        
     }
     
     func isBiometry() -> Bool {
@@ -100,8 +98,6 @@ class SettingViewController: UIViewController {
             return false
         }
     }
-    
-    
 }
 
 
@@ -186,17 +182,14 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                     tasks[1].isSwitchOn = false
                     sender.isOn = false
                 }
-                
-                print("생체인식 사용 o")
             } else {
                 tasks[1].isSwitchOn = false
-                print("생체인식 사용 x")
             }
         }
         
     }
     
-    // 3번째 셀 '비밀번호 변경 누렀을때 작동'
+    // 3번째 셀 '비밀번호 변경 누렀을때 작동, 아직 미구현
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
