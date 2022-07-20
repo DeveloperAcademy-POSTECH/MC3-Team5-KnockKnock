@@ -13,7 +13,7 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     
-    // 배경화면
+    //배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "roomImage")!
@@ -74,16 +74,7 @@ class RoomViewController: UIViewController {
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        CoreDataManager.shared.readFrameCoreData()
-        print("룸뷰 뷰윌어피어 실행됨")
-        if let image = CoreDataManager.shared.frameImage?.last {
-            print("룸뷰이미지가 있음")
-            if let frameImageData = image.value(forKey: "image") as? Data {
-                print("이미지 데이터가 있음")
-                frameHasImageView.image = UIImage(data: frameImageData)
-            }
-        }
-        print("이미지가 없음")
+        imageInput()
     }
     
     //MARK: - viewDidLoad
@@ -98,13 +89,7 @@ class RoomViewController: UIViewController {
         view.addSubview(frameHasImageView)
         
         setupLayout()
-        
-        CoreDataManager.shared.readFrameCoreData()
-        if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {
-            frameHasImageView.image = UIImage(data: frameImageData)
-            print("뷰디드로드에서 이미지가 있을 때")
-        }
-        print("뷰디드로드 실행됨")
+        imageInput()
         
         //배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
@@ -145,6 +130,7 @@ class RoomViewController: UIViewController {
         }
     }
     
+    //AutoLayout
     func setupLayout(){
         NSLayoutConstraint.activate([
             //배경화면 layout
@@ -181,6 +167,16 @@ class RoomViewController: UIViewController {
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
         ])
+    }
+    
+    //CoreData를 읽어와서 이미지를 전달하는 함수
+    func imageInput(){
+        CoreDataManager.shared.readFrameCoreData()
+        if let image = CoreDataManager.shared.frameImage?.last {
+            if let frameImageData = image.value(forKey: "image") as? Data {
+                frameHasImageView.image = UIImage(data: frameImageData)
+            }
+        }
     }
     
     //토스트 알림 함수
@@ -239,7 +235,6 @@ class RoomViewController: UIViewController {
         self.present(letterVC, animated: true, completion: nil)
     }
 }
-
 
 // 감지하는 기능 추가
 extension Notification.Name {
