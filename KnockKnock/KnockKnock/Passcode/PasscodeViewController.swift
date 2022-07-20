@@ -22,7 +22,7 @@ class PasscodeViewController: UIViewController {
     let passcodeImage1: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .label
+        imageView.tintColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -30,7 +30,7 @@ class PasscodeViewController: UIViewController {
     let passcodeImage2: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .label
+        imageView.tintColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -38,7 +38,7 @@ class PasscodeViewController: UIViewController {
     let passcodeImage3: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .label
+        imageView.tintColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -46,7 +46,7 @@ class PasscodeViewController: UIViewController {
     let passcodeImage4: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .label
+        imageView.tintColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -56,7 +56,7 @@ class PasscodeViewController: UIViewController {
         //            label.font = UIFont(name: label.font.fontName, size: 35)
         label.font = UIFont.boldSystemFont(ofSize: 25)
         label.text = "암호 입력"
-        label.textColor = .label
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -89,6 +89,7 @@ class PasscodeViewController: UIViewController {
     // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
         isRegister = keychainManager.getItem(key: "passcode") == nil ? true : false
+
         
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
@@ -153,7 +154,7 @@ class PasscodeViewController: UIViewController {
         for n in 0..<3 {
             for m in 0..<3 {
                 let button = UIButton(frame: CGRect(x: buttonWidthSize * CGFloat(m), y: view.frame.size.height - buttonHeightSize * (4.5 - CGFloat(n)), width: buttonWidthSize, height: buttonHeightSize))
-                button.setTitleColor(.label, for: .normal)
+                button.setTitleColor(.black, for: .normal)
                 
                 //                button.backgroundColor = .white
                 button.setTitle(String((m + 1) + (n * 3)), for: .normal)
@@ -164,20 +165,20 @@ class PasscodeViewController: UIViewController {
         }
         
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
-        faceButton.setTitleColor(.label, for: .normal)
+        faceButton.setTitleColor(.black, for: .normal)
         //        faceButton.backgroundColor = .white
         if isRegister! {
             faceButton.setTitle("취소", for: .normal)
         } else {
             faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
         }
-        faceButton.tintColor = .label
+        faceButton.tintColor = .black
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
         view.addSubview(faceButton)
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
-        zeroButton.setTitleColor(.label, for: .normal)
+        zeroButton.setTitleColor(.black, for: .normal)
         //        zeroButton.backgroundColor = .white
         zeroButton.setTitle("0", for: .normal)
         zeroButton.tag = 0
@@ -188,7 +189,7 @@ class PasscodeViewController: UIViewController {
         deleteButton.setTitleColor(.label, for: .normal)
         //        deleteButton.backgroundColor = .white
         deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
-        deleteButton.tintColor = .label
+        deleteButton.tintColor = .black
         deleteButton.tag = 12
         deleteButton.addTarget(self, action: #selector(deletePressed(_ :)), for: .touchUpInside)
         view.addSubview(deleteButton)
@@ -218,9 +219,12 @@ class PasscodeViewController: UIViewController {
     }
     
     @objc private func deletePressed(_ sender: UIButton) {
-        passcodes.removeLast()
-        print(passcodes)
-        update()
+        if passcodes.count >= 1{
+            passcodes.removeLast()
+            print(passcodes)
+            update()
+        }
+        
     }
     
     private func update() {

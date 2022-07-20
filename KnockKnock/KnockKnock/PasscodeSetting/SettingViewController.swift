@@ -68,14 +68,24 @@ class SettingViewController: UIViewController {
     
     // userDefaults에 저장된 내용을 tasks에 불러오기
     func loadTasks() {
-        let userDefaults = UserDefaults.standard
-        guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
-        self.tasks = data.compactMap {
-            guard let title = $0["title"] as? String else {return nil}
-            guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
-            guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
-            return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+        
+        
+        let isRegister = keyChainManager.getItem(key: "passcode") == nil ? false : true
+        
+        if isRegister {
+            let userDefaults = UserDefaults.standard
+            guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
+            self.tasks = data.compactMap {
+                guard let title = $0["title"] as? String else {return nil}
+                guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
+                guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
+                return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+            }
+        } else {
+            tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)]
         }
+        
+        
     }
     
     func isBiometry() -> Bool {
