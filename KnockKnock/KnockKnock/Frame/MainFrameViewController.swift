@@ -94,10 +94,17 @@ class MainFrameViewController: UIViewController {
         frame.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         self.present(frame, animated:true)
     }
+    
     func defaultTapped() {
-        CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
-        CoreDataManager.shared.readFrameCoreData()
-        CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
+        DispatchQueue.main.async {
+            
+            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
+            CoreDataManager.shared.readFrameCoreData()
+            self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
+            CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
+            print("기본이미지로 변경됨")
+        }
+        
         frameImageView.image?.didChangeValue(forKey: "image")
         frameImageView.setNeedsDisplay()
     }
