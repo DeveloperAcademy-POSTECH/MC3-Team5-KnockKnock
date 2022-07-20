@@ -89,6 +89,7 @@ class RoomViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+//        keychainManager.deleteItem(key: "passcode")
         view.backgroundColor = .systemBackground
 
         
