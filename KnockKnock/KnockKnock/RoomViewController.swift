@@ -92,6 +92,7 @@ class RoomViewController: UIViewController {
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
         
+        //모달 닫히는 것 감지하여 토스트 수행
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
         
     }
@@ -105,11 +106,6 @@ class RoomViewController: UIViewController {
             present(doorViewController, animated: false, completion: nil)
             isDoorView = false
         }
-        
-        if letterCloseCheck {
-            showToast(message: "안녕")
-            letterCloseCheck = false
-        }
     }
     
     func setupLayout(){
@@ -118,7 +114,7 @@ class RoomViewController: UIViewController {
             
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
-          
+            
             
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
@@ -142,14 +138,39 @@ class RoomViewController: UIViewController {
             //letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
-//            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
+            //            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
         ])
     }
     
     @objc func rotate(_ sender: UITapGestureRecognizer) {
-        
+        func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
+            let toastLabel = UILabel()
+            self.view.addSubview(toastLabel)
+            toastLabel.translatesAutoresizingMaskIntoConstraints = false
+            toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+            toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+            toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+            toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            toastLabel.textColor = UIColor.white
+            toastLabel.font = font
+            toastLabel.textAlignment = .center;
+            toastLabel.text = "편지가 하늘에 잘 전달되었어요"
+            toastLabel.layer.cornerRadius = 10;
+            toastLabel.clipsToBounds  =  true
+            UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: {(isCompleted) in
+                toastLabel.removeFromSuperview()
+            })
+        }
+        if letterCloseCheck {
+            showToast()
+            letterCloseCheck = false
+        }
         
     }
     
@@ -178,27 +199,10 @@ class RoomViewController: UIViewController {
         
         self.present(letterVC, animated: true, completion: nil)
     }
-    
-    func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
-            let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            toastLabel.textColor = UIColor.white
-            toastLabel.font = font
-            toastLabel.textAlignment = .center;
-            toastLabel.text = message
-            toastLabel.alpha = 1.0
-            toastLabel.layer.cornerRadius = 10;
-            toastLabel.clipsToBounds  =  true
-            self.view.addSubview(toastLabel)
-            UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: {
-                 toastLabel.alpha = 0.0
-            }, completion: {(isCompleted) in
-                toastLabel.removeFromSuperview()
-            })
-        }
-    
 }
 
+
+// 감지하는 기능 추가
 extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
 }

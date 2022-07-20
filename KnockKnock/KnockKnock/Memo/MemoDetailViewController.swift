@@ -74,18 +74,28 @@ class MemoDetailViewController: UIViewController {
     func memoTextView() {
         if memoId != nil {
             if textView.text == "메모를 입력해주세요." {
-                textView.text = textViewPlaceHolder
+                let style = NSMutableParagraphStyle()
+                style.lineSpacing = 8
+                let attributes = [NSAttributedString.Key.paragraphStyle : style]
+                textView.attributedText = NSAttributedString(string: textViewPlaceHolder, attributes: attributes)
+                textView.textContainer.lineFragmentPadding = 20
+
                 textView.textColor = .lightGray
             } else {
                 textView.textColor = .black
             }
         } else {
-            textView.text = textViewPlaceHolder
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 8
+            let attributes = [NSAttributedString.Key.paragraphStyle : style]
+            textView.attributedText = NSAttributedString(string: textViewPlaceHolder, attributes: attributes)
+            textView.textContainer.lineFragmentPadding = 20
             textView.textColor = .lightGray
         }
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.delegate = self
         textView.backgroundColor = .clear
+        
         
         self.view.addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +108,12 @@ class MemoDetailViewController: UIViewController {
     func set(result: NSManagedObject) {
         memoId = result.value(forKey: "id") as? UUID
         field.text = result.value(forKey: "title") as? String
-        textView.text = result.value(forKey: "memo") as? String
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 8
+        let attributes = [NSAttributedString.Key.paragraphStyle : style]
+        let memoText = result.value(forKey: "memo") as? String ?? ""
+        textView.attributedText = NSAttributedString(string: memoText , attributes: attributes)
+        textView.textContainer.lineFragmentPadding = 20
         imageView.image = UIImage(data: result.value(forKey: "image") as! Data)
     }
     
