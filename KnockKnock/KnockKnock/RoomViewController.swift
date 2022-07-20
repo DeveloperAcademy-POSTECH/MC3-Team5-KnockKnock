@@ -12,6 +12,17 @@ class RoomViewController: UIViewController {
     // DoorViewController실행 되었는지 확인
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
+    let keychainManager = KeychainManager()
+    
+    
+    // 셋팅뷰 버튼 ImageView
+    let settingImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "door")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
     
     // 배경화면
     let roomImageView: UIImageView = {
@@ -64,17 +75,28 @@ class RoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+
+        
         view.addSubview(roomImageView)
         view.addSubview(frameImageView)
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
+        view.addSubview(settingImageView)
         
         setupLayout()
         
+
+
+        
+        //셋팅 사진 터치 가능하도록 설정
+        settingImageView.isUserInteractionEnabled = true
+        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
+
         //배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
+
         
         //메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
@@ -99,6 +121,7 @@ class RoomViewController: UIViewController {
     
     // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
+        
         let doorViewController = DoorViewController()
         doorViewController.modalPresentationStyle = .overFullScreen
         
@@ -108,13 +131,24 @@ class RoomViewController: UIViewController {
         }
     }
     
+
+    
+    
     func setupLayout(){
         NSLayoutConstraint.activate([
             
+
+            //settingImageView
+            settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            settingImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            settingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 200),
+            settingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300),
+
             
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
             
+
             
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
@@ -144,6 +178,13 @@ class RoomViewController: UIViewController {
         ])
     }
     
+
+    //셋팅ㅂ 버튼 터치 함수
+    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
+        let settingVC = SettingViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
+    }
+
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
             let toastLabel = UILabel()
@@ -172,6 +213,7 @@ class RoomViewController: UIViewController {
             letterCloseCheck = false
         }
         
+
     }
     
     //메모 버튼 터치 함수
