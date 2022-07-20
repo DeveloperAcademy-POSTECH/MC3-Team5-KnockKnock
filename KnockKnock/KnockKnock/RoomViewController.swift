@@ -22,7 +22,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    // 메모 버튼 ImageView
+    //메모 버튼 ImageView
     let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
@@ -31,7 +31,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    
+    //앨범 버튼 ImageView
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "album")!
@@ -39,7 +39,6 @@ class RoomViewController: UIViewController {
         imageView.image = myImage
         return imageView
     }()
-    
     
     
     //액자 버튼 ImageView
@@ -51,7 +50,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //액자 사진 이미지 버튼 ImageView
+    //액자 사진 버튼 ImageView
     let frameHasImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleToFill
@@ -71,6 +70,8 @@ class RoomViewController: UIViewController {
         imageView.image = myImage
         return imageView
     }()
+    
+    //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         CoreDataManager.shared.readFrameCoreData()
@@ -81,12 +82,11 @@ class RoomViewController: UIViewController {
                 print("이미지 데이터가 있음")
                 frameHasImageView.image = UIImage(data: frameImageData)
             }
-            print("이미지 배열의 라스트는 있는데 이미지 데이터가 없음")
         }
         print("이미지가 없음")
-        
     }
-    //MARK: - 뷰디드로드
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -147,11 +147,9 @@ class RoomViewController: UIViewController {
     
     func setupLayout(){
         NSLayoutConstraint.activate([
-            
-            
+            //배경화면 layout
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
-            
             
             //memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
@@ -177,16 +175,15 @@ class RoomViewController: UIViewController {
             frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            
             //letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
-            //            letterImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor)
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
         ])
     }
     
+    //토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
             let toastLabel = UILabel()
@@ -214,7 +211,6 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
-        
     }
     
     //메모 버튼 터치 함수

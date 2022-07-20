@@ -21,18 +21,18 @@ class MainFrameViewController: UIViewController {
         return frameView
     }()
     
+    //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
         CoreDataManager.shared.readFrameCoreData()
         
-        print("viewWillAppear 1")
         guard let image = CoreDataManager.shared.frameImage?.last else {return}
         frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
         frameImageView.setNeedsDisplay()
         print("viewWillAppear 2")
-        
     }
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -48,7 +48,6 @@ class MainFrameViewController: UIViewController {
             self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        print("메인프레임 컨트롤러 뷰디드로드 1")
         CoreDataManager.shared.readFrameCoreData()
         guard let image = CoreDataManager.shared.frameImage?.last else {return}
         guard let frameImageData = image.value(forKey: "image") as? Data else {
@@ -82,17 +81,22 @@ class MainFrameViewController: UIViewController {
         present(alert, animated:true)
     }
     
+    //액자 사진 변경하기 버튼 함수
     func frameTapped() {
         let frame = FrameViewController()
         frame.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         self.present(frame, animated:true)
     }
     
+    //기본 사진으로 변경하기 함수
     func defaultTapped() {
         DispatchQueue.main.async {
+            //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-            } else { print("기본 이미지 조차 없을때")}
+            } else {}
+            
+            //CoreData에 기본 이미지 추가
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
@@ -102,6 +106,4 @@ class MainFrameViewController: UIViewController {
         frameImageView.image?.didChangeValue(forKey: "image")
         frameImageView.setNeedsDisplay()
     }
-    
-    
 }

@@ -11,6 +11,7 @@ class FrameViewController: UIViewController {
     
     var itemProviders: [NSItemProvider] = []
     
+    //취소 버튼
     private let cancelButton : UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +51,7 @@ class FrameViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -108,17 +110,18 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
       }
 }
 
-//CollectionView의 이미지 클릭
+//CollectionView의 이미지 클릭 시 작동
 extension FrameViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print("사진 클릭함1")
-            
+        //CoreData에 이미지 저장
         CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
         print("사진 클릭함2")
+        
+        //CoreData에 이미지가 더 존재하는 경우 처음 이미지 삭제
         if CoreDataManager.shared.frameImage!.count > 0 {
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-        } else { print("처음 프레임이미지에 아무것도 없으면 나타남")}
+        } else { }
+        
         dismiss(animated:true)
     }
 }
