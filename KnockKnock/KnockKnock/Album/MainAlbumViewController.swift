@@ -36,6 +36,11 @@ class MainAlbumViewController: UIViewController {
         return view
     }()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        CoreDataManager.shared.readAlbumCoreData()
+        collectionView.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -53,6 +58,9 @@ class MainAlbumViewController: UIViewController {
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        CoreDataManager.shared.readAlbumCoreData()
+        collectionView.reloadData()
     }
     
     //ImagePicker 함수
@@ -80,12 +88,16 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                 item.loadObject(ofClass: UIImage.self) { image, error in
                     DispatchQueue.main.async {
                         guard let image = image as? UIImage else { return }
-                        self.imageArray.append(image)
+                        CoreDataManager.shared.saveAlbumCoreData(image: image.pngData()!)
+                        CoreDataManager.shared.readAlbumCoreData()
                         self.collectionView.reloadData()
                     }
                 }
             }
         }
+        
+        
+       
     }
 }
 
@@ -105,13 +117,16 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     
     //CollectionView에 표시되는 Item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.imageArray.count
+//        self.imageArray.count
+        return CoreDataManager.shared.albumImageArray!.count
     }
     
     //CollectionView의 각 cell에 이미지 표시
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
-        cell.prepare(image: self.imageArray[indexPath.item])
+        
+        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
+                     
         return cell
       }
 }
@@ -120,7 +135,8 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
 extension MainAlbumViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cellDetailVC = CellDetailViewController()
-        cellDetailVC.getimage = self.imageArray[indexPath.item]
+        cellDetailVC.getindex = indexPath.item
+        cellDetailVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
         self.navigationController?.pushViewController(cellDetailVC,animated: true)
     }
 }

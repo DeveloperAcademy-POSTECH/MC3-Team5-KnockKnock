@@ -7,6 +7,8 @@
 
 import UIKit
 
+var letterCloseCheck: Bool = false
+
 class MainLetterViewController: UIViewController {
 
     let paperPlainImageView: UIImageView = {
@@ -20,21 +22,27 @@ class MainLetterViewController: UIViewController {
     
     let textViewPlaceHolder = "편지를 입력해주세요."
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .rotateBack, object: nil)
+    }
+    
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground
+        
+        
+        createTextView()
         
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5).isActive = true
-        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        paperPlainImageView.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+//        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
         
         // MARK: 메모사진이 터치 가능하도록 함
         paperPlainImageView.isUserInteractionEnabled = true
         paperPlainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touchUpDismissModalButton)))
-        
-        createTextView()
     }
     
     
@@ -44,6 +52,8 @@ class MainLetterViewController: UIViewController {
             
         } else {
             self.dismiss(animated: true, completion: nil)
+            letterCloseCheck = true
+            RoomViewController().reloadInputViews()
         }
         
     }
@@ -54,12 +64,17 @@ class MainLetterViewController: UIViewController {
         textView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
         textView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
-        textView.text = textViewPlaceHolder
+        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        // 텍스트뷰 커스텀(행간)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 8
+        let attributes = [NSAttributedString.Key.paragraphStyle : style]
+        textView.attributedText = NSAttributedString(string: textViewPlaceHolder, attributes: attributes)
         textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.delegate = self
-
+        // 마진
+        textView.textContainer.lineFragmentPadding = 20
     }
     
 }
