@@ -13,15 +13,27 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
-   
-    //세팅 버튼 ImageView
+    
+
+    // 셋팅 버튼 이미지
     let settingImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "door")!
+        let myImage: UIImage = UIImage(systemName: "gearshape.fill")!
+        imageView.tintColor = UIColor(named: "iconColor")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
     }()
+    
+    // 셋팅 버튼
+    let settingButton: UIButton = {
+        let settingButton = UIButton(frame: .zero)
+        settingButton.translatesAutoresizingMaskIntoConstraints = false
+        settingButton.addTarget(self, action: #selector(settingViewTapped(_:)), for: .touchUpInside)
+        return settingButton
+    }()
+   
+
     
     //배경화면
     let roomImageView: UIImageView = {
@@ -99,14 +111,12 @@ class RoomViewController: UIViewController {
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
-        view.addSubview(settingImageView)
+        view.addSubview(settingButton)
+        settingButton.addSubview(settingImageView)
         
         setupLayout()
         imageInput()
         
-        //세팅 사진 터치 가능하도록 설정
-        settingImageView.isUserInteractionEnabled = true
-        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
 
         //배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
@@ -131,7 +141,7 @@ class RoomViewController: UIViewController {
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
         
         //모달 닫히는 것 감지하여 토스트 수행
-        NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)  
+        NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
     }
     
     //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
@@ -147,11 +157,20 @@ class RoomViewController: UIViewController {
     func setupLayout(){
         NSLayoutConstraint.activate([
 
-            //settingImageView
-            settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 2),
-            settingImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
-            settingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 200),
-            settingImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300),
+            // settingButtonImageView
+            settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 15),
+            settingImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 15),
+            settingImageView.centerXAnchor.constraint(equalTo: settingButton.centerXAnchor),
+            settingImageView.centerYAnchor.constraint(equalTo: settingButton.centerYAnchor),
+            
+            // settingButtonImageView
+            settingButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 5),
+            settingButton.heightAnchor.constraint(equalToConstant: view.bounds.width / 5),
+            settingButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -view.bounds.width / 10),
+            settingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            
+            
 
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
@@ -199,10 +218,14 @@ class RoomViewController: UIViewController {
     }
 
     //세팅 버튼 터치 함수
-    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
+    @objc func settingViewTapped(_ sender: UIButton) {
         let settingVC = SettingViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
+//    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
+//        let settingVC = SettingViewController()
+//        self.navigationController?.pushViewController(settingVC, animated: true)
+//    }
 
     //토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
