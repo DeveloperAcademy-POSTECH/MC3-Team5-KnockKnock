@@ -16,8 +16,7 @@ class PasscodeViewController: UIViewController {
     let settingViewController = SettingViewController()
     let keychainManager = KeychainManager()
     var isRegister: Bool? = false
-    
-    var userPasscodes = [5, 9, 5, 9]
+    var tasks = [Task]()
     
     
     let passcodeImage1: UIImageView = {
@@ -65,58 +64,41 @@ class PasscodeViewController: UIViewController {
     let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "암호를 입력해 주세요."
-        label.textColor = .systemFill
+        label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 모달 닫힐때
-        if let firstVC = presentingViewController as? SettingViewController {
-                    DispatchQueue.main.async {
-                        firstVC.tableView.reloadData()
-                    }
-                }
-
         view.backgroundColor = UIColor(named: "doorBackground")
         loadTasks()
         passcodeField()
         setupNumberPad()
     }
     
-
-
     
+    
+    // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
         isRegister = keychainManager.getItem(key: "passcode") == nil ? true : false
+        
+        let userDefaults = UserDefaults.standard
+        guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
+        self.tasks = data.compactMap {
+            guard let title = $0["title"] as? String else {return nil}
+            guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
+            guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
+            return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+        }
     }
     
     
     private func passcodeField() {
         
         let passcodeButtonHeight = (view.frame.size.width / 12) * 3.5
-        
-//        let titleLabel: UILabel = {
-//            let label = UILabel()
-//            //            label.font = UIFont(name: label.font.fontName, size: 35)
-//            label.font = UIFont.boldSystemFont(ofSize: 25)
-//            label.text = "암호 입력"
-//            label.textColor = .label
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//            return label
-//        }()
-//
-//        let subTitleLabel: UILabel = {
-//            let label = UILabel()
-//            label.text = "암호를 입력해 주세요."
-//            label.textColor = .systemFill
-//            label.font = UIFont.boldSystemFont(ofSize: 15)
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//            return label
-//        }()
         
         let vStackView: UIStackView = {
             let stackView = UIStackView()
@@ -168,7 +150,7 @@ class PasscodeViewController: UIViewController {
                 let button = UIButton(frame: CGRect(x: buttonWidthSize * CGFloat(m), y: view.frame.size.height - buttonHeightSize * (4.5 - CGFloat(n)), width: buttonWidthSize, height: buttonHeightSize))
                 button.setTitleColor(.label, for: .normal)
                 
-//                button.backgroundColor = .white
+                //                button.backgroundColor = .white
                 button.setTitle(String((m + 1) + (n * 3)), for: .normal)
                 button.tag = (m + 1) + (n * 3)
                 button.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
@@ -178,7 +160,7 @@ class PasscodeViewController: UIViewController {
         
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.label, for: .normal)
-//        faceButton.backgroundColor = .white
+        //        faceButton.backgroundColor = .white
         if isRegister! {
             faceButton.setTitle("취소", for: .normal)
         } else {
@@ -191,7 +173,7 @@ class PasscodeViewController: UIViewController {
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         zeroButton.setTitleColor(.label, for: .normal)
-//        zeroButton.backgroundColor = .white
+        //        zeroButton.backgroundColor = .white
         zeroButton.setTitle("0", for: .normal)
         zeroButton.tag = 0
         zeroButton.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
@@ -199,7 +181,7 @@ class PasscodeViewController: UIViewController {
         
         let deleteButton = UIButton(frame: CGRect(x: buttonWidthSize * 2, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         deleteButton.setTitleColor(.label, for: .normal)
-//        deleteButton.backgroundColor = .white
+        //        deleteButton.backgroundColor = .white
         deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
         deleteButton.tintColor = .label
         deleteButton.tag = 12
@@ -219,8 +201,8 @@ class PasscodeViewController: UIViewController {
             
             settingViewController.tasks[0].isSwitchOn = false
             
-//            settingViewController.tasks.removeLast()
-//            settingViewController.tasks.removeLast()
+            //            settingViewController.tasks.removeLast()
+            //            settingViewController.tasks.removeLast()
             
             print("hi")
             NotificationCenter.default.post(name: .fatchTable, object: nil)
@@ -240,9 +222,19 @@ class PasscodeViewController: UIViewController {
         print(passcodes)
         
         if passcodes.count == 4 {
-
+            
             if isRegister! {
-                if newPasscodes == passcodes {
+                if newPasscodes.isEmpty {
+                    newPasscodes = passcodes
+                    passcodes.removeAll()
+                    subTitleLabel.textColor = .gray
+                    subTitleLabel.text = "확인을 위해 다시 입력해주세요."
+                } else if newPasscodes != passcodes {
+                    passcodes.removeAll()
+                    newPasscodes.removeAll()
+                    subTitleLabel.textColor = .red
+                    subTitleLabel.text = "비밀번호 등록을 다시 진행해주세요."
+                } else {
                     var pwd = ""
                     for n in newPasscodes {
                         pwd += String(n)
@@ -250,26 +242,20 @@ class PasscodeViewController: UIViewController {
                     if keychainManager.addItem(key: "passcode", pwd: pwd) {
                         self.dismiss(animated: true)
                     }
-                    print("비밀번호 등록")
-                } else {
-                    newPasscodes = passcodes
-                    passcodes.removeAll()
-                    subTitleLabel.text = "확인을 위해 다시 입력해주세요."
-                    print("다시 입력")
                 }
-                
-                
             } else {
-//                if passcodes == userPasscodes {
-//                    print("비밀번호 정답")
-//                    self.dismiss(animated: false)
-//                } else {
-//                    print("비밀번호 오답")
-//                    passcodes.removeAll()
-//                }
+                if let keychainPasscides = keychainManager.getItem(key: "passcode") as? String {
+                    let registedPasscodes = keychainPasscides.map { Int(String($0))! }
+                    if passcodes == registedPasscodes {
+                        self.dismiss(animated: true)
+                    } else {
+                        passcodes.removeAll()
+                        subTitleLabel.textColor = .red
+                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
+                    }
+                }
+
             }
-            
-            
         }
         passcodeImage1.image = UIImage(systemName: passcodes.count > 0 ? "circle.fill" : "minus")
         passcodeImage2.image = UIImage(systemName: passcodes.count > 1 ? "circle.fill" : "minus")
@@ -277,7 +263,7 @@ class PasscodeViewController: UIViewController {
         passcodeImage4.image = UIImage(systemName: passcodes.count > 3 ? "circle.fill" : "minus")
         
     }
-
+    
 }
 
 extension Notification.Name {

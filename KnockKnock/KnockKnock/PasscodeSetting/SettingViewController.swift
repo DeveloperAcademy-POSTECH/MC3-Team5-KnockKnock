@@ -123,6 +123,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func fatchTable() {
         tasks[0].isSwitchOn = false
         if self.tasks.count == 3 {
+//            self.tasks.removeLast(2)
             self.tasks.removeLast()
             self.tasks.removeLast()
             tableView.reloadData()
@@ -140,24 +141,22 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 registerPasscode.modalPresentationStyle = .fullScreen
                 present(registerPasscode, animated: true)
                 
-                let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
-                let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
-                tasks.append(task1)
-                tasks.append(task2)
-                tableView.reloadData()
-                
-                
+                if tasks.count == 1 {
+                    let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
+                    let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
+                    tasks.append(task1)
+                    tasks.append(task2)
+                    tableView.reloadData()
+                }
             } else {
                 // 키체인 삭제
                 if keyChainManager.deleteItem(key: "passcode") {
-                    if self.tasks.count == 3 {
-                        self.tasks.removeLast()
-                        self.tasks.removeLast()
+                    if tasks.count == 3 {
+                        tasks.removeLast()
+                        tasks.removeLast()
                         tableView.reloadData()
                     }
                 }
-                
-                
             }
         }
         
