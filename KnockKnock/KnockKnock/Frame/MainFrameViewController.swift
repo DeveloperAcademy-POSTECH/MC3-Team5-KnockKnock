@@ -22,13 +22,7 @@ class MainFrameViewController: UIViewController {
     }()
     
     override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if ((CoreDataManager.shared.frameImage?.isEmpty) == nil) {
-//            print("hi")
-//
-//        } else {
-//        CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-//        }
+        
         CoreDataManager.shared.readFrameCoreData()
         
         print("viewWillAppear 1")
@@ -42,7 +36,6 @@ class MainFrameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        //        frameImageView.image = (getimage == nil ? UIImage(systemName:"photo") : self.getimage)
         view.addSubview(frameImageView)
         
         //NavigationBar에 설정 버튼 생성
@@ -55,7 +48,7 @@ class MainFrameViewController: UIViewController {
             self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        print("viewDidLoad 1")
+        print("메인프레임 컨트롤러 뷰디드로드 1")
         CoreDataManager.shared.readFrameCoreData()
         guard let image = CoreDataManager.shared.frameImage?.last else {return}
         guard let frameImageData = image.value(forKey: "image") as? Data else {
@@ -66,7 +59,7 @@ class MainFrameViewController: UIViewController {
         frameImageView.image = UIImage(data: frameImageData)
         frameImageView.setNeedsDisplay()
         
-        print("viewDidLoad 2")
+        print("메인프레임 컨트롤러 뷰디드로드 2")
         print("\(CoreDataManager.shared.frameImage?.count)")
     }
     
@@ -97,11 +90,12 @@ class MainFrameViewController: UIViewController {
     
     func defaultTapped() {
         DispatchQueue.main.async {
-            
+            if CoreDataManager.shared.frameImage!.count > 0 {
+                CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
+            } else { print("기본 이미지 조차 없을때")}
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
-            CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
             print("기본이미지로 변경됨")
         }
         

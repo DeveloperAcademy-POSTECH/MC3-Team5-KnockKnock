@@ -51,6 +51,18 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    //액자 사진 이미지 버튼 ImageView
+    let frameHasImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        CoreDataManager.shared.readFrameCoreData()
+        if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {
+            imageView.image = UIImage(data: frameImageData)
+        }
+        return imageView
+    }()
+    
     //편지 버튼 ImageView
     var letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -59,7 +71,21 @@ class RoomViewController: UIViewController {
         imageView.image = myImage
         return imageView
     }()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        CoreDataManager.shared.readFrameCoreData()
+        print("룸뷰 뷰윌어피어 실행됨")
+        if let image = CoreDataManager.shared.frameImage?.last {
+            print("룸뷰이미지가 있음")
+            if let frameImageData = image.value(forKey: "image") as? Data {
+                print("이미지 데이터가 있음")
+                frameHasImageView.image = UIImage(data: frameImageData)
+            }
+            print("이미지 배열의 라스트는 있는데 이미지 데이터가 없음")
+        }
+        print("이미지가 없음")
+        
+    }
     //MARK: - 뷰디드로드
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +95,16 @@ class RoomViewController: UIViewController {
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
+        view.addSubview(frameHasImageView)
         
         setupLayout()
+        
+        CoreDataManager.shared.readFrameCoreData()
+        if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {
+            frameHasImageView.image = UIImage(data: frameImageData)
+            print("뷰디드로드에서 이미지가 있을 때")
+        }
+        print("뷰디드로드 실행됨")
         
         //배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
@@ -87,6 +121,9 @@ class RoomViewController: UIViewController {
         //액자 사진 터치 가능하도록 설정
         frameImageView.isUserInteractionEnabled = true
         frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
+        frameHasImageView.isUserInteractionEnabled = true
+        frameHasImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
+        
         
         //편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
@@ -133,6 +170,12 @@ class RoomViewController: UIViewController {
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            //frameHasImageView layout
+            frameHasImageView.widthAnchor.constraint(equalToConstant: 53),
+            frameHasImageView.heightAnchor.constraint(equalToConstant: 85),
+            frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
+            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             
             //letterImageView layout

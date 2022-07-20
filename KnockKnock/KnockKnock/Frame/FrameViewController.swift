@@ -95,7 +95,6 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //CollectionView에 표시되는 Item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        self.imageArray.count
         return CoreDataManager.shared.albumImageArray!.count
     }
     
@@ -113,22 +112,13 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 extension FrameViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //        mainframeVC.getindex = indexPath.item
-        //        mainframeVC.getimage = UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data)
         print("사진 클릭함1")
-//        guard let image = CoreDataManager.shared.frameImage?.first else {return}
-//        if image != nil {
-//            CoreDataManager.shared.deleteFrameCoreData(object: image)
-//        }
             
         CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
         print("사진 클릭함2")
-        if CoreDataManager.shared.frameImage!.count > 0{
+        if CoreDataManager.shared.frameImage!.count > 0 {
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-        } else {
-            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
-            
-        }
+        } else { print("처음 프레임이미지에 아무것도 없으면 나타남")}
         dismiss(animated:true)
     }
 }
