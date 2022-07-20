@@ -76,12 +76,13 @@ class RoomViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
-        view.addSubview(settingImageView)
+        
         view.addSubview(roomImageView)
         view.addSubview(frameImageView)
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
+        view.addSubview(settingImageView)
         
         setupLayout()
         
@@ -182,6 +183,7 @@ class RoomViewController: UIViewController {
     @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
         let settingVC = SettingViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
+    }
 
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
