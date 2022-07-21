@@ -214,7 +214,7 @@ class PasscodeViewController: UIViewController {
             NotificationCenter.default.post(name: .fatchTable, object: nil)
             self.dismiss(animated: true)
         } else {
-            // biometry 다시 띄우기
+            biometry()
         }
     }
     
