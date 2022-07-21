@@ -213,6 +213,8 @@ class RoomViewController: UIViewController {
         if let image = CoreDataManager.shared.frameImage?.last {
             if let frameImageData = image.value(forKey: "image") as? Data {
                 frameHasImageView.image = UIImage(data: frameImageData)
+                //테스트
+                print("해겨ㅑㄹ")
             }
         }
     }
