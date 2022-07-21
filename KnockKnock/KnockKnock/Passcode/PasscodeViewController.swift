@@ -8,7 +8,6 @@
 import LocalAuthentication
 import UIKit
 
-
 class PasscodeViewController: UIViewController {
     
     var passcodes = [Int]()
@@ -18,73 +17,47 @@ class PasscodeViewController: UIViewController {
     var isRegister: Bool? = false
     var tasks = [Task]()
     
+    // 비밀번호 상태 이미지
+    lazy var passcodeImage1: UIImageView = { setupPasscodeImage() }()
+    lazy var passcodeImage2: UIImageView = { setupPasscodeImage() }()
+    lazy var passcodeImage3: UIImageView = { setupPasscodeImage() }()
+    lazy var passcodeImage4: UIImageView = { setupPasscodeImage() }()
     
-    let passcodeImage1: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    // 비밀번호 상태 라벨
+    lazy var titleLabel: UILabel = {
+        setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
     }()
-    
-    let passcodeImage2: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let passcodeImage3: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let passcodeImage4: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "minus")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        //            label.font = UIFont(name: label.font.fontName, size: 35)
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.text = "암호 입력"
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "암호를 입력해 주세요."
-        label.textColor = .gray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    lazy var subTitleLabel: UILabel = {
+        setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor(named: "doorBackground")
         loadTasks()
         passcodeField()
         setupNumberPad()
-        if !isRegister! && tasks[1].isSwitchOn {
-            biometry()
-        }
-        
-        
+        biometry()
     }
     
+    // 비밀번호 상태 이미지
+    private func setupPasscodeImage() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "minus")
+        imageView.tintColor = .black
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
     
+    // 비밀번호 상태 라벨
+    private func setupPasscodeLabel(text: String, color: UIColor, size: CGFloat) -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: size)
+        label.text = text
+        label.textColor = color
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
     
     // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
@@ -100,7 +73,6 @@ class PasscodeViewController: UIViewController {
             return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
         }
     }
-    
     
     private func passcodeField() {
         
@@ -119,7 +91,6 @@ class PasscodeViewController: UIViewController {
         
         let hStackView: UIStackView = {
             let stackView = UIStackView()
-            
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .horizontal
             stackView.alignment = .center
@@ -127,13 +98,10 @@ class PasscodeViewController: UIViewController {
             return stackView
         }()
         
-        
         view.addSubview(vStackView)
-        
         vStackView.addArrangedSubview(titleLabel)
         vStackView.addArrangedSubview(subTitleLabel)
         vStackView.addArrangedSubview(hStackView)
-        
         hStackView.addArrangedSubview(passcodeImage1)
         hStackView.addArrangedSubview(passcodeImage2)
         hStackView.addArrangedSubview(passcodeImage3)
@@ -149,7 +117,6 @@ class PasscodeViewController: UIViewController {
         
         let buttonWidthSize = view.frame.size.width / 3
         let buttonHeightSize = buttonWidthSize / 2
-        
         
         for n in 0..<3 {
             for m in 0..<3 {
@@ -204,13 +171,7 @@ class PasscodeViewController: UIViewController {
     
     @objc private func facePressed(_ sender: UIButton) {
         if isRegister! {
-            
             settingViewController.tasks[0].isSwitchOn = false
-            
-            //            settingViewController.tasks.removeLast()
-            //            settingViewController.tasks.removeLast()
-            
-            print("hi")
             NotificationCenter.default.post(name: .fatchTable, object: nil)
             self.dismiss(animated: true)
         } else {
@@ -224,14 +185,12 @@ class PasscodeViewController: UIViewController {
             print(passcodes)
             update()
         }
-        
     }
     
     private func update() {
         print(passcodes)
         
         if passcodes.count == 4 {
-            
             if isRegister! {
                 if newPasscodes.isEmpty {
                     newPasscodes = passcodes
@@ -270,49 +229,47 @@ class PasscodeViewController: UIViewController {
         passcodeImage2.image = UIImage(systemName: passcodes.count > 1 ? "circle.fill" : "minus")
         passcodeImage3.image = UIImage(systemName: passcodes.count > 2 ? "circle.fill" : "minus")
         passcodeImage4.image = UIImage(systemName: passcodes.count > 3 ? "circle.fill" : "minus")
-        
     }
     
     private func biometry() {
-        
-        // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
-        let authContext = LAContext()
-        
-        var error: NSError?
-        
-        // 각 상황별 안내 문구
-        var description: String!
-        
-        // Touch ID와 Face ID를 지원하는 기기인지 확인
-        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            
-            // 스위치 문을 통해 인증 타입을 확인하여 보여줄 안내 문구 설정
-            switch authContext.biometryType {
-            case .faceID:
-                description = "소중한 정보를 보호하기 위해서 Face ID로 인증해주세요."
-            case .touchID:
-                description = "소중한 정보를 보호하기 위해서 Touch ID를 인증해주세요."
-            case .none:
-                description = "소중한 정보를 보호하기 위해서 로그인 해주세요"
-                break
-            default:
-                break
-            }
-            
-            // Touch ID와 Face ID 인증 시작
-            // authContext를 이용하여 인증을 요청하면 인증 성공 여부와 인증 실패시 결과가 에러를 통해 값으로 내려온다.
-            // 위의 두 결과를 통해 여러가지 인증 처리를 하면 된다.
-            authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
-                DispatchQueue.main.async {
-                    guard success, error == nil else {
-                        return
-                    }
-                    self.dismiss(animated: false)
+        if !isRegister! {
+            // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
+            let authContext = LAContext()
+            var error: NSError?
+            // 각 상황별 안내 문구
+            var description: String!
+            // Touch ID와 Face ID를 지원하는 기기인지 확인
+            if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                
+                // 스위치 문을 통해 인증 타입을 확인하여 보여줄 안내 문구 설정
+                switch authContext.biometryType {
+                case .faceID:
+                    description = "소중한 정보를 보호하기 위해서 Face ID로 인증해주세요."
+                case .touchID:
+                    description = "소중한 정보를 보호하기 위해서 Touch ID를 인증해주세요."
+                case .none:
+                    description = "소중한 정보를 보호하기 위해서 로그인 해주세요"
+                    break
+                default:
+                    break
                 }
-            }
-        } else {
+                
+                // Touch ID와 Face ID 인증 시작
+                // authContext를 이용하여 인증을 요청하면 인증 성공 여부와 인증 실패시 결과가 에러를 통해 값으로 내려온다.
+                // 위의 두 결과를 통해 여러가지 인증 처리를 하면 된다.
+                authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
+                    DispatchQueue.main.async {
+                        guard success, error == nil else {
+                            return
+                        }
+                        self.dismiss(animated: false)
+                    }
+                }
+            } else {
 
+            }
         }
+        
     }
     
 }
