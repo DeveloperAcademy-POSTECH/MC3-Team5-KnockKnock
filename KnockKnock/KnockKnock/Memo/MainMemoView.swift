@@ -187,7 +187,7 @@ class MainTableViewCell: UITableViewCell {
         }
         
         
-        title.font = UIFont.systemFont(ofSize: 19)
+        title.font = UIFont(name: "MapoFlowerIsland", size: 19)
         title.translatesAutoresizingMaskIntoConstraints = false
         title.topAnchor.constraint(equalTo: self.topAnchor, constant: 21).isActive = true
         title.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
@@ -195,21 +195,21 @@ class MainTableViewCell: UITableViewCell {
         
         if memo.text == "메모를 입력해주세요."{
             memo.textColor = UIColor(named: "memoColor")
-            memo.font = UIFont.systemFont(ofSize: 16)
+            memo.font = UIFont(name: "MapoFlowerIsland", size: 16)
             memo.text = " "
             memo.translatesAutoresizingMaskIntoConstraints = false
             memo.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 7).isActive = true
             memo.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         } else {
             memo.textColor = UIColor(named: "memoColor")
-            memo.font = UIFont.systemFont(ofSize: 16)
+            memo.font = UIFont(name: "MapoFlowerIsland", size: 16)
             memo.translatesAutoresizingMaskIntoConstraints = false
             memo.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 7).isActive = true
             memo.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         }
         
         date.textColor = UIColor(named: "dateColor")
-        date.font = UIFont.systemFont(ofSize: 14)
+        date.font = UIFont(name: "MapoFlowerIsland", size: 14)
     
         date.translatesAutoresizingMaskIntoConstraints = false
         //        date.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 8).isActive = true

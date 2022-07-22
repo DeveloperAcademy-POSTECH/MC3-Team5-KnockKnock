@@ -40,7 +40,7 @@ class MemoDetailViewController: UIViewController {
         
         field.placeholder = titleFieldPlaceHolder
         field.textAlignment = .center
-        field.font = UIFont.systemFont(ofSize: 30)
+        field.font = UIFont(name: "MapoFlowerIsland", size: 30)
         
         self.view.addSubview(field)
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +92,7 @@ class MemoDetailViewController: UIViewController {
             textView.textContainer.lineFragmentPadding = 20
             textView.textColor = .lightGray
         }
-        textView.font = UIFont.systemFont(ofSize: 18)
+        textView.font = UIFont(name: "MapoFlowerIsland", size: 18)
         textView.delegate = self
         textView.backgroundColor = .clear
         

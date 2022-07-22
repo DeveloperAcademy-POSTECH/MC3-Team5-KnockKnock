@@ -17,6 +17,7 @@
 		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
 		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
 		32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */; };
+		32F3E2C0288A8E5200F66F05 /* MapoFlowerIsland.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32F3E2BF288A8E5200F66F05 /* MapoFlowerIsland.ttf */; };
 		6F182F062880BA100083131C /* MainAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F182F052880BA100083131C /* MainAlbumViewController.swift */; };
 		6F2F7453288139A400BC2E7B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */; };
 		6F7FCCFE288541A70044F591 /* MainFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FCCFD288541A70044F591 /* MainFrameViewController.swift */; };
@@ -43,6 +44,7 @@
 		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
 		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
+		32F3E2BF288A8E5200F66F05 /* MapoFlowerIsland.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MapoFlowerIsland.ttf; sourceTree = "<group>"; };
 		6F182F052880BA100083131C /* MainAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAlbumViewController.swift; sourceTree = "<group>"; };
 		6F2F7452288139A400BC2E7B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F7FCCFD288541A70044F591 /* MainFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		32211B69287EFD6B00A9F3B1 = {
 			isa = PBXGroup;
 			children = (
+				32F3E2BE288A8E2B00F66F05 /* Font */,
 				32CD93B1287F0ECD00D8E155 /* CoreData */,
 				32211B74287EFD6B00A9F3B1 /* KnockKnock */,
 				32211B73287EFD6B00A9F3B1 /* Products */,
@@ -128,6 +131,14 @@
 				32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		32F3E2BE288A8E2B00F66F05 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				32F3E2BF288A8E5200F66F05 /* MapoFlowerIsland.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		6F4452402880B97C00E7AEE0 /* Album */ = {
@@ -227,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */,
+				32F3E2C0288A8E5200F66F05 /* MapoFlowerIsland.ttf in Resources */,
 				32211B82287EFD6B00A9F3B1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
