@@ -18,10 +18,10 @@ class PasscodeViewController: UIViewController {
     var tasks = [Task]()
     
     // 비밀번호 상태 이미지
-    lazy var passcodeImage1: UIImageView = { setupPasscodeImage() }()
-    lazy var passcodeImage2: UIImageView = { setupPasscodeImage() }()
-    lazy var passcodeImage3: UIImageView = { setupPasscodeImage() }()
-    lazy var passcodeImage4: UIImageView = { setupPasscodeImage() }()
+    lazy var passcodeImage1: UIImageView = setupPasscodeImage()
+    lazy var passcodeImage2: UIImageView = setupPasscodeImage()
+    lazy var passcodeImage3: UIImageView = setupPasscodeImage()
+    lazy var passcodeImage4: UIImageView = setupPasscodeImage()
     
     // 비밀번호 상태 라벨
     lazy var titleLabel: UILabel = {
