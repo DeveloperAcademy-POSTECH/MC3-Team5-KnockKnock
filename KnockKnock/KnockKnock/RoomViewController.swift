@@ -14,26 +14,6 @@ class RoomViewController: UIViewController {
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
     
-
-    // 셋팅 버튼 이미지
-    let settingImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(systemName: "gearshape.fill")!
-        imageView.tintColor = UIColor(named: "iconColor")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 셋팅 버튼
-    let settingButton: UIButton = {
-        let settingButton = UIButton(frame: .zero)
-        settingButton.translatesAutoresizingMaskIntoConstraints = false
-        settingButton.addTarget(self, action: #selector(settingViewTapped(_:)), for: .touchUpInside)
-        return settingButton
-    }()
-   
-
     
     //배경화면
     let roomImageView: UIImageView = {
@@ -101,19 +81,20 @@ class RoomViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-//        keychainManager.deleteItem(key: "passcode")
+
         view.backgroundColor = .systemBackground
 
-        
         view.addSubview(roomImageView)
         view.addSubview(frameImageView)
         view.addSubview(memoImageView)
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
-        view.addSubview(settingButton)
-        settingButton.addSubview(settingImageView)
         
+
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingViewTapped))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "iconColor")
         setupLayout()
         imageInput()
         
@@ -156,21 +137,6 @@ class RoomViewController: UIViewController {
     
     func setupLayout(){
         NSLayoutConstraint.activate([
-
-            // settingButtonImageView
-            settingImageView.widthAnchor.constraint(equalToConstant: view.bounds.width / 15),
-            settingImageView.heightAnchor.constraint(equalToConstant: view.bounds.width / 15),
-            settingImageView.centerXAnchor.constraint(equalTo: settingButton.centerXAnchor),
-            settingImageView.centerYAnchor.constraint(equalTo: settingButton.centerYAnchor),
-            
-            // settingButtonImageView
-            settingButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 5),
-            settingButton.heightAnchor.constraint(equalToConstant: view.bounds.width / 5),
-            settingButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -view.bounds.width / 10),
-            settingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            
-            
 
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
@@ -220,14 +186,10 @@ class RoomViewController: UIViewController {
     }
 
     //세팅 버튼 터치 함수
-    @objc func settingViewTapped(_ sender: UIButton) {
+    @objc func settingViewTapped() {
         let settingVC = SettingViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
-//    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
-//        let settingVC = SettingViewController()
-//        self.navigationController?.pushViewController(settingVC, animated: true)
-//    }
 
     //토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
