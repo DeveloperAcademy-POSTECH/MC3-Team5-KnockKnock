@@ -71,7 +71,7 @@ class MainLetterViewController: UIViewController {
         let attributes = [NSAttributedString.Key.paragraphStyle : style]
         textView.attributedText = NSAttributedString(string: textViewPlaceHolder, attributes: attributes)
         textView.textColor = .lightGray
-        textView.font = UIFont.systemFont(ofSize: 18)
+        textView.font = UIFont(name: "MapoFlowerIsland", size: 18)
         textView.delegate = self
         // 마진
         textView.textContainer.lineFragmentPadding = 20
