@@ -9,9 +9,6 @@ import UIKit
 
 class MainFrameViewController: UIViewController {
     
-    var getimage: UIImage?
-    var getindex: Int?
-    
     //액자 사진 ImageView
     var frameImageView: UIImageView = {
         let frameView = UIImageView()
@@ -97,7 +94,7 @@ class MainFrameViewController: UIViewController {
             } else {}
             
             //CoreData에 기본 이미지 추가
-            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
+            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "person.fill")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
             print("기본이미지로 변경됨")

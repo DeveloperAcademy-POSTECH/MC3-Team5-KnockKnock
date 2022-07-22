@@ -14,7 +14,6 @@ class RoomViewController: UIViewController {
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
     
-    
     //배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -91,7 +90,10 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         
-
+        if CoreDataManager.shared.frameImage?.count == 0 {
+            CoreDataManager.shared.saveFrameCoreData(image: UIImage(systemName:"person.fill")!.pngData()!)
+            CoreDataManager.shared.readFrameCoreData()
+        }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingViewTapped))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "iconColor")
