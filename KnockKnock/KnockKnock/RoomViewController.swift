@@ -218,6 +218,8 @@ class RoomViewController: UIViewController {
         if letterCloseCheck {
             showToast()
             letterCloseCheck = false
+            // 테스트
+            print("dkssud")
         }
     }
     
