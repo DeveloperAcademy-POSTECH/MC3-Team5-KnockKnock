@@ -20,13 +20,7 @@ class MainFrameViewController: UIViewController {
     
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        
-        CoreDataManager.shared.readFrameCoreData()
-        
-        guard let image = CoreDataManager.shared.frameImage?.last else {return}
-        frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
-        frameImageView.setNeedsDisplay()
-        print("viewWillAppear 2")
+        readImage()
     }
     
     //MARK: - viewDidLoad
@@ -45,15 +39,8 @@ class MainFrameViewController: UIViewController {
             self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        CoreDataManager.shared.readFrameCoreData()
-        guard let image = CoreDataManager.shared.frameImage?.last else {return}
-        guard let frameImageData = image.value(forKey: "image") as? Data else {
-            print("frameImageData 터짐")
-            return }
         
-        
-        frameImageView.image = UIImage(data: frameImageData)
-        frameImageView.setNeedsDisplay()
+        readImage()
         
         print("메인프레임 컨트롤러 뷰디드로드 2")
         print("\(CoreDataManager.shared.frameImage?.count)")
@@ -101,6 +88,13 @@ class MainFrameViewController: UIViewController {
         }
         
         frameImageView.image?.didChangeValue(forKey: "image")
+        frameImageView.setNeedsDisplay()
+    }
+    
+    func readImage() {
+        CoreDataManager.shared.readFrameCoreData()
+        guard let image = CoreDataManager.shared.frameImage?.last else {return}
+        frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
         frameImageView.setNeedsDisplay()
     }
 }
