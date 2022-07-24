@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import QCropper
 
-class FrameViewController: UIViewController {
+class FrameViewController: UIViewController, UINavigationControllerDelegate {
     
     var itemProviders: [NSItemProvider] = []
     
@@ -111,7 +112,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 }
 
 //CollectionView의 이미지 클릭 시 작동
-extension FrameViewController: UICollectionViewDelegate {
+extension FrameViewController: UICollectionViewDelegate, UIImagePickerControllerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //CoreData에 이미지 저장
         CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
@@ -122,6 +123,38 @@ extension FrameViewController: UICollectionViewDelegate {
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
         } else { }
         
-        dismiss(animated:true)
+        //추가중
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = false
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
+        if let imageData = CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data {
+            if let image = UIImage(data: imageData) {
+                print(image)
+                let cropper = CropperViewController(originalImage: image)
+                cropper.delegate = self
+                picker.dismiss(animated: true) {
+                    self.present(cropper, animated: true, completion: nil)
+                }
+                
+        }
+        
+        }
+        
+//        dismiss(animated:true)
+        
+    }
+}
+extension FrameViewController: CropperViewControllerDelegate {
+    func cropperDidConfirm(_ cropper: CropperViewController, state: CropperState?) {
+        cropper.dismiss(animated: true, completion: nil)
+        
+        if let state = state, let image = cropper.originalImage.cropped(withCropperState: state) {
+            print("hello")
+        } else {
+            print("이상해")
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }
