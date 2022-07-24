@@ -151,7 +151,7 @@ extension FrameViewController: CropperViewControllerDelegate {
         cropper.dismiss(animated: true, completion: nil)
         
         if let state = state, let image = cropper.originalImage.cropped(withCropperState: state) {
-            print("hello")
+            CoreDataManager.shared.saveFrameCoreData(image: image.pngData()!)
         } else {
             print("이상해")
         }
