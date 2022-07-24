@@ -54,7 +54,8 @@ class RoomViewController: UIViewController {
     //액자 사진 버튼 ImageView
     let frameHasImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         CoreDataManager.shared.readFrameCoreData()
         if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {

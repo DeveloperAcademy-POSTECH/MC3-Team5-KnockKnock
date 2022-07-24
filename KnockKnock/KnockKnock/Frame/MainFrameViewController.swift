@@ -44,7 +44,7 @@ class MainFrameViewController: UIViewController {
         //frameImageView AutoLayout
         NSLayoutConstraint.activate([
             self.frameImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            self.frameImageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            self.frameImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3),
             self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])

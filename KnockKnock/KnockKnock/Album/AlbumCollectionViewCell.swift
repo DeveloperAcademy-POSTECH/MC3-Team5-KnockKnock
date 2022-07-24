@@ -15,7 +15,8 @@ final class albumImageCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .gray
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
