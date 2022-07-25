@@ -30,6 +30,7 @@ class MainLetterViewController: UIViewController {
     
     let textViewPlaceHolder = "편지를 입력해주세요."
 
+    let letterTextField = UITextField()
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.post(name: .rotateBack, object: nil)
@@ -39,12 +40,22 @@ class MainLetterViewController: UIViewController {
         view.backgroundColor = .systemBackground
         let label = UILabel()
         label.text = "To."
+        label.font = UIFont.boldSystemFont(ofSize: 50)
+        
         
         createTextView()
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
         label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        
+        view.addSubview(letterTextField)
+        letterTextField.translatesAutoresizingMaskIntoConstraints = false
+        letterTextField.leadingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true
+        letterTextField.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        letterTextField.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        letterTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        letterTextField.font = UIFont.boldSystemFont(ofSize: 50)
         
         
         
