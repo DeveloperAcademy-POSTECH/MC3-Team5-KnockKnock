@@ -41,8 +41,7 @@ class MainFrameViewController: UIViewController {
         ])
         
         readImage()
-        
-        print("메인프레임 컨트롤러 뷰디드로드 2")
+    
         print("\(CoreDataManager.shared.frameImage?.count)")
     }
     
@@ -91,6 +90,7 @@ class MainFrameViewController: UIViewController {
         frameImageView.setNeedsDisplay()
     }
     
+    //CoreData의 이미지를 불러와서 표시하는 함수
     func readImage() {
         CoreDataManager.shared.readFrameCoreData()
         guard let image = CoreDataManager.shared.frameImage?.last else {return}

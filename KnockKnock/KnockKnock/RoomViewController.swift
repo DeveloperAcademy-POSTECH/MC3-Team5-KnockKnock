@@ -9,12 +9,12 @@ import UIKit
 
 class RoomViewController: UIViewController {
     
-    //DoorViewController 실행 되었는지 확인
+    // DoorViewController 실행 되었는지 확인
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
     
-    //배경화면
+    // 배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "roomImage")!
@@ -23,7 +23,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //메모 버튼 ImageView
+    // 메모 버튼 ImageView
     let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "memo")!
@@ -32,7 +32,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //앨범 버튼 ImageView
+    // 앨범 버튼 ImageView
     let albumImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "album")!
@@ -41,7 +41,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //액자 버튼 ImageView
+    // 액자 버튼 ImageView
     let frameImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "frame")!
@@ -50,7 +50,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //액자 사진 버튼 ImageView
+    // 액자 사진 버튼 ImageView
     let frameHasImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
@@ -63,7 +63,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
-    //편지 버튼 ImageView
+    // 편지 버튼 ImageView
     var letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "letter")!
@@ -91,6 +91,7 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         
+        // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
             CoreDataManager.shared.saveFrameCoreData(image: UIImage(systemName:"person.fill")!.pngData()!)
             CoreDataManager.shared.readFrameCoreData()
@@ -98,37 +99,38 @@ class RoomViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingViewTapped))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "iconColor")
+        
         setupLayout()
         imageInput()
         
 
-        //배경화면 크기 AspectFill로 맞춤
+        // 배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
 
-        //메모 사진 터치 가능하도록 설정
+        // 메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
         memoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(memoViewTapped(_:))))
         
-        //앨범 사진 터치 가능하도록 설정
+        // 앨범 사진 터치 가능하도록 설정
         albumImageView.isUserInteractionEnabled = true
         albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
         
-        //액자 사진 터치 가능하도록 설정
+        // 액자 사진 터치 가능하도록 설정
         frameImageView.isUserInteractionEnabled = true
         frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         frameHasImageView.isUserInteractionEnabled = true
         frameHasImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         
-        //편지 사진 터치 가능하도록 설정
+        // 편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
         
-        //모달 닫히는 것 감지하여 토스트 수행
+        // 모달 닫히는 것 감지하여 토스트 수행
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
     }
     
-    //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
+    // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
         let doorViewController = DoorViewController()
         doorViewController.modalPresentationStyle = .overFullScreen
@@ -144,31 +146,31 @@ class RoomViewController: UIViewController {
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
             
-            //memoImageView layout
+            // memoImageView layout
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
             memoImageView.heightAnchor.constraint(equalToConstant: 79),
             memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -90),
             memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40),
             
-            //albumImageView layout
+            // albumImageView layout
             albumImageView.widthAnchor.constraint(equalToConstant: 73),
             albumImageView.heightAnchor.constraint(equalToConstant: 92),
             albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant:  -115),
             albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -120),
             
-            //frameImageView layout
+            // frameImageView layout
             frameImageView.widthAnchor.constraint(equalToConstant: 68),
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            //frameHasImageView layout
+            // frameHasImageView layout
             frameHasImageView.widthAnchor.constraint(equalToConstant: 53),
             frameHasImageView.heightAnchor.constraint(equalToConstant: 85),
             frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            //letterImageView layout
+            // letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
@@ -176,7 +178,7 @@ class RoomViewController: UIViewController {
         ])
     }
     
-    //CoreData를 읽어와서 이미지를 전달하는 함수
+    // CoreData를 읽어와서 이미지를 전달하는 함수
     func imageInput(){
         CoreDataManager.shared.readFrameCoreData()
         if let image = CoreDataManager.shared.frameImage?.last {
@@ -186,13 +188,13 @@ class RoomViewController: UIViewController {
         }
     }
 
-    //세팅 버튼 터치 함수
+    // 세팅 버튼 터치 함수
     @objc func settingViewTapped() {
         let settingVC = SettingViewController()
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
 
-    //토스트 알림 함수
+    // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
             let toastLabel = UILabel()
@@ -219,30 +221,28 @@ class RoomViewController: UIViewController {
         if letterCloseCheck {
             showToast()
             letterCloseCheck = false
-            // 테스트
-            print("dkssud")
         }
     }
     
-    //메모 버튼 터치 함수
+    // 메모 버튼 터치 함수
     @objc func memoViewTapped(_ sender: UITapGestureRecognizer) {
         let memoVC = MainMemoView()
         self.navigationController?.pushViewController(memoVC, animated: true)
     }
     
-    //앨범 버튼 터치 함수
+    // 앨범 버튼 터치 함수
     @objc func albumViewTapped(_ sender: UITapGestureRecognizer) {
         let albumVC = MainAlbumViewController()
         self.navigationController?.pushViewController(albumVC, animated: true)
     }
     
-    //액자 버튼 터치 함수
+    // 액자 버튼 터치 함수
     @objc func frameViewTapped(_ sender: UITapGestureRecognizer) {
         let frameVC = MainFrameViewController()
         self.navigationController?.pushViewController(frameVC, animated: true)
     }
     
-    //편지 버튼 터치 함수
+    // 편지 버튼 터치 함수
     @objc func letterViewTapped(_ sender: UITapGestureRecognizer) {
         let letterVC = MainLetterViewController()
         letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
