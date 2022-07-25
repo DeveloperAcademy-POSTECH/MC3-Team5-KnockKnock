@@ -9,9 +9,6 @@ import UIKit
 
 class MainFrameViewController: UIViewController {
     
-    var getimage: UIImage?
-    var getindex: Int?
-    
     //액자 사진 ImageView
     var frameImageView: UIImageView = {
         let frameView = UIImageView()
@@ -23,13 +20,7 @@ class MainFrameViewController: UIViewController {
     
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        
-        CoreDataManager.shared.readFrameCoreData()
-        
-        guard let image = CoreDataManager.shared.frameImage?.last else {return}
-        frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
-        frameImageView.setNeedsDisplay()
-        print("viewWillAppear 2")
+        readImage()
     }
     
     //MARK: - viewDidLoad
@@ -44,21 +35,13 @@ class MainFrameViewController: UIViewController {
         //frameImageView AutoLayout
         NSLayoutConstraint.activate([
             self.frameImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            self.frameImageView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            self.frameImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3),
             self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        CoreDataManager.shared.readFrameCoreData()
-        guard let image = CoreDataManager.shared.frameImage?.last else {return}
-        guard let frameImageData = image.value(forKey: "image") as? Data else {
-            print("frameImageData 터짐")
-            return }
         
-        
-        frameImageView.image = UIImage(data: frameImageData)
-        frameImageView.setNeedsDisplay()
-        
-        print("메인프레임 컨트롤러 뷰디드로드 2")
+        readImage()
+    
         print("\(CoreDataManager.shared.frameImage?.count)")
     }
     
@@ -97,13 +80,21 @@ class MainFrameViewController: UIViewController {
             } else {}
             
             //CoreData에 기본 이미지 추가
-            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "photo")?.pngData())!)
+            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(systemName: "person.fill")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
             print("기본이미지로 변경됨")
         }
         
         frameImageView.image?.didChangeValue(forKey: "image")
+        frameImageView.setNeedsDisplay()
+    }
+    
+    //CoreData의 이미지를 불러와서 표시하는 함수
+    func readImage() {
+        CoreDataManager.shared.readFrameCoreData()
+        guard let image = CoreDataManager.shared.frameImage?.last else {return}
+        frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
         frameImageView.setNeedsDisplay()
     }
 }

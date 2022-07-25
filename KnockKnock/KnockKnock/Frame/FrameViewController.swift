@@ -66,7 +66,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -25),
+            cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15),
             cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15)
         ])
         collectionView.dataSource = self
