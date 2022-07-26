@@ -78,7 +78,15 @@ class RoomViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         imageInput()
+        // 네비게이션 뷰 삭제
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            // 다시 등장
+            navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -86,6 +94,7 @@ class RoomViewController: UIViewController {
         navigationBarAppearance.backgroundColor = UIColor(named: "navigationColor")
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
 
         view.backgroundColor = .systemBackground
 
