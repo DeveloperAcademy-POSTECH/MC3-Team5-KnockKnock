@@ -119,10 +119,6 @@ class MemoDetailViewController: UIViewController {
     
     
     @objc fileprivate func finishMemo(_ sender: UIButton){
-        // 객체 인스턴스 생성
-//        formatter.locale = Locale(identifier: "ko") // 로케일 변경
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEEE"
-//        print("현재시간: " + formatter.string(from: date as Date))
         if field.text == "" {
             
             let alert = UIAlertController(title: "제목을 꼭 적어주세요!", message: "", preferredStyle: UIAlertController.Style.alert)

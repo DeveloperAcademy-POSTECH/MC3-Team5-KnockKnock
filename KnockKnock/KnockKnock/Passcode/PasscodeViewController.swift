@@ -146,7 +146,6 @@ class PasscodeViewController: UIViewController {
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         zeroButton.setTitleColor(.black, for: .normal)
-        //        zeroButton.backgroundColor = .white
         zeroButton.setTitle("0", for: .normal)
         zeroButton.tag = 0
         zeroButton.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
@@ -154,7 +153,6 @@ class PasscodeViewController: UIViewController {
         
         let deleteButton = UIButton(frame: CGRect(x: buttonWidthSize * 2, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         deleteButton.setTitleColor(.label, for: .normal)
-        //        deleteButton.backgroundColor = .white
         deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
         deleteButton.tintColor = .black
         deleteButton.tag = 12

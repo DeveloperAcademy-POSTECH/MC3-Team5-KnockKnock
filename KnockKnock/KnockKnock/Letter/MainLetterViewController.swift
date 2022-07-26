@@ -113,12 +113,6 @@ class MainLetterViewController: UIViewController {
         // 마진
         textView.textContainer.lineFragmentPadding = 20
         textView.backgroundColor = .clear
-        
-//        letterImageView.translatesAutoresizingMaskIntoConstraints = false
-//        letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
-//        letterImageView.heightAnchor.constraint(equalToConstant: view.bounds.height / 2.5).isActive = true
-//        letterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
     }
     
 }
