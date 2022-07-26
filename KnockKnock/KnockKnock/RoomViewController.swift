@@ -141,6 +141,10 @@ class RoomViewController: UIViewController {
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
         
+        // 지도 사진 터치 가능하도록 설정
+        mapImageView.isUserInteractionEnabled = true
+        mapImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mapViewTapped(_:))))
+        
         // 셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
         settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
@@ -266,6 +270,12 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
+    }
+    
+    // test map button click
+    @objc func mapViewTapped(_ sender: UITapGestureRecognizer) {
+        let mapVC = MapViewController()
+        self.navigationController?.pushViewController(mapVC, animated: true)
     }
     
     // 메모 버튼 터치 함수
