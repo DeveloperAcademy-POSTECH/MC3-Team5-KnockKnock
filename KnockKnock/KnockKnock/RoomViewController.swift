@@ -13,6 +13,8 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
+    // 배경음악재생 이미지 전환
+    var isPlay: Bool = false
     
     let navigationBarAppearance = UINavigationBarAppearance()
     
@@ -142,8 +144,8 @@ class RoomViewController: UIViewController {
         roomImageView.contentMode = .scaleAspectFill
         
         // 음악 사진 터치 가능하도록 설정
-        settingImageView.isUserInteractionEnabled = true
-//        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
+        musicImageView.isUserInteractionEnabled = true
+        musicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(controlSound(_:))))
         
         // 셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
@@ -224,8 +226,8 @@ class RoomViewController: UIViewController {
             settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
             
             // musicImageView layout
-            musicImageView.widthAnchor.constraint(equalToConstant: 30),
-            musicImageView.heightAnchor.constraint(equalToConstant: 30),
+            musicImageView.widthAnchor.constraint(equalToConstant: 28),
+            musicImageView.heightAnchor.constraint(equalToConstant: 28),
             musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
             musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20)
         ])
@@ -240,7 +242,6 @@ class RoomViewController: UIViewController {
             }
         }
     }
-
 
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
@@ -270,6 +271,22 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
+    }
+    
+    // 배경음악 재생 함수
+    @objc func controlSound(_ sender: UITapGestureRecognizer) {
+        print("dd2)")
+        isPlay.toggle()
+        
+        if isPlay {
+            AudioManager.shared.playSound("forest")
+            self.musicImageView.image = UIImage(named: "musicnote2")
+            print("dd")
+        } else {
+            AudioManager.shared.stopSound()
+            self.musicImageView.image = UIImage(named: "musicnote-x")
+        }
+        
     }
     
     // 메모 버튼 터치 함수
