@@ -25,6 +25,16 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    // 셋팅 버튼 ImageView
+    let settingImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(systemName: "gearshape.fill")!
+        imageView.tintColor = UIColor(named: "iconColor")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
     // 메모 버튼 ImageView
     let memoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -104,15 +114,13 @@ class RoomViewController: UIViewController {
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
+        view.addSubview(settingImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
             CoreDataManager.shared.saveFrameCoreData(image: UIImage(named: "frame person")!.pngData()!)
             CoreDataManager.shared.readFrameCoreData()
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingViewTapped))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "iconColor")
         
         setupLayout()
         imageInput()
@@ -121,6 +129,10 @@ class RoomViewController: UIViewController {
         // 배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
+        
+        // 셋팅 사진 터치 가능하도록 설정
+        settingImageView.isUserInteractionEnabled = true
+        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
 
         // 메모 사진 터치 가능하도록 설정
         memoImageView.isUserInteractionEnabled = true
@@ -188,7 +200,13 @@ class RoomViewController: UIViewController {
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
             letterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
-            letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
+            letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
+            
+            // settingImageView layout
+            settingImageView.widthAnchor.constraint(equalToConstant: 30),
+            settingImageView.heightAnchor.constraint(equalToConstant: 30),
+            settingImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
+            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
         ])
     }
     
@@ -202,11 +220,6 @@ class RoomViewController: UIViewController {
         }
     }
 
-    // 세팅 버튼 터치 함수
-    @objc func settingViewTapped() {
-        let settingVC = SettingViewController()
-        self.navigationController?.pushViewController(settingVC, animated: true)
-    }
 
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
@@ -236,6 +249,12 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
+    }
+    
+    // 메모 버튼 터치 함수
+    @objc func settingViewTapped(_ sender: UITapGestureRecognizer) {
+        let settingVC = SettingViewController()
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     // 메모 버튼 터치 함수
