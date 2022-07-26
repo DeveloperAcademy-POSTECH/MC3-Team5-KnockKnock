@@ -25,6 +25,16 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    // 지도 버튼 ImageView
+    let mapImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(systemName: "map.fill")!
+        imageView.tintColor = UIColor(named: "iconColor")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
     // 셋팅 버튼 ImageView
     let settingImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -115,6 +125,7 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         view.addSubview(settingImageView)
+        view.addSubview(mapImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -206,7 +217,13 @@ class RoomViewController: UIViewController {
             settingImageView.widthAnchor.constraint(equalToConstant: 30),
             settingImageView.heightAnchor.constraint(equalToConstant: 30),
             settingImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
-            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
+            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            
+            // mapImageView layout
+            mapImageView.widthAnchor.constraint(equalToConstant: 30),
+            mapImageView.heightAnchor.constraint(equalToConstant: 30),
+            mapImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
+            mapImageView.topAnchor.constraint(equalTo: settingImageView.bottomAnchor, constant: 20),
         ])
     }
     
