@@ -14,6 +14,7 @@
 		32211B82287EFD6B00A9F3B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32211B81287EFD6B00A9F3B1 /* Assets.xcassets */; };
 		32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32211B83287EFD6B00A9F3B1 /* LaunchScreen.storyboard */; };
 		3266FFEE2883D92A00B6D6A6 /* MainLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3266FFED2883D92A00B6D6A6 /* MainLetterViewController.swift */; };
+		32B30090288FC1E90020FF8E /* SawarabiMincho-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32B3008F288FC1E90020FF8E /* SawarabiMincho-Regular.ttf */; };
 		32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93AF287F0AE300D8E155 /* MainMemoView.swift */; };
 		32CD93B3287F0EE100D8E155 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */; };
 		32CD93B5287F14C200D8E155 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */; };
@@ -43,6 +44,7 @@
 		32211B84287EFD6B00A9F3B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32211B86287EFD6B00A9F3B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3266FFED2883D92A00B6D6A6 /* MainLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLetterViewController.swift; sourceTree = "<group>"; };
+		32B3008F288FC1E90020FF8E /* SawarabiMincho-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SawarabiMincho-Regular.ttf"; sourceTree = "<group>"; };
 		32CD93AF287F0AE300D8E155 /* MainMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMemoView.swift; sourceTree = "<group>"; };
 		32CD93B2287F0EE100D8E155 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		32CD93B4287F14C200D8E155 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				32F3E2BF288A8E5200F66F05 /* MapoFlowerIsland.ttf */,
+				32B3008F288FC1E90020FF8E /* SawarabiMincho-Regular.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -174,7 +177,6 @@
 				465EB4B59ECBEBDF62408209 /* Pods-KnockKnock.debug.xcconfig */,
 				5BD94A55DB524B71EB09E129 /* Pods-KnockKnock.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -265,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32211B85287EFD6B00A9F3B1 /* LaunchScreen.storyboard in Resources */,
+				32B30090288FC1E90020FF8E /* SawarabiMincho-Regular.ttf in Resources */,
 				32F3E2C0288A8E5200F66F05 /* MapoFlowerIsland.ttf in Resources */,
 				32211B82287EFD6B00A9F3B1 /* Assets.xcassets in Resources */,
 			);

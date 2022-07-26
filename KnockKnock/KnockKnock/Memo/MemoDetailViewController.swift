@@ -39,12 +39,12 @@ class MemoDetailViewController: UIViewController {
     func titleTextField() {
         
         field.placeholder = titleFieldPlaceHolder
-        field.textAlignment = .center
-        field.font = UIFont(name: "MapoFlowerIsland", size: 30)
+        field.textAlignment = .left
+        field.font = UIFont(name: "MapoFlowerIsland", size: 24)
         
         self.view.addSubview(field)
         field.translatesAutoresizingMaskIntoConstraints = false
-        field.widthAnchor.constraint(equalToConstant: view.bounds.width - 20).isActive = true
+        field.widthAnchor.constraint(equalToConstant: view.bounds.width - 50).isActive = true
         field.heightAnchor.constraint(equalToConstant: view.bounds.height / 20).isActive = true
         field.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 8).isActive = true
         field.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -57,17 +57,17 @@ class MemoDetailViewController: UIViewController {
         button.setImage(imageView.image == nil ? image : imageView.image, for: .normal)
         button.imageView?.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 0.3
         button.layer.borderColor = UIColor.systemGray.cgColor
         button.layer.cornerRadius = 10
-        button.tintColor = .systemGray
+        button.tintColor = .systemGray5
         
         self.view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: view.bounds.width / 1.3).isActive = true
         button.heightAnchor.constraint(equalToConstant: view.bounds.height / 3).isActive = true
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 10   ).isActive = true
+        button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 20).isActive = true
     }
     
     

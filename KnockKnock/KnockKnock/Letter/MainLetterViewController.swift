@@ -11,6 +11,7 @@ var letterCloseCheck: Bool = false
 
 class MainLetterViewController: UIViewController {
 
+    
     let paperPlainImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(systemName: "paperplane.fill")!
@@ -18,31 +19,64 @@ class MainLetterViewController: UIViewController {
         return imageView
     }()
     
+    let letterImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "letterBackGround")!
+        imageView.image = myImage
+        return imageView
+    }()
+    
     let textView = UITextView()
     
     let textViewPlaceHolder = "편지를 입력해주세요."
+
+    let letterTextField = UITextField()
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.post(name: .rotateBack, object: nil)
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = .systemBackground
         
+        view.addSubview(letterImageView)
         
-        createTextView()
+        letterImageView.translatesAutoresizingMaskIntoConstraints = false
+        letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        letterImageView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
+        paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -10).isActive = true
+        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 10).isActive = true
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        paperPlainImageView.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
-        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-//        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
         
         // MARK: 메모사진이 터치 가능하도록 함
         paperPlainImageView.isUserInteractionEnabled = true
         paperPlainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touchUpDismissModalButton)))
+        
+        createTextView()
+        
+        let label = UILabel()
+        label.text = "To."
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        label.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        label.font = UIFont(name: "SawarabiMincho-Regular", size: 24)
+        
+        
+        
+        view.addSubview(letterTextField)
+        letterTextField.translatesAutoresizingMaskIntoConstraints = false
+        letterTextField.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 5).isActive = true
+        letterTextField.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        letterTextField.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        letterTextField.font = UIFont(name: "MapoFlowerIsland", size: 22)
+        
+
     }
     
     
@@ -60,11 +94,14 @@ class MainLetterViewController: UIViewController {
     
     func createTextView() {
         view.addSubview(textView)
+        
+        
+        
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
-        textView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
+        textView.heightAnchor.constraint(equalToConstant: view.bounds.height / 2.5).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         // 텍스트뷰 커스텀(행간)
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
@@ -75,6 +112,13 @@ class MainLetterViewController: UIViewController {
         textView.delegate = self
         // 마진
         textView.textContainer.lineFragmentPadding = 20
+        textView.backgroundColor = .clear
+        
+//        letterImageView.translatesAutoresizingMaskIntoConstraints = false
+//        letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
+//        letterImageView.heightAnchor.constraint(equalToConstant: view.bounds.height / 2.5).isActive = true
+//        letterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        letterImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
     }
     
 }
