@@ -14,6 +14,8 @@ class RoomViewController: UIViewController {
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
     
+    let navigationBarAppearance = UINavigationBarAppearance()
+    
     // 배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -81,6 +83,9 @@ class RoomViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBarAppearance.backgroundColor = UIColor(named: "navigationColor")
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
 
         view.backgroundColor = .systemBackground
 
