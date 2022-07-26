@@ -90,12 +90,6 @@ extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            _ = CoreDataManager.shared.deleteCoreData(object: CoreDataManager.shared.resultArray!.reversed()[indexPath.item])
-//            do {
-//                CoreDataManager.shared.resultArray = try CoreDataManager.shared.readCoreData() as!
-//            } catch {
-//                print(error)
-//            }
             CoreDataManager.shared.deleteCoreData(object: CoreDataManager.shared.resultArray!.reversed()[indexPath.item])
             CoreDataManager.shared.readCoreData()
             tableView.reloadData()
@@ -212,7 +206,6 @@ class MainTableViewCell: UITableViewCell {
         date.font = UIFont(name: "MapoFlowerIsland", size: 14)
     
         date.translatesAutoresizingMaskIntoConstraints = false
-        //        date.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 8).isActive = true
         date.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         date.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 6).isActive = true
     }
