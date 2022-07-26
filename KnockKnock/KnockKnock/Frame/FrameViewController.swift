@@ -135,15 +135,17 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
                 let cropper = CropperViewController(originalImage: image)
                 cropper.delegate = self
                 picker.dismiss(animated: true) {
-                    self.present(cropper, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "액자 사진 비율 안내",
+                                                  message: "종횡비 3:4가 가장 적합합니다.",
+                                                  preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "확인", style: .default, handler: {
+                        action in self.present(cropper, animated: true, completion: nil)
+                    })
+                    alert.addAction(alertAction)
+                    self.present(alert, animated:true)
                 }
-                
+            }
         }
-        
-        }
-        
-//        dismiss(animated:true)
-        
     }
 }
 extension FrameViewController: CropperViewControllerDelegate {
