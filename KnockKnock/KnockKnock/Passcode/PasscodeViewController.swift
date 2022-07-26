@@ -8,11 +8,18 @@
 import LocalAuthentication
 import UIKit
 
+enum PasscodeMode {
+    case pass
+    case new
+    case change
+}
+
 class PasscodeViewController: UIViewController {
     
     let settingViewController = SettingViewController()
     let keychainManager = KeychainManager()
-    var isRegister: Bool? = false
+    var passcodeMode: PasscodeMode = .pass
+    var isPasscode: Bool? = false
     var newPasscodes = [Int]()
     var passcodes = [Int]()
     var tasks = [Task]()
@@ -24,12 +31,8 @@ class PasscodeViewController: UIViewController {
     lazy var passcodeImage4: UIImageView = setupPasscodeImage()
     
     // 비밀번호 상태 라벨
-    lazy var titleLabel: UILabel = {
-        setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
-    }()
-    lazy var subTitleLabel: UILabel = {
-        setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
-    }()
+    lazy var titleLabel: UILabel = setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
+    lazy var subTitleLabel: UILabel = setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +64,7 @@ class PasscodeViewController: UIViewController {
     
     // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
-        isRegister = keychainManager.getItem(key: "passcode") == nil ? true : false
+        isPasscode = keychainManager.getItem(key: "passcode") == nil ? false : true
 
         
         let userDefaults = UserDefaults.standard
@@ -113,6 +116,7 @@ class PasscodeViewController: UIViewController {
         ])
     }
     
+    // 넘버 버튼
     private func setupNumberPad() {
         
         let buttonWidthSize = view.frame.size.width / 3
@@ -134,10 +138,10 @@ class PasscodeViewController: UIViewController {
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.black, for: .normal)
         //        faceButton.backgroundColor = .white
-        if isRegister! {
-            faceButton.setTitle("취소", for: .normal)
-        } else {
+        if isPasscode! {
             faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
+        } else {
+            faceButton.setTitle("취소", for: .normal)
         }
         faceButton.tintColor = .black
         faceButton.tag = 11
@@ -160,6 +164,7 @@ class PasscodeViewController: UIViewController {
         view.addSubview(deleteButton)
     }
     
+    // number button 눌렸을 때
     @objc private func numberPressed(_ sender: UIButton) {
         let number = sender.tag
         passcodes.append(number)
@@ -168,12 +173,12 @@ class PasscodeViewController: UIViewController {
     }
     
     @objc private func facePressed(_ sender: UIButton) {
-        if isRegister! {
+        if isPasscode! {
+            biometry()
+        } else {
             settingViewController.tasks[0].isSwitchOn = false
             NotificationCenter.default.post(name: .fatchTable, object: nil)
             self.dismiss(animated: true)
-        } else {
-            biometry()
         }
     }
     
@@ -185,11 +190,24 @@ class PasscodeViewController: UIViewController {
         }
     }
     
+    // 비밀번호 4자리 입력 완료
     private func update() {
         print(passcodes)
-        
         if passcodes.count == 4 {
-            if isRegister! {
+            
+            switch passcodeMode {
+            case .pass:
+                if let keychainPasscodes = keychainManager.getItem(key: "passcode") as? String {
+                    let registedPasscodes = keychainPasscodes.map { Int(String($0))! }
+                    if passcodes == registedPasscodes {
+                        self.dismiss(animated: true)
+                    } else {
+                        passcodes.removeAll()
+                        subTitleLabel.textColor = .red
+                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
+                    }
+                }
+            case .new, .change:
                 if newPasscodes.isEmpty {
                     newPasscodes = passcodes
                     passcodes.removeAll()
@@ -209,17 +227,6 @@ class PasscodeViewController: UIViewController {
                         self.dismiss(animated: true)
                     }
                 }
-            } else {
-                if let keychainPasscides = keychainManager.getItem(key: "passcode") as? String {
-                    let registedPasscodes = keychainPasscides.map { Int(String($0))! }
-                    if passcodes == registedPasscodes {
-                        self.dismiss(animated: true)
-                    } else {
-                        passcodes.removeAll()
-                        subTitleLabel.textColor = .red
-                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
-                    }
-                }
 
             }
         }
@@ -230,7 +237,7 @@ class PasscodeViewController: UIViewController {
     }
     
     private func biometry() {
-        if !isRegister! {
+        if isPasscode! && tasks[1].isSwitchOn {
             // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
             let authContext = LAContext()
             var error: NSError?

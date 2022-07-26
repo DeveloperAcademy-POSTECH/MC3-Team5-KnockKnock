@@ -137,6 +137,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             if sender.isOn {
                 let registerPasscode = PasscodeViewController()
                 registerPasscode.modalPresentationStyle = .fullScreen
+                registerPasscode.passcodeMode = .new
                 present(registerPasscode, animated: true)
                 
                 if tasks.count == 1 {
@@ -182,6 +183,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 2 {
             let registerPasscode = PasscodeViewController()
             registerPasscode.modalPresentationStyle = .fullScreen
+            registerPasscode.passcodeMode = .change
             present(registerPasscode, animated: true)
         }
         
