@@ -10,6 +10,7 @@
 		090F2E4A288FEBCA003712CB /* CenterInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 090F2E49288FEBCA003712CB /* CenterInfo.json */; };
 		090F2E4C288FEC08003712CB /* CenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F2E4B288FEC08003712CB /* CenterModel.swift */; };
 		090F2E4E288FEC3A003712CB /* CenterDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F2E4D288FEC3A003712CB /* CenterDataManager.swift */; };
+		090F2E51288FECDA003712CB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F2E50288FECDA003712CB /* MapViewController.swift */; };
 		32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B75287EFD6B00A9F3B1 /* AppDelegate.swift */; };
 		32211B78287EFD6B00A9F3B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B77287EFD6B00A9F3B1 /* SceneDelegate.swift */; };
 		32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B79287EFD6B00A9F3B1 /* RoomViewController.swift */; };
@@ -40,6 +41,7 @@
 		090F2E49288FEBCA003712CB /* CenterInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CenterInfo.json; sourceTree = "<group>"; };
 		090F2E4B288FEC08003712CB /* CenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterModel.swift; sourceTree = "<group>"; };
 		090F2E4D288FEC3A003712CB /* CenterDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterDataManager.swift; sourceTree = "<group>"; };
+		090F2E50288FECDA003712CB /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		15B9DD1D384DD6BA64959574 /* Pods_KnockKnock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32211B72287EFD6B00A9F3B1 /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32211B75287EFD6B00A9F3B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 			path = CenterInfo;
 			sourceTree = "<group>";
 		};
+		090F2E4F288FECCC003712CB /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				090F2E50288FECDA003712CB /* MapViewController.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
 		32211B69287EFD6B00A9F3B1 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 		32211B74287EFD6B00A9F3B1 /* KnockKnock */ = {
 			isa = PBXGroup;
 			children = (
+				090F2E4F288FECCC003712CB /* MapView */,
 				D70267AD2886912200EFDABE /* Passcode */,
 				D70267A8288685C100EFDABE /* PasscodeSetting */,
 				6F7FCCFC2885418A0044F591 /* Frame */,
@@ -359,6 +370,7 @@
 				32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */,
 				6FDE05222886EF2300F4252C /* FrameViewController.swift in Sources */,
 				D70267AC2886877B00EFDABE /* Task.swift in Sources */,
+				090F2E51288FECDA003712CB /* MapViewController.swift in Sources */,
 				D70267AF2886915300EFDABE /* PasscodeViewController.swift in Sources */,
 				32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */,
 				32CD93B0287F0AE300D8E155 /* MainMemoView.swift in Sources */,
