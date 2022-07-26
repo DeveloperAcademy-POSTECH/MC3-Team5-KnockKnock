@@ -146,7 +146,10 @@ class PasscodeViewController: UIViewController {
         faceButton.tintColor = .black
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
-        view.addSubview(faceButton)
+        if tasks.count == 3 && tasks[1].isSwitchOn {
+            view.addSubview(faceButton)
+        }
+        
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         zeroButton.setTitleColor(.black, for: .normal)
