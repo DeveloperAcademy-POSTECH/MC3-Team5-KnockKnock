@@ -10,11 +10,11 @@ import UIKit
 
 class PasscodeViewController: UIViewController {
     
-    var passcodes = [Int]()
-    var newPasscodes = [Int]()
     let settingViewController = SettingViewController()
     let keychainManager = KeychainManager()
     var isRegister: Bool? = false
+    var newPasscodes = [Int]()
+    var passcodes = [Int]()
     var tasks = [Task]()
     
     // 비밀번호 상태 이미지

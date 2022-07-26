@@ -113,7 +113,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if task.isSwitch {
             cell.accessoryView = switchView
             cell.selectionStyle = .none
-            cell.isUserInteractionEnabled = false
         } else {
             cell.accessoryView = nil
         }
@@ -180,10 +179,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     // 3번째 셀 '비밀번호 변경 누렀을때 작동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 2 {
+            let registerPasscode = PasscodeViewController()
+            registerPasscode.modalPresentationStyle = .fullScreen
+            present(registerPasscode, animated: true)
+        }
         
-        let registerPasscode = PasscodeViewController()
-        registerPasscode.modalPresentationStyle = .fullScreen
-        present(registerPasscode, animated: true)
     }
     
 }
