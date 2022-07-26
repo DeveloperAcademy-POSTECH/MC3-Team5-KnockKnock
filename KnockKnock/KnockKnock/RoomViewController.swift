@@ -93,7 +93,7 @@ class RoomViewController: UIViewController {
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
-            CoreDataManager.shared.saveFrameCoreData(image: UIImage(systemName:"person.fill")!.pngData()!)
+            CoreDataManager.shared.saveFrameCoreData(image: UIImage(named: "frame person")!.pngData()!)
             CoreDataManager.shared.readFrameCoreData()
         }
         
