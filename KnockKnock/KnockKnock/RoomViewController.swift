@@ -25,6 +25,16 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    
+    // 배경음악 버튼 ImageView
+    let musicImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "musicnote-x")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
     // 셋팅 버튼 ImageView
     let settingImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -115,6 +125,7 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         view.addSubview(settingImageView)
+        view.addSubview(musicImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -129,6 +140,10 @@ class RoomViewController: UIViewController {
         // 배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
+        
+        // 음악 사진 터치 가능하도록 설정
+        settingImageView.isUserInteractionEnabled = true
+//        settingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingViewTapped(_:))))
         
         // 셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
@@ -206,7 +221,13 @@ class RoomViewController: UIViewController {
             settingImageView.widthAnchor.constraint(equalToConstant: 30),
             settingImageView.heightAnchor.constraint(equalToConstant: 30),
             settingImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
-            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
+            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            
+            // musicImageView layout
+            musicImageView.widthAnchor.constraint(equalToConstant: 30),
+            musicImageView.heightAnchor.constraint(equalToConstant: 30),
+            musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20)
         ])
     }
     
