@@ -43,29 +43,8 @@ class MainLetterViewController: UIViewController {
         letterImageView.translatesAutoresizingMaskIntoConstraints = false
         letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         letterImageView.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
-//        view.backgroundColor = .systemBackground
-//        let label = UILabel()
-//        label.text = "To."
-//        label.font = UIFont.boldSystemFont(ofSize: 30)
-//
-//
-//        createTextView()
-//        view.addSubview(label)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
-//        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-//        label.backgroundColor = .blue
-//
-//        view.addSubview(letterTextField)
-//        letterTextField.translatesAutoresizingMaskIntoConstraints = false
-//        letterTextField.leadingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true
-//        letterTextField.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
-//        letterTextField.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
-//        letterTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        letterTextField.font = UIFont.boldSystemFont(ofSize: 20)
-//        letterTextField.backgroundColor = .blue
         
-        letterImageView.addSubview(paperPlainImageView)
+        view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
         paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -10).isActive = true
         paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 10).isActive = true
@@ -76,6 +55,7 @@ class MainLetterViewController: UIViewController {
         paperPlainImageView.isUserInteractionEnabled = true
         paperPlainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touchUpDismissModalButton)))
         
+        createTextView()
         
         let label = UILabel()
         label.text = "To."
@@ -84,23 +64,19 @@ class MainLetterViewController: UIViewController {
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        label.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        label.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        label.font = UIFont(name: "SawarabiMincho-Regular", size: 24)
         
         
-        createTextView()
         
+        view.addSubview(letterTextField)
+        letterTextField.translatesAutoresizingMaskIntoConstraints = false
+        letterTextField.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 5).isActive = true
+        letterTextField.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        letterTextField.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
+        letterTextField.font = UIFont(name: "MapoFlowerIsland", size: 22)
         
-//
-//
-//        letterImageView.addSubview(paperPlainImageView)
-//        paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
-//        paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-//        paperPlainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-//        paperPlainImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
-        
-//        createTextView()
+
     }
     
     
