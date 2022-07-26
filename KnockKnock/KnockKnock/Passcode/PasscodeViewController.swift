@@ -296,6 +296,7 @@ class PasscodeViewController: UIViewController {
         
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [],
                                 animations: {
+            AudioServicesPlaySystemSound(4095)
             UIView.addKeyframe(withRelativeStartTime: 0.0,
                                relativeDuration: frameDuration) {
                 self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
