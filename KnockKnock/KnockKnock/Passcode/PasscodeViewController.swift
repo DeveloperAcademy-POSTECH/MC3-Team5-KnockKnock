@@ -7,6 +7,7 @@
 
 import LocalAuthentication
 import UIKit
+import AVFoundation
 
 enum PasscodeMode {
     case pass
@@ -208,6 +209,8 @@ class PasscodeViewController: UIViewController {
                         passcodes.removeAll()
                         subTitleLabel.textColor = .red
                         subTitleLabel.text = "비밀번호 다시 입력해주세요."
+                        shakeWith(duration: 0.5, angle: .pi/30, yOffset: 0.5)
+                        
                     }
                 }
             case .new, .change:
@@ -268,15 +271,59 @@ class PasscodeViewController: UIViewController {
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
                     DispatchQueue.main.async {
                         guard success, error == nil else {
+                            AudioServicesPlaySystemSound(4095)
                             return
                         }
                         self.dismiss(animated: false)
                     }
                 }
             } else {
+                
 
             }
         }
+        
+    }
+    
+    // 암호입력 틀렸을때 애니메이션
+    private func shakeWith(duration: Double, angle: CGFloat, yOffset: CGFloat) {
+        
+        let numberOfFrames: Double = 6
+        let frameDuration = Double(1/numberOfFrames)
+        
+        
+//        imageView.layer.anchorPoint = CGPoint(x: 0.5, y: yOffset)
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: [],
+                                animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+                AudioServicesPlaySystemSound(4095)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*2,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*3,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*4,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*5,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform.identity
+            }
+        },
+                                completion: nil
+        )
         
     }
     
