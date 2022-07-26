@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090F2E44288FDB22003712CB /* forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 090F2E43288FDB22003712CB /* forest.mp3 */; };
+		090F2E46288FDB7A003712CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F2E45288FDB7A003712CB /* AudioManager.swift */; };
 		32211B76287EFD6B00A9F3B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B75287EFD6B00A9F3B1 /* AppDelegate.swift */; };
 		32211B78287EFD6B00A9F3B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B77287EFD6B00A9F3B1 /* SceneDelegate.swift */; };
 		32211B7A287EFD6B00A9F3B1 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32211B79287EFD6B00A9F3B1 /* RoomViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		090F2E43288FDB22003712CB /* forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = forest.mp3; sourceTree = "<group>"; };
+		090F2E45288FDB7A003712CB /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		15B9DD1D384DD6BA64959574 /* Pods_KnockKnock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32211B72287EFD6B00A9F3B1 /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32211B75287EFD6B00A9F3B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		090F2E41288FDB0A003712CB /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				090F2E45288FDB7A003712CB /* AudioManager.swift */,
 				090F2E42288FDB12003712CB /* Music */,
 			);
 			path = Audio;
@@ -360,6 +363,7 @@
 				6F182F062880BA100083131C /* MainAlbumViewController.swift in Sources */,
 				BF94253E288143E500CB8653 /* CellDetailViewController.swift in Sources */,
 				32211B78287EFD6B00A9F3B1 /* SceneDelegate.swift in Sources */,
+				090F2E46288FDB7A003712CB /* AudioManager.swift in Sources */,
 				32211B80287EFD6B00A9F3B1 /* KnockKnock.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
