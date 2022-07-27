@@ -84,6 +84,7 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -176,25 +177,25 @@ class RoomViewController: UIViewController {
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
             memoImageView.heightAnchor.constraint(equalToConstant: 79),
             memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -90),
-            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40),
+            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 60),
             
             // albumImageView layout
             albumImageView.widthAnchor.constraint(equalToConstant: 73),
             albumImageView.heightAnchor.constraint(equalToConstant: 92),
             albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant:  -115),
-            albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -120),
+            albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -125),
             
             // frameImageView layout
             frameImageView.widthAnchor.constraint(equalToConstant: 68),
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
-            frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
             // frameHasImageView layout
             frameHasImageView.widthAnchor.constraint(equalToConstant: 53),
             frameHasImageView.heightAnchor.constraint(equalToConstant: 85),
             frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
-            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
             // letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
