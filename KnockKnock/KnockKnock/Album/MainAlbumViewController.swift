@@ -56,7 +56,7 @@ class MainAlbumViewController: UIViewController {
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         collectionView.dataSource = self
