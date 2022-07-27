@@ -43,12 +43,13 @@ class MapViewController: UIViewController {
         
         for data in centerData {
             
-            let pin = MKPointAnnotation()
+//            let pin = MKPointAnnotation()
+            let pin = CustomPointAnnotation()
             pin.title = data.name
-            pin.subtitle = data.address
-            pin.subtitle = data.tel
+            pin.subtitle = "주소 : " + data.address
+            pin.tel = data.tel
             
-            pin.subtitle = "주소 : " + data.address + "\n전화번호 : " + data.tel
+            print(pin.tel)
             
             pin.coordinate = CLLocationCoordinate2D(
                 latitude: data.gps.latitude,
@@ -58,6 +59,11 @@ class MapViewController: UIViewController {
             mapView.addAnnotation(pin)
         }
     }
+}
+
+// override
+class CustomPointAnnotation: MKPointAnnotation {
+    var tel: String!
 }
 
 
@@ -73,12 +79,28 @@ extension MapViewController: MKMapViewDelegate {
         
         annotationView.image = UIImage(systemName: "pin.fill")
         annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        annotationView.leftCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
+//        annotationView.detailCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
 
         return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
-        print("test")
+        print("Annotation Click")
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        let annotation = view.annotation as! CustomPointAnnotation
+        
+        if view.rightCalloutAccessoryView == control {
+            // right accessory
+            print("right")
+            print(annotation.tel)
+        } else {
+            // left accessory
+            print("left")
+        }
     }
 }
