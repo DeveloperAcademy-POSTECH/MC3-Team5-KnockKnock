@@ -41,7 +41,8 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
-        biometry()
+//        biometry()
+        
     }
     
     // 비밀번호 상태 이미지
@@ -138,18 +139,22 @@ class PasscodeViewController: UIViewController {
         
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.black, for: .normal)
-        //        faceButton.backgroundColor = .white
-        if isPasscode! {
+        
+        switch passcodeMode {
+        case .pass:
             faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
-        } else {
+            if tasks.count == 3 && tasks[1].isSwitchOn {
+                view.addSubview(faceButton)
+                biometry()
+            }
+        case .new, .change:
             faceButton.setTitle("취소", for: .normal)
+            view.addSubview(faceButton)
         }
         faceButton.tintColor = .black
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
-        if tasks.count == 3 && tasks[1].isSwitchOn {
-            view.addSubview(faceButton)
-        }
+        
         
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
@@ -177,11 +182,14 @@ class PasscodeViewController: UIViewController {
     }
     
     @objc private func facePressed(_ sender: UIButton) {
-        if isPasscode! {
+        switch passcodeMode {
+        case .pass:
             biometry()
-        } else {
+        case .new:
             settingViewController.tasks[0].isSwitchOn = false
             NotificationCenter.default.post(name: .fatchTable, object: nil)
+            self.dismiss(animated: true)
+        case .change:
             self.dismiss(animated: true)
         }
     }
