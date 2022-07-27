@@ -61,7 +61,7 @@ class MapViewController: UIViewController {
     }
 }
 
-// override
+// 상속, 변수 추가
 class CustomPointAnnotation: MKPointAnnotation {
     var tel: String!
 }
