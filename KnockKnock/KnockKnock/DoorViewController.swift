@@ -17,6 +17,7 @@ class DoorViewController: UIViewController {
         
         firstCheck()
         doorSetup()
+        
         // 뷰 전체에 싱글탭 제스처 기능 추가
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(oneTapped))
         oneTap.numberOfTapsRequired = 1
@@ -39,9 +40,6 @@ class DoorViewController: UIViewController {
             PasscodeVC.modalPresentationStyle = .overFullScreen
             present(PasscodeVC, animated: true)
         }
-
-        
-        
     }
     
     // 앱을 처음사용 하는 것인지 확인 후 기존의 키체인에 비밀번호가 등록되어 있다면 삭제
@@ -56,9 +54,7 @@ class DoorViewController: UIViewController {
         }
     }
     
-    
     private func doorSetup() {
-        
         let doorImageView: UIImageView = {
             let imageView = UIImageView()
             let myImage: UIImage = UIImage(named: "door")!
@@ -77,35 +73,14 @@ class DoorViewController: UIViewController {
             doorImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 6.3)
         ])
     }
+    
     // 싱글 탭하면 토스트 팝업 알림
     @objc private func oneTapped() {
-        self.showToast()
+        showToast(VC:self, text:"방에 입장하려면 두 번 터치해주세요.")
     }
+    
     // 더블 탭하면 DoorViewController dismiss
     @objc private func doubleTapped() {
         self.dismiss(animated: false)
-    }
-    
-    func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
-        let toastLabel = UILabel()
-        self.view.addSubview(toastLabel)
-        toastLabel.translatesAutoresizingMaskIntoConstraints = false
-        toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.font = font
-        toastLabel.textAlignment = .center;
-        toastLabel.text = "방에 입장하려면 두 번 터치해주세요."
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        UIView.animate(withDuration: 1.0, delay: 1, options: .curveEaseIn, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
     }
 }
