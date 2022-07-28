@@ -16,6 +16,7 @@ class MainLetterViewController: UIViewController {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(systemName: "paperplane.fill")!
         imageView.image = myImage
+        imageView.tintColor = .systemGray2
         return imageView
     }()
     
@@ -47,8 +48,8 @@ class MainLetterViewController: UIViewController {
         
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
-        paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -10).isActive = true
-        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 10).isActive = true
+        paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -15).isActive = true
+        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 15).isActive = true
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
