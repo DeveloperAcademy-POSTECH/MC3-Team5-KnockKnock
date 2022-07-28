@@ -247,28 +247,6 @@ class RoomViewController: UIViewController {
 
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
-        func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
-            let toastLabel = UILabel()
-            self.view.addSubview(toastLabel)
-            toastLabel.translatesAutoresizingMaskIntoConstraints = false
-            toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-            toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-            toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            toastLabel.textColor = UIColor.white
-            toastLabel.font = font
-            toastLabel.textAlignment = .center;
-            toastLabel.text = "편지가 하늘에 잘 전달되었어요"
-            toastLabel.layer.cornerRadius = 10;
-            toastLabel.clipsToBounds  =  true
-            UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseIn, animations: {
-                toastLabel.alpha = 0.0
-            }, completion: {(isCompleted) in
-                toastLabel.removeFromSuperview()
-            })
-        }
         if letterCloseCheck {
             showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요.")
             letterCloseCheck = false
@@ -343,7 +321,7 @@ func showToast(VC: UIViewController, text: String) {
     toastLabel.text = text
     toastLabel.layer.cornerRadius = 10;
     toastLabel.clipsToBounds  =  true
-    UIView.animate(withDuration: 1.0, delay: 1, options: .curveEaseIn, animations: {
+    UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseIn, animations: {
         toastLabel.alpha = 0.0
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
