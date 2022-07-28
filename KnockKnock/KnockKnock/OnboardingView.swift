@@ -146,7 +146,7 @@ extension OnboardingController: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
         
         if currentIndex == 0 {
-            return pages.last               // wrap last
+            return nil
         } else {
             return pages[currentIndex - 1]  // go previous
         }
@@ -158,7 +158,7 @@ extension OnboardingController: UIPageViewControllerDataSource {
         if currentIndex < pages.count - 1 {
             return pages[currentIndex + 1]  // go next
         } else {
-            return RoomViewController()//pages.first              // wrap first
+            return nil
         }
     }
 }
