@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //TEST
         let navVC = UINavigationController(rootViewController: OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal))
         window?.rootViewController = navVC
-        //제일 처음 시작하는 뷰
+//        제일 처음 시작하는 뷰
 //        if Storage.isFirstTime() {
 //            let navVC = UINavigationController(rootViewController: OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil))
 //            window?.rootViewController = navVC
@@ -30,6 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //           let navVC = UINavigationController(rootViewController: RoomViewController())
 //            window?.rootViewController = navVC
 //        }
+        
         window?.makeKeyAndVisible()
     }
 

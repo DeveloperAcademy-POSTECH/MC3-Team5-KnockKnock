@@ -100,6 +100,15 @@ class RoomViewController: UIViewController {
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
+        //뷰디드어피어 부분을 옮겨옴
+        let doorViewController = DoorViewController()
+        doorViewController.modalPresentationStyle = .overFullScreen
+        if isDoorView {
+            present(doorViewController, animated: false, completion: nil)
+            isDoorView = false
+        }
+        
         imageInput()
         // 네비게이션 뷰 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -180,16 +189,18 @@ class RoomViewController: UIViewController {
         // 비행기 이미지 앞에 투명 버튼
         letterButton.translatesAutoresizingMaskIntoConstraints = false
         letterButton.addTarget(self, action: #selector(letterViewTapped(_:)), for: .touchUpInside)
+        
+        
     }
     
     // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
-        let doorViewController = DoorViewController()
-        doorViewController.modalPresentationStyle = .overFullScreen
-        if isDoorView {
-            present(doorViewController, animated: false, completion: nil)
-            isDoorView = false
-        }
+//        let doorViewController = DoorViewController()
+//        doorViewController.modalPresentationStyle = .overFullScreen
+//        if isDoorView {
+//            present(doorViewController, animated: false, completion: nil)
+//            isDoorView = false
+//        }
     }
     
     func setupLayout(){
@@ -339,7 +350,7 @@ func showToast(VC: UIViewController, text: String) {
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
     })
-
+}
 //UserDefaults 사용
 public class Storage {
     static func isFirstTime() -> Bool {
