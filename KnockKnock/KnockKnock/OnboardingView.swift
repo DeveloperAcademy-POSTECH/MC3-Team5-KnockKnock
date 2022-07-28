@@ -40,10 +40,6 @@ class OnboardingController: UIPageViewController {
         layout()
         
     }
-    
-
-    
-
 }
 
 extension OnboardingController {

@@ -19,6 +19,12 @@ class RoomViewController: UIViewController {
     let navigationBarAppearance = UINavigationBarAppearance()
     
     let letterButton = UIButton()
+    // [Test]온보딩 다시보기 버튼
+    let reButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .red
+        return button
+    }()
     
     // 배경화면
     let roomImageView: UIImageView = {
@@ -143,7 +149,7 @@ class RoomViewController: UIViewController {
         view.addSubview(settingImageView)
         view.addSubview(musicImageView)
         view.addSubview(letterButton)
-        
+        view.addSubview(reButton)
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
             CoreDataManager.shared.saveFrameCoreData(image: UIImage(named: "frame person")!.pngData()!)
@@ -189,6 +195,10 @@ class RoomViewController: UIViewController {
         // 비행기 이미지 앞에 투명 버튼
         letterButton.translatesAutoresizingMaskIntoConstraints = false
         letterButton.addTarget(self, action: #selector(letterViewTapped(_:)), for: .touchUpInside)
+        
+        // [Test]온보딩 다시보기 버튼
+        reButton.translatesAutoresizingMaskIntoConstraints = false
+        reButton.addTarget(self, action: #selector(reButtonTapped), for: .touchUpInside)
         
         
     }
@@ -255,7 +265,13 @@ class RoomViewController: UIViewController {
             letterButton.widthAnchor.constraint(equalToConstant: 90),
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
-            letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
+            letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
+            
+            // [Test] 온보딩 다시보기 버튼
+            reButton.widthAnchor.constraint(equalToConstant: 90),
+            reButton.heightAnchor.constraint(equalToConstant: 80),
+            reButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -75),
+            reButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 6)
             
         ])
     }
@@ -322,6 +338,13 @@ class RoomViewController: UIViewController {
         letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
         self.present(letterVC, animated: true, completion: nil)
     }
+    // [Test] 온보딩 다시보기 버튼 터치 함수
+    @objc func reButtonTapped(){
+        //UserDefaults.standard.set(nil, forKey: "isFirstTime")
+        let navVC =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            
+        self.navigationController?.pushViewController(navVC, animated: true)
+    }
 }
 
 // 감지하는 기능 추가
@@ -353,13 +376,13 @@ func showToast(VC: UIViewController, text: String) {
 }
 //UserDefaults 사용
 public class Storage {
-    static func isFirstTime() -> Bool {
+    static func isFirstTime() -> Bool{
         //UserDefaults object 가져오기
         let defaults = UserDefaults.standard
         //UserDefaults 를 이용해 값 가져오기
         if defaults.object(forKey: "isFirstTime") == nil {
             //UserDefaults 를 이용해 값 저장하기
-            defaults.set("No", forKey:"isFirstTime")
+            defaults.set("Yes", forKey:"isFirstTime")
             return true
         } else {
             return false
