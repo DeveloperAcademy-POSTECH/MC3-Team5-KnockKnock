@@ -13,6 +13,8 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
+    // 배경음악재생 이미지 전환
+    var isPlay: Bool = false
     
     let navigationBarAppearance = UINavigationBarAppearance()
     
@@ -20,6 +22,16 @@ class RoomViewController: UIViewController {
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "roomImage")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
+    
+    // 배경음악 버튼 ImageView
+    let musicImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "musicnote-x")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
@@ -116,6 +128,7 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         view.addSubview(settingImageView)
+        view.addSubview(musicImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -130,6 +143,10 @@ class RoomViewController: UIViewController {
         // 배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
+        
+        // 음악 사진 터치 가능하도록 설정
+        musicImageView.isUserInteractionEnabled = true
+        musicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(controlSound(_:))))
         
         // 셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
@@ -207,7 +224,13 @@ class RoomViewController: UIViewController {
             settingImageView.widthAnchor.constraint(equalToConstant: 30),
             settingImageView.heightAnchor.constraint(equalToConstant: 30),
             settingImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
-            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
+            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            
+            // musicImageView layout
+            musicImageView.widthAnchor.constraint(equalToConstant: 28),
+            musicImageView.heightAnchor.constraint(equalToConstant: 28),
+            musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20)
         ])
     }
     
@@ -220,7 +243,6 @@ class RoomViewController: UIViewController {
             }
         }
     }
-
 
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
@@ -250,6 +272,22 @@ class RoomViewController: UIViewController {
             showToast()
             letterCloseCheck = false
         }
+    }
+    
+    // 배경음악 재생 함수
+    @objc func controlSound(_ sender: UITapGestureRecognizer) {
+        print("dd2)")
+        isPlay.toggle()
+        
+        if isPlay {
+            AudioManager.shared.playSound("forest")
+            self.musicImageView.image = UIImage(named: "musicnote2")
+            print("dd")
+        } else {
+            AudioManager.shared.stopSound()
+            self.musicImageView.image = UIImage(named: "musicnote-x")
+        }
+        
     }
     
     // 메모 버튼 터치 함수
