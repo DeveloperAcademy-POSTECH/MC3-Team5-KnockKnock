@@ -28,15 +28,12 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
-        
         title = "비밀번호 설정"
         view.backgroundColor = .red
         tableViewSetup()
         tableViewSetup()
         loadTasks()
-        
     }
     
     private func tableViewSetup() {
@@ -45,14 +42,13 @@ class SettingViewController: UIViewController {
         tableView.delegate = self
         
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            
         ])
     }
+    
     // tasks를 userDefaults에 저장
     func saveTasks() {
         let data = self.tasks.map {
@@ -68,10 +64,7 @@ class SettingViewController: UIViewController {
     
     // userDefaults에 저장된 내용을 tasks에 불러오기
     func loadTasks() {
-        
-        
         let isRegister = keyChainManager.getItem(key: "passcode") == nil ? false : true
-        
         if isRegister {
             let userDefaults = UserDefaults.standard
             guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
@@ -119,10 +112,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
         if task.isSwitch {
             cell.accessoryView = switchView
+            cell.selectionStyle = .none
         } else {
             cell.accessoryView = nil
         }
-        
         
         return cell
     }
@@ -130,9 +123,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func fatchTable() {
         tasks[0].isSwitchOn = false
         if self.tasks.count == 3 {
-//            self.tasks.removeLast(2)
-            self.tasks.removeLast()
-            self.tasks.removeLast()
+            self.tasks.removeLast(2)
             tableView.reloadData()
         }
     }
@@ -146,6 +137,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             if sender.isOn {
                 let registerPasscode = PasscodeViewController()
                 registerPasscode.modalPresentationStyle = .fullScreen
+                registerPasscode.passcodeMode = .new
                 present(registerPasscode, animated: true)
                 
                 if tasks.count == 1 {
@@ -158,11 +150,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 // 키체인 삭제
                 if keyChainManager.deleteItem(key: "passcode") {
-                    if tasks.count == 3 {
-                        tasks.removeLast()
-                        tasks.removeLast()
-                        tableView.reloadData()
-                    }
+                    fatchTable()
                 }
             }
         }
@@ -189,17 +177,16 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    // 3번째 셀 '비밀번호 변경 누렀을때 작동, 아직 미구현
+    // 3번째 셀 '비밀번호 변경 누렀을때 작동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        switch indexPath.row {
-        case 0: return
-        case 1: return
-        case 2: print("비밀번호 변경")
-        default:
-            return
+        if indexPath.row == 2 {
+            let registerPasscode = PasscodeViewController()
+            registerPasscode.modalPresentationStyle = .fullScreen
+            registerPasscode.passcodeMode = .change
+            present(registerPasscode, animated: true)
         }
+        
     }
     
 }

@@ -16,12 +16,14 @@ class MainLetterViewController: UIViewController {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(systemName: "paperplane.fill")!
         imageView.image = myImage
+        imageView.tintColor = .systemGray2
         return imageView
     }()
     
     let letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "letterBackGround")!
+        //    .alpha(0.5)
         imageView.image = myImage
         return imageView
     }()
@@ -46,8 +48,8 @@ class MainLetterViewController: UIViewController {
         
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
-        paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -10).isActive = true
-        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 10).isActive = true
+        paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -15).isActive = true
+        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 15).isActive = true
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
@@ -136,4 +138,17 @@ extension MainLetterViewController: UITextViewDelegate {
 }
 
 
+
+
+extension UIImage {
+    
+    // 오펙 주기위한 extension
+    func alpha(_ value: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+}
 

@@ -13,13 +13,26 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     let keychainManager = KeychainManager()
+    // 배경음악재생 이미지 전환
+    var isPlay: Bool = false
     
     let navigationBarAppearance = UINavigationBarAppearance()
+    
+    let letterButton = UIButton()
     
     // 배경화면
     let roomImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "roomImage")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        return imageView
+    }()
+    
+    // 배경음악 버튼 ImageView
+    let musicImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "musicnote-x")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = myImage
         return imageView
@@ -76,7 +89,7 @@ class RoomViewController: UIViewController {
     }()
     
     // 편지 버튼 ImageView
-    var letterImageView: UIImageView = {
+    let letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let myImage: UIImage = UIImage(named: "letter")!
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,13 +103,18 @@ class RoomViewController: UIViewController {
         imageInput()
         // 네비게이션 뷰 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        // 애니메이션 넣는 코드
+        UIView.animate(withDuration: 2, delay: 0.5,
+                       options: [.repeat, .autoreverse], animations: {
+                            self.letterImageView.center.y -= 10.0
+            }, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             // 다시 등장
             navigationController?.setNavigationBarHidden(false, animated: animated)
-        }
+    }
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -104,7 +122,6 @@ class RoomViewController: UIViewController {
         navigationBarAppearance.backgroundColor = UIColor(named: "navigationColor")
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        
 
         view.backgroundColor = .systemBackground
 
@@ -115,6 +132,8 @@ class RoomViewController: UIViewController {
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
         view.addSubview(settingImageView)
+        view.addSubview(musicImageView)
+        view.addSubview(letterButton)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -125,10 +144,13 @@ class RoomViewController: UIViewController {
         setupLayout()
         imageInput()
         
-
         // 배경화면 크기 AspectFill로 맞춤
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
+        
+        // 음악 사진 터치 가능하도록 설정
+        musicImageView.isUserInteractionEnabled = true
+        musicImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(controlSound(_:))))
         
         // 셋팅 사진 터치 가능하도록 설정
         settingImageView.isUserInteractionEnabled = true
@@ -154,6 +176,10 @@ class RoomViewController: UIViewController {
         
         // 모달 닫히는 것 감지하여 토스트 수행
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
+        
+        // 비행기 이미지 앞에 투명 버튼
+        letterButton.translatesAutoresizingMaskIntoConstraints = false
+        letterButton.addTarget(self, action: #selector(letterViewTapped(_:)), for: .touchUpInside)
     }
     
     // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
@@ -168,7 +194,7 @@ class RoomViewController: UIViewController {
     
     func setupLayout(){
         NSLayoutConstraint.activate([
-
+            // roomImageView layout
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             roomImageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
             
@@ -176,25 +202,25 @@ class RoomViewController: UIViewController {
             memoImageView.widthAnchor.constraint(equalToConstant: 124),
             memoImageView.heightAnchor.constraint(equalToConstant: 79),
             memoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -90),
-            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40),
+            memoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 60),
             
             // albumImageView layout
             albumImageView.widthAnchor.constraint(equalToConstant: 73),
             albumImageView.heightAnchor.constraint(equalToConstant: 92),
             albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant:  -115),
-            albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -120),
+            albumImageView.bottomAnchor.constraint(equalTo: memoImageView.topAnchor, constant: -125),
             
             // frameImageView layout
             frameImageView.widthAnchor.constraint(equalToConstant: 68),
             frameImageView.heightAnchor.constraint(equalToConstant: 100),
             frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
-            frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
             // frameHasImageView layout
             frameHasImageView.widthAnchor.constraint(equalToConstant: 53),
             frameHasImageView.heightAnchor.constraint(equalToConstant: 85),
             frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
-            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
             // letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
@@ -206,7 +232,20 @@ class RoomViewController: UIViewController {
             settingImageView.widthAnchor.constraint(equalToConstant: 30),
             settingImageView.heightAnchor.constraint(equalToConstant: 30),
             settingImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 15),
-            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
+            settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            
+            // musicImageView layout
+            musicImageView.widthAnchor.constraint(equalToConstant: 28),
+            musicImageView.heightAnchor.constraint(equalToConstant: 28),
+            musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
+            musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20),
+            
+            // 비행기 앞에 투명 버튼
+            letterButton.widthAnchor.constraint(equalToConstant: 90),
+            letterButton.heightAnchor.constraint(equalToConstant: 80),
+            letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
+            letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
+            
         ])
     }
     
@@ -220,34 +259,25 @@ class RoomViewController: UIViewController {
         }
     }
 
-
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
-        func showToast(font: UIFont = UIFont.systemFont(ofSize: 16.0)) {
-            let toastLabel = UILabel()
-            self.view.addSubview(toastLabel)
-            toastLabel.translatesAutoresizingMaskIntoConstraints = false
-            toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            toastLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-            toastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-            toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            toastLabel.textColor = UIColor.white
-            toastLabel.font = font
-            toastLabel.textAlignment = .center;
-            toastLabel.text = "편지가 하늘에 잘 전달되었어요"
-            toastLabel.layer.cornerRadius = 10;
-            toastLabel.clipsToBounds  =  true
-            UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
-                toastLabel.alpha = 0.0
-            }, completion: {(isCompleted) in
-                toastLabel.removeFromSuperview()
-            })
-        }
         if letterCloseCheck {
-            showToast()
+            showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요.")
             letterCloseCheck = false
+        }
+    }
+    
+    // 배경음악 재생 함수
+    @objc func controlSound(_ sender: UITapGestureRecognizer) {
+        print("dd2)")
+        isPlay.toggle()
+        
+        if isPlay {
+            AudioManager.shared.playSound("forest")
+            self.musicImageView.image = UIImage(named: "musicnote2")
+        } else {
+            AudioManager.shared.stopSound()
+            self.musicImageView.image = UIImage(named: "musicnote-x")
         }
     }
     
@@ -279,7 +309,6 @@ class RoomViewController: UIViewController {
     @objc func letterViewTapped(_ sender: UITapGestureRecognizer) {
         let letterVC = MainLetterViewController()
         letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
-        
         self.present(letterVC, animated: true, completion: nil)
     }
 }
@@ -288,6 +317,28 @@ class RoomViewController: UIViewController {
 extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
 }
+
+func showToast(VC: UIViewController, text: String) {
+    let toastLabel = UILabel()
+    VC.view.addSubview(toastLabel)
+    toastLabel.translatesAutoresizingMaskIntoConstraints = false
+    toastLabel.centerXAnchor.constraint(equalTo: VC.view.centerXAnchor).isActive = true
+    toastLabel.centerYAnchor.constraint(equalTo: VC.view.centerYAnchor).isActive = true
+    toastLabel.leadingAnchor.constraint(equalTo: VC.view.leadingAnchor, constant: 24).isActive = true
+    toastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+    toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+    toastLabel.textColor = UIColor.white
+    toastLabel.font = UIFont.systemFont(ofSize: 16.0)
+    toastLabel.textAlignment = .center;
+    toastLabel.text = text
+    toastLabel.layer.cornerRadius = 10;
+    toastLabel.clipsToBounds  =  true
+    UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseIn, animations: {
+        toastLabel.alpha = 0.0
+    }, completion: {(isCompleted) in
+        toastLabel.removeFromSuperview()
+    })
 
 //UserDefaults 사용
 public class Storage {
