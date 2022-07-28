@@ -243,7 +243,7 @@ class RoomViewController: UIViewController {
     // 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         if letterCloseCheck {
-            showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요")
+            showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요.")
             letterCloseCheck = false
         }
     }
@@ -316,9 +316,10 @@ func showToast(VC: UIViewController, text: String) {
     toastLabel.text = text
     toastLabel.layer.cornerRadius = 10;
     toastLabel.clipsToBounds  =  true
-    UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
+    UIView.animate(withDuration: 1.0, delay: 1, options: .curveEaseIn, animations: {
         toastLabel.alpha = 0.0
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
     })
+
 }
