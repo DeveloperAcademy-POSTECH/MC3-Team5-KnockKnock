@@ -262,7 +262,7 @@ class RoomViewController: UIViewController {
             toastLabel.text = "편지가 하늘에 잘 전달되었어요"
             toastLabel.layer.cornerRadius = 10;
             toastLabel.clipsToBounds  =  true
-            UIView.animate(withDuration: 2.0, delay: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseIn, animations: {
                 toastLabel.alpha = 0.0
             }, completion: {(isCompleted) in
                 toastLabel.removeFromSuperview()
