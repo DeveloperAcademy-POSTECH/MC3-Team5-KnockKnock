@@ -322,9 +322,9 @@ func showToast(VC: UIViewController, text: String) {
     toastLabel.layer.cornerRadius = 10;
     toastLabel.clipsToBounds  =  true
     UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseIn, animations: {
-          toastLabel.alpha = 0.0
+        toastLabel.alpha = 0.0
     }, completion: {(isCompleted) in
-          toastLabel.removeFromSuperview()
+        toastLabel.removeFromSuperview()
     })
 
 }
