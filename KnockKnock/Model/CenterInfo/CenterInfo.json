@@ -2,7 +2,8 @@
     {
         "name": "춘천시정신건강복지센터",
         "address": "강원도 춘천시 효제길 35",
-        "tel": "0332447574",
+        "tel": "tel://033-244-7574-111",
+        "url": "https://www.chmhc.org/main/",
         "gps": {
             "latitude": 37.8712892,
             "longitude": 127.7371644
@@ -11,7 +12,8 @@
     {
         "name": "태백시정신건강복지센터",
         "address": "태백시 태백로 905 (황지동, 보건소)",
-        "tel": "0335521378",
+        "tel": "tel://033-552-1378-111",
+        "url": "https://www.happymind-tb.or.kr/index.php",
         "gps": {
             "latitude": 37.176676,
             "longitude": 128.9924305
@@ -20,7 +22,8 @@
     {
         "name": "고양시자살예방센터",
         "address": "경기도 고양시 일산서구 중앙로 1443 4층",
-        "tel": "0319279275",
+        "tel": "tel://031-927-9275-111",
+        "url": "https://www.goyangmaum.org/",
         "gps": {
             "latitude": 37.6703698,
             "longitude": 126.7597233

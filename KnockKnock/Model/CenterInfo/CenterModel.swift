@@ -11,6 +11,7 @@ struct CenterModel: Codable {
     let name: String
     let address: String
     let tel: String
+    let url: String
     let gps: GpsInfo
 }
 

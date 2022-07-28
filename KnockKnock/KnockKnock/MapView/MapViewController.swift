@@ -43,11 +43,12 @@ class MapViewController: UIViewController {
         
         for data in centerData {
             
-//            let pin = MKPointAnnotation()
+            //            let pin = MKPointAnnotation()
             let pin = CustomPointAnnotation()
             pin.title = data.name
             pin.subtitle = "주소 : " + data.address
             pin.tel = data.tel
+            pin.url = data.url
             
             print(pin.tel)
             
@@ -64,6 +65,7 @@ class MapViewController: UIViewController {
 // 상속, 변수 추가
 class CustomPointAnnotation: MKPointAnnotation {
     var tel: String!
+    var url: String!
 }
 
 
@@ -79,10 +81,11 @@ extension MapViewController: MKMapViewDelegate {
         
         annotationView.image = UIImage(systemName: "pin.fill")
         annotationView.canShowCallout = true
+        annotationView.leftCalloutAccessoryView = UIButton(type: .close)
         annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        annotationView.leftCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
-//        annotationView.detailCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
-
+        //        annotationView.leftCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
+        //        annotationView.detailCalloutAccessoryView = UIImageView(image: UIImage(systemName: "building.2.crop.circle.fill"))
+        
         return annotationView
     }
     
@@ -93,14 +96,27 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         let annotation = view.annotation as! CustomPointAnnotation
+        let btn = control as! UIButton
+        
+//        print(btn.)
         
         if view.rightCalloutAccessoryView == control {
+            
             // right accessory
-            print("right")
+            print("right - call")
             print(annotation.tel)
+            
+            if let url = URL(string: annotation.tel!) {
+                UIApplication.shared.open(url)
+            }
+            
         } else {
             // left accessory
-            print("left")
+            print("left - url")
+            
+            if let url = URL(string: annotation.url!) {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }
