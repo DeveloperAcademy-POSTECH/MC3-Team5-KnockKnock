@@ -7,14 +7,22 @@
 
 import LocalAuthentication
 import UIKit
+import AVFoundation
+
+enum PasscodeMode {
+    case pass
+    case new
+    case change
+}
 
 class PasscodeViewController: UIViewController {
     
-    var passcodes = [Int]()
-    var newPasscodes = [Int]()
     let settingViewController = SettingViewController()
     let keychainManager = KeychainManager()
-    var isRegister: Bool? = false
+    var passcodeMode: PasscodeMode = .pass
+    var isPasscode: Bool? = false
+    var newPasscodes = [Int]()
+    var passcodes = [Int]()
     var tasks = [Task]()
     
     // 비밀번호 상태 이미지
@@ -24,12 +32,8 @@ class PasscodeViewController: UIViewController {
     lazy var passcodeImage4: UIImageView = setupPasscodeImage()
     
     // 비밀번호 상태 라벨
-    lazy var titleLabel: UILabel = {
-        setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
-    }()
-    lazy var subTitleLabel: UILabel = {
-        setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
-    }()
+    lazy var titleLabel: UILabel = setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
+    lazy var subTitleLabel: UILabel = setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +41,8 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
-        biometry()
+//        biometry()
+        
     }
     
     // 비밀번호 상태 이미지
@@ -61,7 +66,7 @@ class PasscodeViewController: UIViewController {
     
     // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
-        isRegister = keychainManager.getItem(key: "passcode") == nil ? true : false
+        isPasscode = keychainManager.getItem(key: "passcode") == nil ? false : true
 
         
         let userDefaults = UserDefaults.standard
@@ -113,6 +118,7 @@ class PasscodeViewController: UIViewController {
         ])
     }
     
+    // 넘버 버튼
     private func setupNumberPad() {
         
         let buttonWidthSize = view.frame.size.width / 3
@@ -133,16 +139,23 @@ class PasscodeViewController: UIViewController {
         
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.black, for: .normal)
-        //        faceButton.backgroundColor = .white
-        if isRegister! {
-            faceButton.setTitle("취소", for: .normal)
-        } else {
+        
+        switch passcodeMode {
+        case .pass:
             faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
+            if tasks.count == 3 && tasks[1].isSwitchOn {
+                view.addSubview(faceButton)
+                biometry()
+            }
+        case .new, .change:
+            faceButton.setTitle("취소", for: .normal)
+            view.addSubview(faceButton)
         }
         faceButton.tintColor = .black
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
-        view.addSubview(faceButton)
+        
+        
         
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         zeroButton.setTitleColor(.black, for: .normal)
@@ -160,6 +173,7 @@ class PasscodeViewController: UIViewController {
         view.addSubview(deleteButton)
     }
     
+    // number button 눌렸을 때
     @objc private func numberPressed(_ sender: UIButton) {
         let number = sender.tag
         passcodes.append(number)
@@ -168,12 +182,15 @@ class PasscodeViewController: UIViewController {
     }
     
     @objc private func facePressed(_ sender: UIButton) {
-        if isRegister! {
+        switch passcodeMode {
+        case .pass:
+            biometry()
+        case .new:
             settingViewController.tasks[0].isSwitchOn = false
             NotificationCenter.default.post(name: .fatchTable, object: nil)
             self.dismiss(animated: true)
-        } else {
-            biometry()
+        case .change:
+            self.dismiss(animated: true)
         }
     }
     
@@ -185,11 +202,26 @@ class PasscodeViewController: UIViewController {
         }
     }
     
+    // 비밀번호 4자리 입력 완료
     private func update() {
         print(passcodes)
-        
         if passcodes.count == 4 {
-            if isRegister! {
+            
+            switch passcodeMode {
+            case .pass:
+                if let keychainPasscodes = keychainManager.getItem(key: "passcode") as? String {
+                    let registedPasscodes = keychainPasscodes.map { Int(String($0))! }
+                    if passcodes == registedPasscodes {
+                        self.dismiss(animated: true)
+                    } else {
+                        passcodes.removeAll()
+                        subTitleLabel.textColor = .red
+                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
+                        shakeWith(duration: 0.5, angle: .pi/30, yOffset: 0.5)
+                        
+                    }
+                }
+            case .new, .change:
                 if newPasscodes.isEmpty {
                     newPasscodes = passcodes
                     passcodes.removeAll()
@@ -209,17 +241,6 @@ class PasscodeViewController: UIViewController {
                         self.dismiss(animated: true)
                     }
                 }
-            } else {
-                if let keychainPasscides = keychainManager.getItem(key: "passcode") as? String {
-                    let registedPasscodes = keychainPasscides.map { Int(String($0))! }
-                    if passcodes == registedPasscodes {
-                        self.dismiss(animated: true)
-                    } else {
-                        passcodes.removeAll()
-                        subTitleLabel.textColor = .red
-                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
-                    }
-                }
 
             }
         }
@@ -230,7 +251,7 @@ class PasscodeViewController: UIViewController {
     }
     
     private func biometry() {
-        if !isRegister! {
+        if isPasscode! && tasks[1].isSwitchOn {
             // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
             let authContext = LAContext()
             var error: NSError?
@@ -258,15 +279,60 @@ class PasscodeViewController: UIViewController {
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { success, error in
                     DispatchQueue.main.async {
                         guard success, error == nil else {
+                            AudioServicesPlaySystemSound(4095)
                             return
                         }
                         self.dismiss(animated: false)
                     }
                 }
             } else {
+                
 
             }
         }
+        
+    }
+    
+    // 암호입력 틀렸을때 애니메이션
+    private func shakeWith(duration: Double, angle: CGFloat, yOffset: CGFloat) {
+        
+        let numberOfFrames: Double = 6
+        let frameDuration = Double(1/numberOfFrames)
+        
+        
+//        imageView.layer.anchorPoint = CGPoint(x: 0.5, y: yOffset)
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: [],
+                                animations: {
+            AudioServicesPlaySystemSound(4095)
+            UIView.addKeyframe(withRelativeStartTime: 0.0,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+                AudioServicesPlaySystemSound(4095)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*2,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*3,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*4,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+            UIView.addKeyframe(withRelativeStartTime: frameDuration*5,
+                               relativeDuration: frameDuration) {
+                self.subTitleLabel.transform = CGAffineTransform.identity
+            }
+        },
+                                completion: nil
+        )
         
     }
     

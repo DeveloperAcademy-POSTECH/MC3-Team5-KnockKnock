@@ -64,10 +64,10 @@ class MemoDetailViewController: UIViewController {
         
         self.view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalToConstant: view.bounds.width / 1.3).isActive = true
+        button.widthAnchor.constraint(equalToConstant: view.bounds.width - 50).isActive = true
         button.heightAnchor.constraint(equalToConstant: view.bounds.height / 3).isActive = true
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 20).isActive = true
+        button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 10).isActive = true
     }
     
     

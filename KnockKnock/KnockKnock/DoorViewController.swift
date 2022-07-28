@@ -71,10 +71,10 @@ class DoorViewController: UIViewController {
         view.addSubview(doorImageView)
     
         NSLayoutConstraint.activate([
-            doorImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.width / 10),
-            doorImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.bounds.width / 10),
-            doorImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width / 10),
-            doorImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 10)
+            doorImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.width / 6.3),
+            doorImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.bounds.width / 6.3),
+            doorImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width / 6.3),
+            doorImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 6.3)
         ])
     }
     // 싱글 탭하면 토스트 팝업 알림
