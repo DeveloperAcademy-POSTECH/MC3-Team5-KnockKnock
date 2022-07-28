@@ -289,3 +289,18 @@ extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
 }
 
+//UserDefaults 사용
+public class Storage {
+    static func isFirstTime() -> Bool {
+        //UserDefaults object 가져오기
+        let defaults = UserDefaults.standard
+        //UserDefaults 를 이용해 값 가져오기
+        if defaults.object(forKey: "isFirstTime") == nil {
+            //UserDefaults 를 이용해 값 저장하기
+            defaults.set("No", forKey:"isFirstTime")
+            return true
+        } else {
+            return false
+        }
+    }
+}
