@@ -12,11 +12,9 @@ class OnboardingController: UIPageViewController {
     var pages = [UIViewController]()
 
     // external controls
-//    let skipButton = UIButton()
-//    let nextButton = UIButton()
     let pageControl = UIPageControl()
     let initialPage = 0
-// MARK: - 룸 버튼 생성
+
     let goToRoomButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -32,8 +30,6 @@ class OnboardingController: UIPageViewController {
     }()
     
     // animations
-//    var skipButtonTopAnchor: NSLayoutConstraint?
-//    var nextButtonTopAnchor: NSLayoutConstraint?
     var pageControlBottomAnchor: NSLayoutConstraint?
     
     override func viewDidLoad() {
@@ -90,22 +86,11 @@ extension OnboardingController {
         
 // MARK: - 룸버튼 스타일
         goToRoomButton.translatesAutoresizingMaskIntoConstraints = false
-//        skipButton.translatesAutoresizingMaskIntoConstraints = false
-//        skipButton.setTitleColor(.systemBlue, for: .normal)
-//        skipButton.setTitle("Skip", for: .normal)
-//        skipButton.addTarget(self, action: #selector(skipTapped(_:)), for: .primaryActionTriggered)
-//
-//        nextButton.translatesAutoresizingMaskIntoConstraints = false
-//        nextButton.setTitleColor(.systemBlue, for: .normal)
-//        nextButton.setTitle("Next", for: .normal)
-//        nextButton.addTarget(self, action: #selector(nextTapped(_:)), for: .primaryActionTriggered)
+
     }
     
     func layout() {
         view.addSubview(pageControl)
-//        view.addSubview(nextButton)
-//        view.addSubview(skipButton)
-        // MARK: - 룸 버튼 레이아웃
         view.addSubview(goToRoomButton)
         
         NSLayoutConstraint.activate([
@@ -117,22 +102,13 @@ extension OnboardingController {
             goToRoomButton.widthAnchor.constraint(equalToConstant: 340),
             goToRoomButton.heightAnchor.constraint(equalToConstant: 54),
             goToRoomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            goToRoomButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 10)
-            
-            
-            
-//            skipButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 80)
 
-//            view.trailingAnchor.constraint(equalToSystemSpacingAfter: nextButton.trailingAnchor, multiplier: 2),
         ])
         
         // for animations
-//        skipButtonTopAnchor = skipButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2)
-//        nextButtonTopAnchor = nextButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2)
         pageControlBottomAnchor = view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 10)
 
-//        skipButtonTopAnchor?.isActive = true
-//        nextButtonTopAnchor?.isActive = true
         pageControlBottomAnchor?.isActive = true
     }
 }
@@ -174,6 +150,10 @@ extension OnboardingController: UIPageViewControllerDelegate {
         guard let currentIndex = pages.firstIndex(of: viewControllers[0]) else { return }
         
         pageControl.currentPage = currentIndex
+        
+        if currentIndex == pages.count - 1 {
+            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        }
         animateControlsIfNeeded()
     }
     
@@ -181,7 +161,7 @@ extension OnboardingController: UIPageViewControllerDelegate {
         let lastPage = pageControl.currentPage == pages.count - 1
         
         if lastPage {
-            hideControls()
+//            hideControls()
         } else {
             showControls()
         }
@@ -193,16 +173,10 @@ extension OnboardingController: UIPageViewControllerDelegate {
     
     private func hideControls() {
         pageControlBottomAnchor?.constant = -80
-//        skipButtonTopAnchor?.constant = -80
-//        nextButtonTopAnchor?.constant = -80
-        goToRoomButton.topAnchor.constraint(equalTo: view.bottomAnchor , constant: -130).isActive = true
     }
 
     private func showControls() {
         pageControlBottomAnchor?.constant = 80
-//        skipButtonTopAnchor?.constant = 16
-//        nextButtonTopAnchor?.constant = 16
-        goToRoomButton.topAnchor.constraint(equalTo: view.bottomAnchor , constant: 80).isActive = true
     }
 }
 
@@ -220,19 +194,6 @@ extension OnboardingController {
         self.navigationController?.pushViewController(roomVC, animated: true)
     }
 
-//    @objc func skipTapped(_ sender: UIButton) {
-//        let lastPageIndex = pages.count - 1
-//        pageControl.currentPage = lastPageIndex
-//
-//        goToSpecificPage(index: lastPageIndex, ofViewControllers: pages)
-//        animateControlsIfNeeded()
-//    }
-//
-//    @objc func nextTapped(_ sender: UIButton) {
-//        pageControl.currentPage += 1
-//        goToNextPage()
-//        animateControlsIfNeeded()
-//    }
 }
 
 // MARK: - Extensions
