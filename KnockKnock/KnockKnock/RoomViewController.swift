@@ -103,6 +103,11 @@ class RoomViewController: UIViewController {
         imageInput()
         // 네비게이션 뷰 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        // 애니메이션 넣는 코드
+        UIView.animate(withDuration: 2, delay: 0.5,
+                       options: [.repeat, .autoreverse], animations: {
+                            self.letterImageView.center.y -= 10.0
+            }, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -169,10 +174,6 @@ class RoomViewController: UIViewController {
         // 편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
         letterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(letterViewTapped(_:))))
-        UIView.animate(withDuration: 2, delay: 0.5,
-                       options: [.repeat, .autoreverse], animations: {
-                            self.letterImageView.center.y -= 10.0
-            }, completion: nil)
         
         // 모달 닫히는 것 감지하여 토스트 수행
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
