@@ -16,6 +16,10 @@ class RoomViewController: UIViewController {
     // 배경음악 재생 이미지 전환
     var isPlay: Bool = false
     
+    var musicWidth : NSLayoutConstraint?
+    var musicHeight : NSLayoutConstraint?
+    var musicTop : NSLayoutConstraint?
+    
     let navigationBarAppearance = UINavigationBarAppearance()
     
     // 편지 사진 위 투명 버튼
@@ -108,6 +112,36 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    // 음표 1
+    let noteOneImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music1")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
+    // 음표 2
+    let noteTwoImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music2")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
+    // 음표 3
+    let noteThreeImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music3")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -133,6 +167,9 @@ class RoomViewController: UIViewController {
         
         // 편지 사진에 애니메이션 추가
         UIView.animate(withDuration: 2, delay: 0.5, options: [.repeat, .autoreverse], animations: { self.letterImageView.center.y -= 10.0 }, completion: nil)
+        
+        // 음표 애니메이션
+        noteAnimation()
     }
     
     //MARK: -viewWillDisappear
@@ -140,6 +177,11 @@ class RoomViewController: UIViewController {
             super.viewWillDisappear(animated)
             // 네비게이션 바 다시 등장
             navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        // 음표위치 초기화
+        self.noteThreeImageView.center.y += 2
+        self.noteTwoImageView.center.y -= 6
+        self.noteOneImageView.center.y += 10
     }
     
     //MARK: - viewDidLoad
@@ -161,6 +203,9 @@ class RoomViewController: UIViewController {
         view.addSubview(settingImageView)
         view.addSubview(musicImageView)
         view.addSubview(letterButton)
+        view.addSubview(noteOneImageView)
+        view.addSubview(noteTwoImageView)
+        view.addSubview(noteThreeImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -209,6 +254,14 @@ class RoomViewController: UIViewController {
     
     //MARK: - setupLayout
     func setupLayout(){
+        // musicImageView layout
+        musicWidth = musicImageView.widthAnchor.constraint(equalToConstant: 28)
+        musicWidth?.isActive = true
+        musicHeight = musicImageView.heightAnchor.constraint(equalToConstant: 28)
+        musicHeight?.isActive = true
+        musicTop = musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
+        musicTop?.isActive = true
+        
         NSLayoutConstraint.activate([
             // roomImageView layout
             roomImageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
@@ -257,9 +310,6 @@ class RoomViewController: UIViewController {
             settingImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
             
             // musicImageView layout
-            musicImageView.widthAnchor.constraint(equalToConstant: 28),
-            musicImageView.heightAnchor.constraint(equalToConstant: 28),
-            musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15),
             musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20),
             
             // 편지 투명 버튼 layout
@@ -267,7 +317,33 @@ class RoomViewController: UIViewController {
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
+            
+            
+            // note(1~3) imageview layout
+            noteThreeImageView.widthAnchor.constraint(equalToConstant: 9),
+            noteThreeImageView.heightAnchor.constraint(equalToConstant: 13),
+            noteThreeImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 6.5),
+            noteThreeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.43),
+            
+            noteTwoImageView.widthAnchor.constraint(equalToConstant: 8),
+            noteTwoImageView.heightAnchor.constraint(equalToConstant: 12),
+            noteTwoImageView.trailingAnchor.constraint(equalTo: noteThreeImageView.leadingAnchor, constant: -10),
+            noteTwoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.37),
+            
+            noteOneImageView.widthAnchor.constraint(equalToConstant: 9),
+            noteOneImageView.heightAnchor.constraint(equalToConstant: 13),
+            noteOneImageView.trailingAnchor.constraint(equalTo: noteTwoImageView.leadingAnchor, constant: -10),
+            noteOneImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.45)
         ])
+    }
+    
+    // 음표 애니메이션
+    func noteAnimation(){
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: [.repeat, .autoreverse, .curveEaseInOut], animations: {
+            self.noteThreeImageView.center.y -= 2
+            self.noteTwoImageView.center.y += 6
+            self.noteOneImageView.center.y -= 10
+        })
     }
     
     // CoreData를 읽어와서 이미지를 전달하는 함수
@@ -293,11 +369,30 @@ class RoomViewController: UIViewController {
         isPlay.toggle()
         
         if isPlay {
-            AudioManager.shared.playSound("forest")
+            AudioManager.shared.playSound("Many_Days")
             self.musicImageView.image = UIImage(named: "musicnote2")
+            musicWidth?.constant = 26
+            musicHeight?.constant = 24
+            musicTop?.constant = view.bounds.height / 14
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn],animations: {
+                self.noteThreeImageView.alpha = 1.0
+                self.noteTwoImageView.alpha = 1.0
+                self.noteOneImageView.alpha = 1.0
+            })
+            
         } else {
             AudioManager.shared.stopSound()
             self.musicImageView.image = UIImage(named: "musicnote-x")
+            musicWidth?.constant = 28
+            musicHeight?.constant = 28
+            musicTop?.constant = view.bounds.height / 15
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
+                self.noteThreeImageView.alpha = 0.0
+                self.noteTwoImageView.alpha = 0.0
+                self.noteOneImageView.alpha = 0.0
+            })
         }
     }
     
