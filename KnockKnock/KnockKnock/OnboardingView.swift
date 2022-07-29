@@ -32,6 +32,9 @@ class OnboardingController: UIPageViewController {
     
     // animations
     var pageControlBottomAnchor: NSLayoutConstraint?
+    var buttonWidth: NSLayoutConstraint?
+    var buttonHeight: NSLayoutConstraint?
+    var buttonBottom: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +68,7 @@ extension OnboardingController {
         delegate = self
         view.backgroundColor = .white
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
-// MARK: - 룸버튼 액션 추가
+
         goToRoomButton.addTarget(self, action: #selector(goToRoomButtonTapped), for: .touchUpInside)
         let page1 = OnboardingViewController(imageName: "album",
                                              titleText: "앨범",
@@ -85,7 +88,6 @@ extension OnboardingController {
         
         setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
         
-        //nav?
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -96,7 +98,6 @@ extension OnboardingController {
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = initialPage
         
-// MARK: - 룸버튼 스타일
         goToRoomButton.translatesAutoresizingMaskIntoConstraints = false
 
     }
@@ -109,20 +110,19 @@ extension OnboardingController {
             pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
-            pageControl.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 10),
-            
-            goToRoomButton.widthAnchor.constraint(equalToConstant: 340),
-            goToRoomButton.heightAnchor.constraint(equalToConstant: 54),
             goToRoomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 80)
-
         ])
         
         // for animations
-        pageControlBottomAnchor = view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 10)
+        pageControlBottomAnchor = pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
 
         pageControlBottomAnchor?.isActive = true
+        buttonWidth = goToRoomButton.widthAnchor.constraint(equalToConstant: 340)
+        buttonWidth?.isActive = true
+        buttonHeight = goToRoomButton.heightAnchor.constraint(equalToConstant: 54)
+        buttonHeight?.isActive = true
+        buttonBottom = goToRoomButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 80)
+        buttonBottom?.isActive = true
     }
 }
 
@@ -165,31 +165,14 @@ extension OnboardingController: UIPageViewControllerDelegate {
         pageControl.currentPage = currentIndex
         
         if currentIndex == pages.count - 1 {
-            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+//            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+            buttonBottom?.constant = -120
         }
-        animateControlsIfNeeded()
-    }
-    
-    private func animateControlsIfNeeded() {
-        let lastPage = pageControl.currentPage == pages.count - 1
         
-        if lastPage {
-//            hideControls()
-        } else {
-            showControls()
-        }
-
+        //최신 애니메이션 적용
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0, options: [.curveEaseOut], animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    private func hideControls() {
-        pageControlBottomAnchor?.constant = -80
-    }
-
-    private func showControls() {
-        pageControlBottomAnchor?.constant = 80
     }
 }
 
@@ -199,7 +182,9 @@ extension OnboardingController {
 
     @objc func pageControlTapped(_ sender: UIPageControl) {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: true, completion: nil)
-        animateControlsIfNeeded()
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     @objc func goToRoomButtonTapped() {
