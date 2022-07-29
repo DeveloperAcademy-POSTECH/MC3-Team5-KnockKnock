@@ -116,7 +116,6 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //CoreData에 이미지 저장
         CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
-        print("사진 클릭함2")
         
         //CoreData에 이미지가 더 존재하는 경우 처음 이미지 삭제
         if CoreDataManager.shared.frameImage!.count > 0 {
@@ -148,15 +147,22 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
         }
     }
 }
+
+// 크롭된 이미지 저장
 extension FrameViewController: CropperViewControllerDelegate {
     func cropperDidConfirm(_ cropper: CropperViewController, state: CropperState?) {
         cropper.dismiss(animated: true, completion: nil)
         
         if let state = state, let image = cropper.originalImage.cropped(withCropperState: state) {
+            //CoreData에 이미지가 존재하는 경우 제거
+            if CoreDataManager.shared.frameImage!.count > 0 {
+                CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
+            } else { }
+            
+            //CoreData에 이미지 저장
             CoreDataManager.shared.saveFrameCoreData(image: image.pngData()!)
-        } else {
-            print("이상해")
-        }
+        } else { }
+        
         self.dismiss(animated: true, completion: nil)
     }
 }

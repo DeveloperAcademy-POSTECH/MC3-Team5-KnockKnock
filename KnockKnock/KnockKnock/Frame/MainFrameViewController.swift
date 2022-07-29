@@ -77,7 +77,7 @@ class MainFrameViewController: UIViewController {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-            } else {}
+            } else { }
             
             //CoreData에 기본 이미지 추가
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.pngData())!)
