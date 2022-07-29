@@ -180,6 +180,8 @@ class RoomViewController: UIViewController {
             // 다시 등장
             navigationController?.setNavigationBarHidden(false, animated: animated)
         
+        // 비행기 위치 초기화
+        self.letterImageView.center.y += 10
         // 음표위치 초기화
         self.noteThreeImageView.center.y += 2
         self.noteTwoImageView.center.y -= 6
