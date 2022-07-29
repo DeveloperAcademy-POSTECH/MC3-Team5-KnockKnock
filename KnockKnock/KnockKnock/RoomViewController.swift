@@ -89,6 +89,16 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    // 액자 사진 레이어 ImageView
+    let frameLayerImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named:"frame-layer")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     // 편지 버튼 ImageView
     let letterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -117,7 +127,7 @@ class RoomViewController: UIViewController {
             
         }
         
-        
+
         imageInput()
         // 네비게이션 뷰 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -149,6 +159,7 @@ class RoomViewController: UIViewController {
         view.addSubview(albumImageView)
         view.addSubview(letterImageView)
         view.addSubview(frameHasImageView)
+        view.addSubview(frameLayerImageView)
         view.addSubview(settingImageView)
         view.addSubview(musicImageView)
         view.addSubview(letterButton)
@@ -183,10 +194,8 @@ class RoomViewController: UIViewController {
         albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
         
         // 액자 사진 터치 가능하도록 설정
-        frameImageView.isUserInteractionEnabled = true
-        frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
-        frameHasImageView.isUserInteractionEnabled = true
-        frameHasImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
+        frameLayerImageView.isUserInteractionEnabled = true
+        frameLayerImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         
         // 편지 사진 터치 가능하도록 설정
         letterImageView.isUserInteractionEnabled = true
@@ -241,6 +250,12 @@ class RoomViewController: UIViewController {
             frameHasImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
+            // frameLayerImageView layout
+            frameLayerImageView.widthAnchor.constraint(equalToConstant: 68),
+            frameLayerImageView.heightAnchor.constraint(equalToConstant: 100),
+            frameLayerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
+            frameLayerImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
+            
             // letterImageView layout
             letterImageView.widthAnchor.constraint(equalToConstant: 77),
             letterImageView.heightAnchor.constraint(equalToConstant: 66),
@@ -264,9 +279,6 @@ class RoomViewController: UIViewController {
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
-            
-            
-            
         ])
     }
     
