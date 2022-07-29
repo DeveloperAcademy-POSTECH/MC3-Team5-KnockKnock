@@ -76,7 +76,7 @@ class SettingViewController: UIViewController {
             }
         } else {
             tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false),
-            Task(title: "설명 다시보기", isSwitch: true, isSwitchOn: false)]
+                     Task(title: "설명 다시보기", isSwitch: false, isSwitchOn: false)]
         }
     }
     
@@ -155,15 +155,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        //온보딩 다시보기 스위치 작동
-        if sender.tag == 1 {
-            if sender.isOn {
-                let onBoarding =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-                onBoarding.modalPresentationStyle = .overFullScreen
-                present(onBoarding, animated: true)
-                
-            }
-        }
+        
         // 생체인증 스위치 작동
         if sender.tag == 2 {
             if sender.isOn {
@@ -189,6 +181,13 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     // 3번째 셀 '비밀번호 변경 누렀을때 작동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 1 {
+            //온보딩 다시보기 작동
+            
+            let onBoarding =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            onBoarding.modalPresentationStyle = .overFullScreen
+            present(onBoarding, animated: true)
+        }
         if indexPath.row == 3 {
             let registerPasscode = PasscodeViewController()
             registerPasscode.modalPresentationStyle = .fullScreen
