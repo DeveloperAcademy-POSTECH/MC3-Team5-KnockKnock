@@ -12,7 +12,7 @@ class SettingViewController: UIViewController {
     let keyChainManager = KeychainManager()
     
     // tasks set 할 때 saveTasks함수 호출
-    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
+    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false), Task(title: "설명 다시보기", isSwitch: true, isSwitchOn: false)] {
         didSet {
             self.saveTasks()
         }
@@ -75,7 +75,8 @@ class SettingViewController: UIViewController {
                 return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
             }
         } else {
-            tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)]
+            tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false),
+                     Task(title: "설명 다시보기", isSwitch: false, isSwitchOn: false)]
         }
     }
     
@@ -122,7 +123,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func fatchTable() {
         tasks[0].isSwitchOn = false
-        if self.tasks.count == 3 {
+        if self.tasks.count == 4 {
             self.tasks.removeLast(2)
             tableView.reloadData()
         }
@@ -140,7 +141,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 registerPasscode.passcodeMode = .new
                 present(registerPasscode, animated: true)
                 
-                if tasks.count == 1 {
+                if tasks.count == 2 {
                     let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
                     let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
                     tasks.append(task1)
@@ -156,10 +157,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         // 생체인증 스위치 작동
-        if sender.tag == 1 {
+        if sender.tag == 2 {
             if sender.isOn {
                 if isBiometry() {
-                    tasks[1].isSwitchOn = true
+                    tasks[2].isSwitchOn = true
                 } else {
                     let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가",
                                                   message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.",
@@ -167,11 +168,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                     let alertAction = UIAlertAction(title: "확인", style: .cancel)
                     alert.addAction(alertAction)
                     present(alert, animated: true)
-                    tasks[1].isSwitchOn = false
+                    tasks[2].isSwitchOn = false
                     sender.isOn = false
                 }
             } else {
-                tasks[1].isSwitchOn = false
+                tasks[3].isSwitchOn = false
             }
         }
         
@@ -180,7 +181,14 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     // 3번째 셀 '비밀번호 변경 누렀을때 작동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 2 {
+        if indexPath.row == 1 {
+            //온보딩 다시보기 작동
+            
+            let onBoarding =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            onBoarding.modalPresentationStyle = .overFullScreen
+            present(onBoarding, animated: true)
+        }
+        if indexPath.row == 3 {
             let registerPasscode = PasscodeViewController()
             registerPasscode.modalPresentationStyle = .fullScreen
             registerPasscode.passcodeMode = .change
