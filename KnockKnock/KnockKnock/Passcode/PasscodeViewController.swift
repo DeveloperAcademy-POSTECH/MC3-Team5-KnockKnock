@@ -42,7 +42,6 @@ class PasscodeViewController: UIViewController {
         passcodeField()
         setupNumberPad()
 //        biometry()
-        
     }
     
     // 비밀번호 상태 이미지
@@ -67,8 +66,6 @@ class PasscodeViewController: UIViewController {
     // 비밀번호 등록 여부와, UserDefaults의 값을 load
     private func loadTasks() {
         isPasscode = keychainManager.getItem(key: "passcode") == nil ? false : true
-
-        
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
         self.tasks = data.compactMap {
@@ -80,12 +77,9 @@ class PasscodeViewController: UIViewController {
     }
     
     private func passcodeField() {
-        
         let passcodeButtonHeight = (view.frame.size.width / 12) * 3.5
-        
         let vStackView: UIStackView = {
             let stackView = UIStackView()
-            
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .vertical
             stackView.alignment = .center
@@ -120,7 +114,6 @@ class PasscodeViewController: UIViewController {
     
     // 넘버 버튼
     private func setupNumberPad() {
-        
         let buttonWidthSize = view.frame.size.width / 3
         let buttonHeightSize = buttonWidthSize / 2
         
@@ -128,8 +121,6 @@ class PasscodeViewController: UIViewController {
             for m in 0..<3 {
                 let button = UIButton(frame: CGRect(x: buttonWidthSize * CGFloat(m), y: view.frame.size.height - buttonHeightSize * (4.5 - CGFloat(n)), width: buttonWidthSize, height: buttonHeightSize))
                 button.setTitleColor(.black, for: .normal)
-                
-                //                button.backgroundColor = .white
                 button.setTitle(String((m + 1) + (n * 3)), for: .normal)
                 button.tag = (m + 1) + (n * 3)
                 button.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
@@ -155,15 +146,12 @@ class PasscodeViewController: UIViewController {
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
         
-        
-        
         let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         zeroButton.setTitleColor(.black, for: .normal)
         zeroButton.setTitle("0", for: .normal)
         zeroButton.tag = 0
         zeroButton.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
         view.addSubview(zeroButton)
-        
         let deleteButton = UIButton(frame: CGRect(x: buttonWidthSize * 2, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         deleteButton.setTitleColor(.label, for: .normal)
         deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
@@ -178,7 +166,6 @@ class PasscodeViewController: UIViewController {
         let number = sender.tag
         passcodes.append(number)
         update()
-        
     }
     
     @objc private func facePressed(_ sender: UIButton) {
