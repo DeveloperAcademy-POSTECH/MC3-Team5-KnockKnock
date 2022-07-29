@@ -290,7 +290,6 @@ class RoomViewController: UIViewController {
     
     // 배경음악 재생 함수
     @objc func controlSound(_ sender: UITapGestureRecognizer) {
-        print("dd2)")
         isPlay.toggle()
         
         if isPlay {

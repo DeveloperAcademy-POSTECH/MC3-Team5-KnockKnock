@@ -42,7 +42,7 @@ class MainFrameViewController: UIViewController {
         
         readImage()
     
-        print("\(CoreDataManager.shared.frameImage?.count)")
+        print("\(String(describing: CoreDataManager.shared.frameImage?.count))")
     }
     
     //ActionSheet 함수
@@ -83,7 +83,6 @@ class MainFrameViewController: UIViewController {
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
-            print("기본이미지로 변경됨")
         }
         
         frameImageView.image?.didChangeValue(forKey: "image")

@@ -53,9 +53,7 @@ class CellDetailViewController: UIViewController {
         }
         alert.addAction(success)
         alert.addAction(cancel)
-        present(alert, animated: true) {
-            print("삭제 전 경고창 뜸")
-        }
+        present(alert, animated: true)
     }
     
 }
