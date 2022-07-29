@@ -174,9 +174,9 @@ class RoomViewController: UIViewController {
     
     //MARK: -viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            // 네비게이션 바 다시 등장
-            navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillDisappear(animated)
+        // 네비게이션 바 다시 등장
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         
         // 음표위치 초기화
         self.noteThreeImageView.center.y += 2
@@ -254,6 +254,7 @@ class RoomViewController: UIViewController {
     
     //MARK: - setupLayout
     func setupLayout(){
+        
         // musicImageView layout
         musicWidth = musicImageView.widthAnchor.constraint(equalToConstant: 28)
         musicWidth?.isActive = true
@@ -318,7 +319,6 @@ class RoomViewController: UIViewController {
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
             
-            
             // note(1~3) imageview layout
             noteThreeImageView.widthAnchor.constraint(equalToConstant: 9),
             noteThreeImageView.heightAnchor.constraint(equalToConstant: 13),
@@ -367,7 +367,6 @@ class RoomViewController: UIViewController {
     // 배경음악 재생 함수
     @objc func controlSound(_ sender: UITapGestureRecognizer) {
         isPlay.toggle()
-        
         if isPlay {
             AudioManager.shared.playSound("Many_Days")
             self.musicImageView.image = UIImage(named: "musicnote2")
@@ -380,7 +379,6 @@ class RoomViewController: UIViewController {
                 self.noteTwoImageView.alpha = 1.0
                 self.noteOneImageView.alpha = 1.0
             })
-            
         } else {
             AudioManager.shared.stopSound()
             self.musicImageView.image = UIImage(named: "musicnote-x")
