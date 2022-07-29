@@ -10,7 +10,7 @@ import UIKit
 var letterCloseCheck: Bool = false
 
 class MainLetterViewController: UIViewController {
-
+    
     
     let paperPlainImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -125,6 +125,7 @@ extension MainLetterViewController: UITextViewDelegate {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .black
+            paperPlainImageView.tintColor = .systemBlue
         }
     }
     
@@ -133,6 +134,7 @@ extension MainLetterViewController: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
             textView.textColor = .lightGray
+            
         }
     }
 }

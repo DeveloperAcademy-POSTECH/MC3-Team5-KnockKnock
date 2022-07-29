@@ -48,7 +48,7 @@ class MainAlbumViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        
+        navigationItem.title = "앨범"
         //NavigationBar에 ImagePicker 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(presentPicker))
         
