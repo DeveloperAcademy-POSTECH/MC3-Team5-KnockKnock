@@ -166,12 +166,20 @@ class RoomViewController: UIViewController {
                        options: [.repeat, .autoreverse], animations: {
                             self.letterImageView.center.y -= 10.0
             }, completion: nil)
+        
+        // 음표 애니메이션
+        noteAnimation()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             // 다시 등장
             navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        // 음표위치 초기화
+        self.noteThreeImageView.center.y += 2
+        self.noteTwoImageView.center.y -= 6
+        self.noteOneImageView.center.y += 10
     }
     
     //MARK: - viewDidLoad
@@ -332,6 +340,15 @@ class RoomViewController: UIViewController {
         ])
     }
     
+    // 음표 애니메이션
+    func noteAnimation(){
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: [.repeat, .autoreverse, .curveEaseInOut], animations: {
+            self.noteThreeImageView.center.y -= 2
+            self.noteTwoImageView.center.y += 6
+            self.noteOneImageView.center.y -= 10
+        })
+    }
+    
     // CoreData를 읽어와서 이미지를 전달하는 함수
     func imageInput(){
         CoreDataManager.shared.readFrameCoreData()
@@ -352,15 +369,27 @@ class RoomViewController: UIViewController {
     
     // 배경음악 재생 함수
     @objc func controlSound(_ sender: UITapGestureRecognizer) {
-        print("dd2)")
         isPlay.toggle()
         
         if isPlay {
             AudioManager.shared.playSound("forest")
             self.musicImageView.image = UIImage(named: "musicnote2")
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn],animations: {
+                self.noteThreeImageView.alpha = 1.0
+                self.noteTwoImageView.alpha = 1.0
+                self.noteOneImageView.alpha = 1.0
+            })
+            
         } else {
             AudioManager.shared.stopSound()
             self.musicImageView.image = UIImage(named: "musicnote-x")
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
+                self.noteThreeImageView.alpha = 0.0
+                self.noteTwoImageView.alpha = 0.0
+                self.noteOneImageView.alpha = 0.0
+            })
         }
     }
     
