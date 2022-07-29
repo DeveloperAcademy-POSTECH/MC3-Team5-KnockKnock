@@ -129,9 +129,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func switchChanged(_ sender: UISwitch!) {
-        
+
         tasks[sender.tag].isSwitchOn = sender.isOn
-        
         // 화면 잠금 스위치 작동
         if sender.tag == 0 {
             if sender.isOn {
@@ -174,7 +173,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 tasks[1].isSwitchOn = false
             }
         }
-        
     }
     
     // 3번째 셀 '비밀번호 변경 누렀을때 작동
@@ -186,9 +184,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             registerPasscode.passcodeMode = .change
             present(registerPasscode, animated: true)
         }
-        
     }
-    
 }
 
 extension Notification.Name {

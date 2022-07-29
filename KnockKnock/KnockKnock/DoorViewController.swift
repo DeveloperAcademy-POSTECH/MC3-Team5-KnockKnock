@@ -10,6 +10,16 @@ import UIKit
 class DoorViewController: UIViewController {
     
     let keychainManager = KeychainManager()
+    
+    let doorImageView: UIImageView = {
+        let imageView = UIImageView()
+        let myImage: UIImage = UIImage(named: "door")!
+        imageView.image = myImage
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.anchorPoint = CGPoint(x: 1, y: 0.5)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +57,7 @@ class DoorViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         if userDefaults.object(forKey: "isPasscode") is Bool {
         } else {
+            
             userDefaults.set(true, forKey: "isPasscode")
             if keychainManager.deleteItem(key: "passcode") {
                 print("기존의 키체인을 삭제 함")
@@ -55,22 +66,14 @@ class DoorViewController: UIViewController {
     }
     
     private func doorSetup() {
-        let doorImageView: UIImageView = {
-            let imageView = UIImageView()
-            let myImage: UIImage = UIImage(named: "door")!
-            imageView.image = myImage
-            imageView.contentMode = .scaleAspectFit
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
         
         view.addSubview(doorImageView)
     
         NSLayoutConstraint.activate([
-            doorImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.width / 6.3),
-            doorImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.bounds.width / 6.3),
-            doorImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width / 6.3),
-            doorImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 6.3)
+            doorImageView.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant:  -view.bounds.width * 0.15),
+            doorImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            doorImageView.heightAnchor.constraint(equalToConstant: view.bounds.height * 0.7),
+            doorImageView.widthAnchor.constraint(equalToConstant: view.bounds.width * 0.7)
         ])
     }
     
@@ -81,6 +84,19 @@ class DoorViewController: UIViewController {
     
     // 더블 탭하면 DoorViewController dismiss
     @objc private func doubleTapped() {
-        self.dismiss(animated: false)
+        UIView.animate(withDuration: 1.5, delay: 0, animations: {
+            let layer = self.doorImageView.layer
+            var rotationAndPerspectiveTransform = CATransform3DIdentity
+            rotationAndPerspectiveTransform.m34 = 1.0 / -500
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -15.0 * .pi / 90.0, 0.0, 0.5, 0.0)
+            layer.transform = rotationAndPerspectiveTransform
+            self.doorImageView.alpha = 0.2
+            self.view.backgroundColor = .white
+            
+        }, completion: {finished in
+            self.doorImageView.alpha = 0.0
+            self.modalTransitionStyle = .crossDissolve
+                    self.dismiss(animated: true)
+        })
     }
 }
