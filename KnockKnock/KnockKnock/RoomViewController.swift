@@ -108,6 +108,36 @@ class RoomViewController: UIViewController {
         return imageView
     }()
     
+    // 음표 1
+    let noteOneImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music1")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
+    // 음표 2
+    let noteTwoImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music2")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
+    // 음표 3
+    let noteThreeImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = UIImage(named: "music3")!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = 0.0
+        return imageView
+    }()
+    
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -163,6 +193,9 @@ class RoomViewController: UIViewController {
         view.addSubview(settingImageView)
         view.addSubview(musicImageView)
         view.addSubview(letterButton)
+        view.addSubview(noteOneImageView)
+        view.addSubview(noteTwoImageView)
+        view.addSubview(noteThreeImageView)
         
         // 처음에 기본 이미지 추가
         if CoreDataManager.shared.frameImage?.count == 0 {
@@ -279,6 +312,23 @@ class RoomViewController: UIViewController {
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
+            
+            
+            // note(1~3) imageview layout
+            noteThreeImageView.widthAnchor.constraint(equalToConstant: 9),
+            noteThreeImageView.heightAnchor.constraint(equalToConstant: 13),
+            noteThreeImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width / 6.5),
+            noteThreeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.43),
+            
+            noteTwoImageView.widthAnchor.constraint(equalToConstant: 8),
+            noteTwoImageView.heightAnchor.constraint(equalToConstant: 12),
+            noteTwoImageView.trailingAnchor.constraint(equalTo: noteThreeImageView.leadingAnchor, constant: -10),
+            noteTwoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.37),
+            
+            noteOneImageView.widthAnchor.constraint(equalToConstant: 9),
+            noteOneImageView.heightAnchor.constraint(equalToConstant: 13),
+            noteOneImageView.trailingAnchor.constraint(equalTo: noteTwoImageView.leadingAnchor, constant: -10),
+            noteOneImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 2.45)
         ])
     }
     
