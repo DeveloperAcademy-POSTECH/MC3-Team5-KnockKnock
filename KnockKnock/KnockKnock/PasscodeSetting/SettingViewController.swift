@@ -158,10 +158,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         //온보딩 다시보기 스위치 작동
         if sender.tag == 1 {
             if sender.isOn {
-                let navVC =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-                    
-                self.navigationController?.pushViewController(navVC, animated: true)
-                sender.isOn = false
+                let onBoarding =  OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+                onBoarding.modalPresentationStyle = .overFullScreen
+                present(onBoarding, animated: true)
+                
             }
         }
         // 생체인증 스위치 작동

@@ -8,7 +8,8 @@
 import UIKit
 
 class OnboardingController: UIPageViewController {
-
+    let keychainManager = KeychainManager()
+    let doorView = DoorViewController()
     var pages = [UIViewController]()
 
     // external controls
@@ -39,6 +40,21 @@ class OnboardingController: UIPageViewController {
         style()
         layout()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.object(forKey: "oldUser") is Bool {
+            
+        } else {
+            // 앱을 처음사용 하는 것인지 확인 후 기존의 키체인에 비밀번호가 등록되어 있다면 삭제
+            if
+                
+                keychainManager.deleteItem(key: "passcode") {
+                print("기존의 키체인을 삭제 함")
+            }
+            doorView.modalPresentationStyle = .overFullScreen
+            present(doorView, animated: false)
+        }
     }
 }
 
@@ -186,8 +202,10 @@ extension OnboardingController {
     }
     
     @objc func goToRoomButtonTapped() {
-        let roomVC = RoomViewController()
-        self.navigationController?.pushViewController(roomVC, animated: true)
+        UserDefaults.standard.set(true, forKey: "oldUser")
+        
+        dismiss(animated: false)
+        
     }
 
 }
