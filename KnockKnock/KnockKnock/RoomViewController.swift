@@ -381,7 +381,7 @@ class RoomViewController: UIViewController {
         isPlay.toggle()
         
         if isPlay {
-            AudioManager.shared.playSound("forest")
+            AudioManager.shared.playSound("Many_Days")
             self.musicImageView.image = UIImage(named: "musicnote2")
             musicWidth?.constant = 26
             musicHeight?.constant = 24
