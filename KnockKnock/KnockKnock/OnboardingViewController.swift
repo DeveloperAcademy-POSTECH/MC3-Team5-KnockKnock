@@ -52,19 +52,13 @@ extension OnboardingViewController {
     }
         
     func layout() {
-//        stackView.addArrangedSubview(imageView)
-//        stackView.addArrangedSubview(titleLabel)
-//        stackView.addArrangedSubview(subtitleLabel)
-        
-//        view.addSubview(stackView)
-        
         view.addSubview(imageView)
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         
         NSLayoutConstraint.activate([
             
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 220),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 5),
             imageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             

@@ -109,6 +109,7 @@ extension OnboardingController {
             pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20),
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             pageControl.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 10),
             
             goToRoomButton.widthAnchor.constraint(equalToConstant: 340),
