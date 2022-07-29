@@ -122,6 +122,7 @@ class RoomViewController: UIViewController {
             }
         } else {
             let onBoarding = OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            isDoorView = false
             onBoarding.modalPresentationStyle = .overFullScreen
             present(onBoarding, animated: false)
             
