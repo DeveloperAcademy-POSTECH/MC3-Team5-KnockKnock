@@ -20,9 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         let navVC = UINavigationController(rootViewController: RoomViewController())
-        
-        //제일 처음 시작하는 뷰
         window?.rootViewController = navVC
+        
+        
         window?.makeKeyAndVisible()
     }
 

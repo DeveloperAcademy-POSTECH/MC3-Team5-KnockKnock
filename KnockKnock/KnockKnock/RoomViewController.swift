@@ -12,13 +12,14 @@ class RoomViewController: UIViewController {
     // DoorViewController 실행 되었는지 확인
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
-    let keychainManager = KeychainManager()
+    
     // 배경음악재생 이미지 전환
     var isPlay: Bool = false
     
     let navigationBarAppearance = UINavigationBarAppearance()
     
     let letterButton = UIButton()
+    
     
     // 배경화면
     let roomImageView: UIImageView = {
@@ -100,6 +101,23 @@ class RoomViewController: UIViewController {
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
+        //뷰디드어피어 부분을 옮겨옴
+        if UserDefaults.standard.object(forKey: "oldUser") is Bool {
+            let doorViewController = DoorViewController()
+            doorViewController.modalPresentationStyle = .overFullScreen
+            if isDoorView {
+                present(doorViewController, animated: false, completion: nil)
+                isDoorView = false
+            }
+        } else {
+            let onBoarding = OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            onBoarding.modalPresentationStyle = .overFullScreen
+            present(onBoarding, animated: false)
+            
+        }
+        
+        
         imageInput()
         // 네비게이션 뷰 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -180,16 +198,17 @@ class RoomViewController: UIViewController {
         // 비행기 이미지 앞에 투명 버튼
         letterButton.translatesAutoresizingMaskIntoConstraints = false
         letterButton.addTarget(self, action: #selector(letterViewTapped(_:)), for: .touchUpInside)
+        
     }
     
     // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
     override func viewDidAppear(_ animated: Bool) {
-        let doorViewController = DoorViewController()
-        doorViewController.modalPresentationStyle = .overFullScreen
-        if isDoorView {
-            present(doorViewController, animated: false, completion: nil)
-            isDoorView = false
-        }
+//        let doorViewController = DoorViewController()
+//        doorViewController.modalPresentationStyle = .overFullScreen
+//        if isDoorView {
+//            present(doorViewController, animated: false, completion: nil)
+//            isDoorView = false
+//        }
     }
     
     func setupLayout(){
@@ -244,7 +263,9 @@ class RoomViewController: UIViewController {
             letterButton.widthAnchor.constraint(equalToConstant: 90),
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
-            letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4)
+            letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
+            
+            
             
         ])
     }
@@ -311,6 +332,7 @@ class RoomViewController: UIViewController {
         letterVC.modalPresentationStyle = UIModalPresentationStyle.automatic
         self.present(letterVC, animated: true, completion: nil)
     }
+    
 }
 
 // 감지하는 기능 추가
@@ -339,5 +361,19 @@ func showToast(VC: UIViewController, text: String) {
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
     })
-
+}
+//UserDefaults 사용
+public class Storage {
+    static func isFirstTime() -> Bool{
+        //UserDefaults object 가져오기
+        let defaults = UserDefaults.standard
+        //UserDefaults 를 이용해 값 가져오기
+        if defaults.object(forKey: "isFirstTime") == nil {
+            //UserDefaults 를 이용해 값 저장하기
+            defaults.set("Yes", forKey:"isFirstTime")
+            return true
+        } else {
+            return false
+        }
+    }
 }

@@ -25,7 +25,7 @@ class DoorViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "doorBackground")
         
-        firstCheck()
+        
         doorSetup()
         
         // 뷰 전체에 싱글탭 제스처 기능 추가
@@ -49,19 +49,6 @@ class DoorViewController: UIViewController {
             let PasscodeVC = PasscodeViewController()
             PasscodeVC.modalPresentationStyle = .overFullScreen
             present(PasscodeVC, animated: true)
-        }
-    }
-    
-    // 앱을 처음사용 하는 것인지 확인 후 기존의 키체인에 비밀번호가 등록되어 있다면 삭제
-    private func firstCheck() {
-        let userDefaults = UserDefaults.standard
-        if userDefaults.object(forKey: "isPasscode") is Bool {
-        } else {
-            
-            userDefaults.set(true, forKey: "isPasscode")
-            if keychainManager.deleteItem(key: "passcode") {
-                print("기존의 키체인을 삭제 함")
-            }
         }
     }
     
