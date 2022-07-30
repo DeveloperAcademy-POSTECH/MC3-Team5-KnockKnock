@@ -28,7 +28,7 @@ class MainFrameViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(frameImageView)
-        
+        navigationItem.title = "액자"
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         

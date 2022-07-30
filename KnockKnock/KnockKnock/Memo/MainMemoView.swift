@@ -29,7 +29,7 @@ class MainMemoView: UIViewController {
         
         CoreDataManager.shared.readCoreData()
         
-        navigationItem.title = "나의 다이어리"
+        navigationItem.title = "다이어리"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goToMemoVC))
         
         view.addSubview(tableView)
