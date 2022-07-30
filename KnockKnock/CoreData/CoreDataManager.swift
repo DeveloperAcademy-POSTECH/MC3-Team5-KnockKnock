@@ -17,7 +17,6 @@ class CoreDataManager {
     var frameImage: [NSManagedObject]?
     
     //MARK: - 메모 부분 CoreData
-    
     //데이터 저장
     func saveCoreData(title: String, memo: String, image: Data) {
         // App Delegate 호출
@@ -66,24 +65,22 @@ class CoreDataManager {
         }
     }
     
-    func deleteCoreData(object: NSManagedObject) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+    func deleteCoreData(object: NSManagedObject) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // 객체를 넘기고 바로 삭제
         managedContext.delete(object)
         do {
             try managedContext.save()
-            return true
         } catch let error as NSError {
             print("Could not update. \(error), \(error.userInfo)")
-            return false
         }
     }
     
     //데이터 업데이트
-    func updateCoreData(id: UUID, title: String, memo: String, image: Data) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+    func updateCoreData(id: UUID, title: String, memo: String, image: Data) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Entity")
         fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
@@ -97,10 +94,10 @@ class CoreDataManager {
             object.setValue(image, forKey: "image")
             
             try managedContext.save()
-            return true
+            return
         } catch let error as NSError {
             print("Could not update. \(error), \(error.userInfo)")
-            return false
+            return
         }
     }
     
@@ -127,9 +124,11 @@ class CoreDataManager {
         do {
             // managedContext 내부의 변경사항 저장
             try managedContext.save()
+            return
         } catch let error as NSError {
             // 에러 발생시
             print("Could not save. \(error), \(error.userInfo)")
+            return
         }
     }
     
@@ -145,25 +144,26 @@ class CoreDataManager {
             // fetchRequest를 통해 managedContext로부터 결과 배열을 가져오기
             let resultCDArray = try managedContext.fetch(fetchRequest)
             self.albumImageArray = resultCDArray
-
+            return
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
+            return
         }
     }
     
     //[DELETE]
-    func deleteAlbumCoreData(object: NSManagedObject) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+    func deleteAlbumCoreData(object: NSManagedObject) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // 객체를 넘기고 바로 삭제
         managedContext.delete(object)
         do {
             try managedContext.save()
-            return true
+            return
         } catch let error as NSError {
             print("Could not update. \(error), \(error.userInfo)")
-            return false
+            return
         }
     }
     
@@ -189,9 +189,11 @@ class CoreDataManager {
         do {
             // managedContext 내부의 변경사항 저장
             try managedContext.save()
+            return
         } catch let error as NSError {
             // 에러 발생시
             print("Could not save. \(error), \(error.userInfo)")
+            return
         }
     }
     
@@ -207,24 +209,26 @@ class CoreDataManager {
             // fetchRequest를 통해 managedContext로부터 결과 배열을 가져오기
             let resultCDArray = try managedContext.fetch(fetchRequest)
             self.frameImage = resultCDArray
-
+            return
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
+            return
         }
     }
+    
     //[DELETE]
-    func deleteFrameCoreData(object: NSManagedObject) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+    func deleteFrameCoreData(object: NSManagedObject) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // 객체를 넘기고 바로 삭제
         managedContext.delete(object)
         do {
             try managedContext.save()
-            return true
+            return
         } catch let error as NSError {
             print("Could not update. \(error), \(error.userInfo)")
-            return false
+            return
         }
     }
 }

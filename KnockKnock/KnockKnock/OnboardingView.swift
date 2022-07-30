@@ -22,11 +22,9 @@ class OnboardingController: UIPageViewController {
         button.backgroundColor = .init(red: 128/255, green: 159/255, blue: 174/255, alpha: 1)
         button.layer.cornerRadius = 14
         button.clipsToBounds = true
-        
         button.setTitle("방에 입장하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(goToRoomButtonTapped), for: .touchUpInside)
-       
         return button
     }()
     
@@ -38,22 +36,19 @@ class OnboardingController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setup()
         style()
         layout()
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if UserDefaults.standard.object(forKey: "oldUser") is Bool {
             
         } else {
             // 앱을 처음사용 하는 것인지 확인 후 기존의 키체인에 비밀번호가 등록되어 있다면 삭제
-            if
-                
-                keychainManager.deleteItem(key: "passcode") {
-                print("기존의 키체인을 삭제 함")
+            if keychainManager.deleteItem(key: "passcode") {
+                print("기존의 키체인 삭제")
             }
             doorView.modalPresentationStyle = .overFullScreen
             present(doorView, animated: false)
@@ -62,7 +57,7 @@ class OnboardingController: UIPageViewController {
 }
 
 extension OnboardingController {
-    
+    // 온보딩 페이지 설정 함수
     func setup() {
         dataSource = self
         delegate = self
@@ -87,7 +82,6 @@ extension OnboardingController {
         pages.append(page4)
         
         setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
-        
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -97,9 +91,7 @@ extension OnboardingController {
         pageControl.pageIndicatorTintColor = .systemGray4
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = initialPage
-        
         goToRoomButton.translatesAutoresizingMaskIntoConstraints = false
-
     }
     
     func layout() {
@@ -115,7 +107,6 @@ extension OnboardingController {
         
         // for animations
         pageControlBottomAnchor = pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
-
         pageControlBottomAnchor?.isActive = true
         buttonWidth = goToRoomButton.widthAnchor.constraint(equalToConstant: 340)
         buttonWidth?.isActive = true
@@ -165,7 +156,6 @@ extension OnboardingController: UIPageViewControllerDelegate {
         pageControl.currentPage = currentIndex
         
         if currentIndex == pages.count - 1 {
-//            goToRoomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
             buttonBottom?.constant = -120
         }
         
@@ -189,11 +179,8 @@ extension OnboardingController {
     
     @objc func goToRoomButtonTapped() {
         UserDefaults.standard.set(true, forKey: "oldUser")
-        
         dismiss(animated: false)
-        
     }
-
 }
 
 // MARK: - Extensions
@@ -217,5 +204,4 @@ extension UIPageViewController {
     func goToSpecificPage(index: Int, ofViewControllers pages: [UIViewController]) {
         setViewControllers([pages[index]], direction: .forward, animated: true, completion: nil)
     }
-    
 }
