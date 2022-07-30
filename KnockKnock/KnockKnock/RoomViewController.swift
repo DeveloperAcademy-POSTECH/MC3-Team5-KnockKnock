@@ -156,6 +156,7 @@ class RoomViewController: UIViewController {
             }
         } else {
             let onBoarding = OnboardingController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            isDoorView = false
             onBoarding.modalPresentationStyle = .overFullScreen
             present(onBoarding, animated: false)
         }
@@ -178,6 +179,8 @@ class RoomViewController: UIViewController {
         // 네비게이션 바 다시 등장
         navigationController?.setNavigationBarHidden(false, animated: animated)
         
+        // 비행기 위치 초기화
+        self.letterImageView.center.y += 10
         // 음표위치 초기화
         self.noteThreeImageView.center.y += 2
         self.noteTwoImageView.center.y -= 6
