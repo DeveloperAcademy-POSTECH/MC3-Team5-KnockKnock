@@ -15,12 +15,6 @@ class SettingViewController: UIViewController {
     let onboardingCells: [String] = ["다시보기"]
     
     // 비밀번호 설정 셀에 사용될 배열
-    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
-        didSet {
-            self.saveTasks()
-        }
-    }
-    
     let sections: [String] = ["앱설명", "비밀번호"]
     
     let tableView: UITableView = {
@@ -30,9 +24,14 @@ class SettingViewController: UIViewController {
         return tableView
     }()
     
+    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
+        didSet {
+            self.saveTasks()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
         title = "비밀번호 설정"
         view.backgroundColor = .red
@@ -57,11 +56,7 @@ class SettingViewController: UIViewController {
     // tasks를 userDefaults에 저장
     func saveTasks() {
         let data = self.tasks.map {
-            [
-                "title": $0.title,
-                "isSwitch": $0.isSwitch,
-                "isSwitchOn": $0.isSwitchOn
-            ]
+            ["title": $0.title, "isSwitch": $0.isSwitch, "isSwitchOn": $0.isSwitchOn]
         }
         let userDefaults = UserDefaults.standard
         userDefaults.set(data, forKey: "tasks")
@@ -106,8 +101,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-            return sections[section]
-        }
+        return sections[section]
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -142,7 +137,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // 비밀번호 변경 셀 or 설명 다시보기 셀 눌렀을 때
+    // 비밀번호 변경 or 설명 다시보기 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
@@ -155,9 +150,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             registerPasscode.passcodeMode = .change
             present(registerPasscode, animated: true)
         }
-
     }
     
+    // 비밀번호 스위치 off로 변경되면 생체인증, 비밀번호 변경 task 삭제 함수
     @objc func fatchTable() {
         tasks[0].isSwitchOn = false
         if self.tasks.count == 3 {
@@ -166,8 +161,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // 셀 스위치 on/off 함수
     @objc private func switchChanged(_ sender: UISwitch!) {
-
         tasks[sender.tag].isSwitchOn = sender.isOn
         // 화면 잠금 스위치 작동
         if sender.tag == 0 {
@@ -193,27 +188,23 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         // 생체인증 스위치 작동
-        if sender.tag == 2 {
+        if sender.tag == 1 {
             if sender.isOn {
                 if isBiometry() {
-                    tasks[2].isSwitchOn = true
+                    tasks[1].isSwitchOn = true
                 } else {
-                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가",
-                                                  message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.",
-                                                  preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.", preferredStyle: .alert)
                     let alertAction = UIAlertAction(title: "확인", style: .cancel)
                     alert.addAction(alertAction)
                     present(alert, animated: true)
-                    tasks[2].isSwitchOn = false
+                    tasks[1].isSwitchOn = false
                     sender.isOn = false
                 }
             } else {
-                tasks[3].isSwitchOn = false
+                tasks[1].isSwitchOn = false
             }
         }
     }
-    
-    
 }
 
 extension Notification.Name {
