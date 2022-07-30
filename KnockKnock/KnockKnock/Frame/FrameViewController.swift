@@ -86,7 +86,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     //CollectionView Cell의 Size 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         guard
-            let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else{fatalError()}
+            let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
         
         let cellColumns = 3
         let widthOfCells = collectionView.bounds.width
@@ -120,7 +120,7 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
         //CoreData에 이미지가 더 존재하는 경우 처음 이미지 삭제
         if CoreDataManager.shared.frameImage!.count > 0 {
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-        } else { }
+        }
         
         //추가중
         let picker = UIImagePickerController()
@@ -157,12 +157,10 @@ extension FrameViewController: CropperViewControllerDelegate {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-            } else { }
-            
+            }
             //CoreData에 이미지 저장
             CoreDataManager.shared.saveFrameCoreData(image: image.pngData()!)
-        } else { }
-        
+        }
         self.dismiss(animated: true, completion: nil)
     }
 }
