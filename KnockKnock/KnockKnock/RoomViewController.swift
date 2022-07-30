@@ -240,6 +240,8 @@ class RoomViewController: UIViewController {
         albumImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(albumViewTapped(_:))))
         
         // 액자 사진 터치 가능하도록 설정
+        frameImageView.isUserInteractionEnabled = true
+        frameImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         frameLayerImageView.isUserInteractionEnabled = true
         frameLayerImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(frameViewTapped(_:))))
         
@@ -296,8 +298,8 @@ class RoomViewController: UIViewController {
             frameHasImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
             // frameLayerImageView layout
-            frameLayerImageView.widthAnchor.constraint(equalToConstant: 68),
-            frameLayerImageView.heightAnchor.constraint(equalToConstant: 100),
+            frameLayerImageView.widthAnchor.constraint(equalToConstant: 53),
+            frameLayerImageView.heightAnchor.constraint(equalToConstant: 85),
             frameLayerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             frameLayerImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
             
