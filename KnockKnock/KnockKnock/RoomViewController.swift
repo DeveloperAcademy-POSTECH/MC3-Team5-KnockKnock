@@ -159,6 +159,7 @@ class RoomViewController: UIViewController {
             isDoorView = false
             onBoarding.modalPresentationStyle = .overFullScreen
             present(onBoarding, animated: false)
+            isDoorView = false
         }
         
         imageInput()
