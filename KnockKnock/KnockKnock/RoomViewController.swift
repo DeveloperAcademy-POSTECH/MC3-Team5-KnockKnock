@@ -15,7 +15,6 @@ class RoomViewController: UIViewController {
     
     // 배경음악 재생 이미지 전환
     var isPlay: Bool = false
-    
     var musicWidth : NSLayoutConstraint?
     var musicHeight : NSLayoutConstraint?
     var musicTop : NSLayoutConstraint?

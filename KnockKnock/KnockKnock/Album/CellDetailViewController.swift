@@ -39,6 +39,7 @@ class CellDetailViewController: UIViewController {
         detailImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         detailImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true  
     }
+    
     //앨범 사진 삭제 함수
     @objc func trashTapped() {
         // alert 먼저 뜸
@@ -55,5 +56,4 @@ class CellDetailViewController: UIViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-    
 }
