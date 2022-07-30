@@ -42,7 +42,7 @@ class MainFrameViewController: UIViewController {
         
         readImage()
     
-        print("\(CoreDataManager.shared.frameImage?.count)")
+        print("\(String(describing: CoreDataManager.shared.frameImage?.count))")
     }
     
     //ActionSheet 함수
@@ -77,13 +77,12 @@ class MainFrameViewController: UIViewController {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-            } else {}
+            } else { }
             
             //CoreData에 기본 이미지 추가
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
-            print("기본이미지로 변경됨")
         }
         
         frameImageView.image?.didChangeValue(forKey: "image")

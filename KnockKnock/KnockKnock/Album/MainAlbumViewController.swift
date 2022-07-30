@@ -13,7 +13,7 @@ class MainAlbumViewController: UIViewController {
     var itemProviders: [NSItemProvider] = []
     var imageArray: [UIImage] = []
     
-    //CollectionView 기본 설정
+    // CollectionView 기본 설정
     private let gridFlowLayout : UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 2
@@ -22,7 +22,7 @@ class MainAlbumViewController: UIViewController {
         return layout
     }()
     
-    //CollectionView 정의
+    // CollectionView 정의
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame:.zero, collectionViewLayout: self.gridFlowLayout)
         view.isScrollEnabled = true
@@ -48,8 +48,9 @@ class MainAlbumViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        navigationItem.title = "앨범"
+        
         //NavigationBar에 ImagePicker 버튼 생성
+        navigationItem.title = "앨범"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(presentPicker))
         
         //CollectionView AutoLayout
@@ -112,14 +113,11 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
 extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     //CollectionView Cell의 Size 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        guard
-            let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else{fatalError()}
-        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
         let cellColumns = 3
         let widthOfCells = collectionView.bounds.width
         let widthOfSpacing = CGFloat(cellColumns - 1) * flowLayout.minimumInteritemSpacing
         let width = (widthOfCells-widthOfSpacing) / CGFloat(cellColumns)
-
         return CGSize(width: width, height: width)
     }
     
@@ -132,7 +130,6 @@ extension MainAlbumViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
         cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
-                     
         return cell
       }
 }

@@ -37,7 +37,6 @@ class MemoDetailViewController: UIViewController {
     }
     
     func titleTextField() {
-        
         field.placeholder = titleFieldPlaceHolder
         field.textAlignment = .left
         field.font = UIFont(name: "MapoFlowerIsland", size: 24)
@@ -119,28 +118,26 @@ class MemoDetailViewController: UIViewController {
     
     
     @objc fileprivate func finishMemo(_ sender: UIButton){
+        // 제목이 빈 경우 알림창 표시
         if field.text == "" {
-            
             let alert = UIAlertController(title: "제목을 꼭 적어주세요!", message: "", preferredStyle: UIAlertController.Style.alert)
-            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-                    }
+            let okAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(okAction)
+            
             present(alert, animated: false, completion: nil)
-            
-        } else {
+        }
+        else {
+            // 이미 저장되어 있는 메모인 경우 업데이트
             if let memoId = memoId {
-                CoreDataManager.shared.updateCoreData(id: memoId, title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
-            } else {
-                CoreDataManager.shared.saveCoreData(title: field.text ?? "제목이 없어요", memo: textView.text ?? "메모가 없어요", image: imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData() as! Data)
+                CoreDataManager.shared.updateCoreData(id: memoId, title: field.text!, memo: textView.text, image: (imageView.image?.pngData())!)
             }
-            
+            // 새로 생성된 메모인 경우 저장
+            else {
+                CoreDataManager.shared.saveCoreData(title: field.text!, memo: textView.text, image: (imageView.image?.pngData() ?? UIImage(systemName: "photo")?.pngData())!)
+            }
             navigationController?.popViewController(animated: true)
-            print("test")
-            
-            
         }
     }
-    
     
     @objc fileprivate func didTapButton(_ sender: UIButton){
         // 객체 인스턴스 생성
@@ -150,7 +147,6 @@ class MemoDetailViewController: UIViewController {
         vc.allowsEditing = true
         present(vc, animated: true)
     }
-    
 
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
@@ -185,8 +181,8 @@ extension MemoDetailViewController: UITextViewDelegate {
             textView.textColor = .black
         }
         if self.view.frame.origin.y == 0 {
-                        self.view.frame.origin.y -= view.bounds.height / 4.5
-                }
+            self.view.frame.origin.y -= view.bounds.height / 4.5
+        }
     }
     
     // 입력이 끝났을때

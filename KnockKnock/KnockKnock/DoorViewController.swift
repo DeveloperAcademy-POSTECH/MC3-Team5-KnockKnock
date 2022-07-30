@@ -25,7 +25,6 @@ class DoorViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "doorBackground")
         
-        
         doorSetup()
         
         // 뷰 전체에 싱글탭 제스처 기능 추가
@@ -53,9 +52,7 @@ class DoorViewController: UIViewController {
     }
     
     private func doorSetup() {
-        
         view.addSubview(doorImageView)
-    
         NSLayoutConstraint.activate([
             doorImageView.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant:  -view.bounds.width * 0.15),
             doorImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),

@@ -34,7 +34,6 @@ class OnboardingViewController: UIViewController {
 extension OnboardingViewController {
     
     func style() {
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
@@ -48,7 +47,6 @@ extension OnboardingViewController {
         subtitleLabel.setLineSpacing(spacing: 6)
         subtitleLabel.textAlignment = .center
         subtitleLabel.numberOfLines = 3
-       
     }
         
     func layout() {
@@ -57,7 +55,6 @@ extension OnboardingViewController {
         view.addSubview(subtitleLabel)
         
         NSLayoutConstraint.activate([
-            
             imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 5),
             imageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -66,17 +63,14 @@ extension OnboardingViewController {
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50),
             
             subtitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 18),
-            
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 18)
         ])
-        
     }
 }
 
 extension UILabel {
     func setLineSpacing(spacing: CGFloat) {
         guard let text = text else { return }
-
         let attributeString = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()
         style.lineSpacing = spacing

@@ -13,17 +13,16 @@ class RoomViewController: UIViewController {
     var isDoorView: Bool = true
     let doorViewController = DoorViewController()
     
-    // 배경음악재생 이미지 전환
+    // 배경음악 재생 이미지 전환
     var isPlay: Bool = false
-    
     var musicWidth : NSLayoutConstraint?
     var musicHeight : NSLayoutConstraint?
     var musicTop : NSLayoutConstraint?
     
     let navigationBarAppearance = UINavigationBarAppearance()
     
+    // 편지 사진 위 투명 버튼
     let letterButton = UIButton()
-    
     
     // 배경화면
     let roomImageView: UIImageView = {
@@ -145,8 +144,8 @@ class RoomViewController: UIViewController {
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         //DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
-        //뷰디드어피어 부분을 옮겨옴
         if UserDefaults.standard.object(forKey: "oldUser") is Bool {
             let doorViewController = DoorViewController()
             doorViewController.modalPresentationStyle = .overFullScreen
@@ -160,27 +159,25 @@ class RoomViewController: UIViewController {
             onBoarding.modalPresentationStyle = .overFullScreen
             present(onBoarding, animated: false)
             isDoorView = false
-            
         }
         
-
         imageInput()
-        // 네비게이션 뷰 삭제
+        
+        // 네비게이션 바 삭제
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        // 애니메이션 넣는 코드
-        UIView.animate(withDuration: 2, delay: 0.5,
-                       options: [.repeat, .autoreverse], animations: {
-                            self.letterImageView.center.y -= 10.0
-            }, completion: nil)
+        
+        // 편지 사진에 애니메이션 추가
+        UIView.animate(withDuration: 2, delay: 0.5, options: [.repeat, .autoreverse], animations: { self.letterImageView.center.y -= 10.0 }, completion: nil)
         
         // 음표 애니메이션
         noteAnimation()
     }
     
+    //MARK: -viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            // 다시 등장
-            navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillDisappear(animated)
+        // 네비게이션 바 다시 등장
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         
         // 비행기 위치 초기화
         self.letterImageView.center.y += 10
@@ -256,20 +253,11 @@ class RoomViewController: UIViewController {
         // 비행기 이미지 앞에 투명 버튼
         letterButton.translatesAutoresizingMaskIntoConstraints = false
         letterButton.addTarget(self, action: #selector(letterViewTapped(_:)), for: .touchUpInside)
-        
     }
     
-    // DoorViewController를 띄우고 한번이라도 실행되었다면 다음부턴 안띄움
-    override func viewDidAppear(_ animated: Bool) {
-//        let doorViewController = DoorViewController()
-//        doorViewController.modalPresentationStyle = .overFullScreen
-//        if isDoorView {
-//            present(doorViewController, animated: false, completion: nil)
-//            isDoorView = false
-//        }
-    }
-    
+    //MARK: - setupLayout
     func setupLayout(){
+        
         // musicImageView layout
         musicWidth = musicImageView.widthAnchor.constraint(equalToConstant: 28)
         musicWidth?.isActive = true
@@ -328,12 +316,11 @@ class RoomViewController: UIViewController {
             // musicImageView layout
             musicImageView.trailingAnchor.constraint(equalTo: settingImageView.leadingAnchor, constant: -20),
             
-            // 비행기 앞에 투명 버튼
+            // 편지 투명 버튼 layout
             letterButton.widthAnchor.constraint(equalToConstant: 90),
             letterButton.heightAnchor.constraint(equalToConstant: 80),
             letterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             letterButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 4),
-            
             
             // note(1~3) imageview layout
             noteThreeImageView.widthAnchor.constraint(equalToConstant: 9),
@@ -372,7 +359,7 @@ class RoomViewController: UIViewController {
         }
     }
 
-    // 토스트 알림 함수
+    // 편지 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         if letterCloseCheck {
             showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요.")
@@ -383,7 +370,6 @@ class RoomViewController: UIViewController {
     // 배경음악 재생 함수
     @objc func controlSound(_ sender: UITapGestureRecognizer) {
         isPlay.toggle()
-        
         if isPlay {
             AudioManager.shared.playSound("Many_Days")
             self.musicImageView.image = UIImage(named: "musicnote2")
@@ -396,7 +382,6 @@ class RoomViewController: UIViewController {
                 self.noteTwoImageView.alpha = 1.0
                 self.noteOneImageView.alpha = 1.0
             })
-            
         } else {
             AudioManager.shared.stopSound()
             self.musicImageView.image = UIImage(named: "musicnote-x")
@@ -450,6 +435,7 @@ extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
 }
 
+// 토스트 알림 함수
 func showToast(VC: UIViewController, text: String) {
     let toastLabel = UILabel()
     VC.view.addSubview(toastLabel)
@@ -471,19 +457,4 @@ func showToast(VC: UIViewController, text: String) {
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
     })
-}
-//UserDefaults 사용
-public class Storage {
-    static func isFirstTime() -> Bool{
-        //UserDefaults object 가져오기
-        let defaults = UserDefaults.standard
-        //UserDefaults 를 이용해 값 가져오기
-        if defaults.object(forKey: "isFirstTime") == nil {
-            //UserDefaults 를 이용해 값 저장하기
-            defaults.set("Yes", forKey:"isFirstTime")
-            return true
-        } else {
-            return false
-        }
-    }
 }
