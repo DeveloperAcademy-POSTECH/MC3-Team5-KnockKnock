@@ -41,7 +41,7 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
-        //        biometry()
+//        biometry()
     }
     
     // 비밀번호 상태 이미지
@@ -69,10 +69,11 @@ class PasscodeViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
         self.tasks = data.compactMap {
+            guard let imageName = $0["imageName"] as? String else {return nil}
             guard let title = $0["title"] as? String else {return nil}
             guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
             guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
-            return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+            return Task(imageName: imageName, title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
         }
     }
     

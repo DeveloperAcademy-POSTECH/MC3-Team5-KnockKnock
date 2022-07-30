@@ -12,19 +12,22 @@ class SettingViewController: UIViewController {
     let keyChainManager = KeychainManager()
     
     // 온보딩 다시보기 셀에 사용될 배열
-    let onboardingCells: [String] = ["다시보기"]
+    let onboardingCells: [String] = ["설명 다시보기"]
     
     // 비밀번호 설정 셀에 사용될 배열
-    let sections: [String] = ["앱설명", "비밀번호"]
+    let sections: [String] = ["앱 설명", "앱 잠금"]
     
+    // 테이블 뷰
     let tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.sectionHeaderTopPadding = 0
+        tableView.separatorInset = .zero
         return tableView
     }()
     
-    var tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)] {
+    var tasks = [Task(imageName: "lock", title: "비밀번호 설정", isSwitch: true, isSwitchOn: false)] {
         didSet {
             self.saveTasks()
         }
@@ -35,7 +38,6 @@ class SettingViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
         title = "비밀번호 설정"
         view.backgroundColor = .red
-        tableViewSetup()
         tableViewSetup()
         loadTasks()
     }
@@ -56,7 +58,7 @@ class SettingViewController: UIViewController {
     // tasks를 userDefaults에 저장
     func saveTasks() {
         let data = self.tasks.map {
-            ["title": $0.title, "isSwitch": $0.isSwitch, "isSwitchOn": $0.isSwitchOn]
+            ["imageName": $0.imageName, "title": $0.title, "isSwitch": $0.isSwitch, "isSwitchOn": $0.isSwitchOn]
         }
         let userDefaults = UserDefaults.standard
         userDefaults.set(data, forKey: "tasks")
@@ -69,13 +71,14 @@ class SettingViewController: UIViewController {
             let userDefaults = UserDefaults.standard
             guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
             self.tasks = data.compactMap {
-                guard let title = $0["title"] as? String else {return nil}
-                guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
+                guard let imageName = $0["imageName"] as? String else { return nil }
+                guard let title = $0["title"] as? String else { return nil }
+                guard let isSwitch = $0["isSwitch"] as? Bool else { return nil }
                 guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
-                return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+                return Task(imageName: imageName, title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
             }
         } else {
-            tasks = [Task(title: "화면 잠금", isSwitch: true, isSwitchOn: false)]
+            tasks = [Task(imageName: "lock", title: "비밀번호 설정", isSwitch: true, isSwitchOn: false)]
         }
     }
     
@@ -112,17 +115,19 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         if indexPath.section == 0 {
             let onboardingCell = onboardingCells[indexPath.row]
+            cell.imageView?.image = UIImage(systemName: "questionmark.circle")
             cell.textLabel?.text = onboardingCell
             cell.accessoryView = nil
         } else {
             let task = self.tasks[indexPath.row]
             cell.textLabel?.text = task.title
-            print("\(indexPath.row), \(task.title)")
+            cell.imageView?.image = UIImage(systemName: task.imageName)
             let switchView = UISwitch(frame: .zero)
             switchView.setOn(task.isSwitchOn, animated: true)
             switchView.tag = indexPath.row
@@ -134,6 +139,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.accessoryView = nil
             }
         }
+        cell.imageView?.tintColor = .black
         return cell
     }
     
@@ -173,8 +179,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 present(registerPasscode, animated: true)
                 
                 if tasks.count == 1 {
-                    let task1 = Task(title: "생체인증 (Touch ID, Face ID)", isSwitch: true, isSwitchOn: isBiometry())
-                    let task2 = Task(title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
+                    let task1 = Task(imageName: "faceid", title: "Touch ID, Face ID 사용", isSwitch: true, isSwitchOn: isBiometry())
+                    let task2 = Task(imageName: "lock.rotation", title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
                     tasks.append(task1)
                     tasks.append(task2)
                     tableView.reloadData()
