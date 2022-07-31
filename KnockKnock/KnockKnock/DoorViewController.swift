@@ -10,7 +10,6 @@ import UIKit
 class DoorViewController: UIViewController {
     
     let keychainManager = KeychainManager()
-    
     let doorImageView: UIImageView = {
         let imageView = UIImageView()
         let myImage: UIImage = UIImage(named: "door")!
@@ -40,16 +39,6 @@ class DoorViewController: UIViewController {
         //더블탭을 할 시 싱글탭 무시
         oneTap.require(toFail: tap)
     }
-    
-    // 비밀번호창 띄우기
-//    override func viewDidAppear(_ animated: Bool) {
-//        let isPasscodeView = keychainManager.getItem(key: "passcode") == nil ? false : true
-//        if isPasscodeView {
-//            let PasscodeVC = PasscodeViewController()
-//            PasscodeVC.modalPresentationStyle = .overFullScreen
-//            present(PasscodeVC, animated: true)
-//        }
-//    }
     
     private func doorSetup() {
         view.addSubview(doorImageView)
