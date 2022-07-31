@@ -15,6 +15,7 @@ class RoomViewController: UIViewController {
     
     // 배경음악 재생 이미지 전환
     var isPlay: Bool = false
+    let bgmSize: Double = 0.92
     var musicWidth : NSLayoutConstraint?
     var musicHeight : NSLayoutConstraint?
     var musicTop : NSLayoutConstraint?
@@ -261,9 +262,9 @@ class RoomViewController: UIViewController {
     func setupLayout(){
         
         // musicImageView layout
-        musicWidth = musicImageView.widthAnchor.constraint(equalToConstant: 28)
+        musicWidth = musicImageView.widthAnchor.constraint(equalToConstant: 28 * bgmSize)
         musicWidth?.isActive = true
-        musicHeight = musicImageView.heightAnchor.constraint(equalToConstant: 28)
+        musicHeight = musicImageView.heightAnchor.constraint(equalToConstant: 28 * bgmSize)
         musicHeight?.isActive = true
         musicTop = musicImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 15)
         musicTop?.isActive = true
@@ -375,8 +376,8 @@ class RoomViewController: UIViewController {
         if isPlay {
             AudioManager.shared.playSound("Many_Days")
             self.musicImageView.image = UIImage(named: "musicnote2")
-            musicWidth?.constant = 26
-            musicHeight?.constant = 24
+            musicWidth?.constant = 26 * bgmSize
+            musicHeight?.constant = 24 * bgmSize
             musicTop?.constant = view.bounds.height / 14
             
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn],animations: {
@@ -387,8 +388,8 @@ class RoomViewController: UIViewController {
         } else {
             AudioManager.shared.stopSound()
             self.musicImageView.image = UIImage(named: "musicnote-x")
-            musicWidth?.constant = 28
-            musicHeight?.constant = 28
+            musicWidth?.constant = 28 * bgmSize
+            musicHeight?.constant = 28 * bgmSize
             musicTop?.constant = view.bounds.height / 15
             
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
