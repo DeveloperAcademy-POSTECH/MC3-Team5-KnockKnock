@@ -69,10 +69,11 @@ class PasscodeViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "tasks") as? [[String: Any]] else { return }
         self.tasks = data.compactMap {
+            guard let imageName = $0["imageName"] as? String else {return nil}
             guard let title = $0["title"] as? String else {return nil}
             guard let isSwitch = $0["isSwitch"] as? Bool else {return nil}
             guard let isSwitchOn = $0["isSwitchOn"] as? Bool else { return nil}
-            return Task(title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
+            return Task(imageName: imageName, title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
         }
     }
     
@@ -191,9 +192,7 @@ class PasscodeViewController: UIViewController {
     
     // 비밀번호 4자리 입력 완료
     private func update() {
-        print(passcodes)
         if passcodes.count == 4 {
-            
             switch passcodeMode {
             case .pass:
                 if let keychainPasscodes = keychainManager.getItem(key: "passcode") as? String {
@@ -205,7 +204,6 @@ class PasscodeViewController: UIViewController {
                         subTitleLabel.textColor = .red
                         subTitleLabel.text = "비밀번호 다시 입력해주세요."
                         shakeWith(duration: 0.5, angle: .pi/30, yOffset: 0.5)
-                        
                     }
                 }
             case .new, .change:
@@ -228,7 +226,6 @@ class PasscodeViewController: UIViewController {
                         self.dismiss(animated: true)
                     }
                 }
-
             }
         }
         passcodeImage1.image = UIImage(systemName: passcodes.count > 0 ? "circle.fill" : "minus")
@@ -272,12 +269,8 @@ class PasscodeViewController: UIViewController {
                         self.dismiss(animated: false)
                     }
                 }
-            } else {
-                
-
             }
         }
-        
     }
     
     // 암호입력 틀렸을때 애니메이션
@@ -285,10 +278,6 @@ class PasscodeViewController: UIViewController {
         
         let numberOfFrames: Double = 6
         let frameDuration = Double(1/numberOfFrames)
-        
-        
-//        imageView.layer.anchorPoint = CGPoint(x: 0.5, y: yOffset)
-        
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [],
                                 animations: {
             AudioServicesPlaySystemSound(4095)

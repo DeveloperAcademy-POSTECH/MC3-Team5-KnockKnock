@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct Task {
+    var imageName: String
     var title: String
     var isSwitch: Bool
     var isSwitchOn: Bool
