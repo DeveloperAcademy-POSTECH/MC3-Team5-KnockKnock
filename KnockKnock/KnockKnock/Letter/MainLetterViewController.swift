@@ -41,6 +41,7 @@ class MainLetterViewController: UIViewController {
     override func viewDidLoad() {
         
         view.addSubview(letterImageView)
+//        view.layer.opacity = 0.5
         
         letterImageView.translatesAutoresizingMaskIntoConstraints = false
         letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
