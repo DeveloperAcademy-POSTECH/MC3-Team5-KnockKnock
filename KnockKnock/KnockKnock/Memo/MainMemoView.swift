@@ -198,6 +198,7 @@ class MainTableViewCell: UITableViewCell {
             memo.textColor = UIColor(named: "memoColor")
             memo.font = UIFont(name: "MapoFlowerIsland", size: 16)
             memo.translatesAutoresizingMaskIntoConstraints = false
+            memo.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14).isActive = true
             memo.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 7).isActive = true
             memo.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         }
