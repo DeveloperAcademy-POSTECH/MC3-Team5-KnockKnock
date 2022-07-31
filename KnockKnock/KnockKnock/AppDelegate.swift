@@ -11,6 +11,13 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let userDefaults = UserDefaults.standard
+    
+    // 앱 종료시 비밀번호 뷰 다시 활성화 하기 위한 값 전달
+    func applicationWillTerminate(_ application: UIApplication) {
+        userDefaults.set(false, forKey: "isUnLock")
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -58,6 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    
+    
 
     // MARK: - Core Data Saving support
 

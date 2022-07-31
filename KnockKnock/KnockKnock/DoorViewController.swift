@@ -42,14 +42,14 @@ class DoorViewController: UIViewController {
     }
     
     // 비밀번호창 띄우기
-    override func viewDidAppear(_ animated: Bool) {
-        let isPasscodeView = keychainManager.getItem(key: "passcode") == nil ? false : true
-        if isPasscodeView {
-            let PasscodeVC = PasscodeViewController()
-            PasscodeVC.modalPresentationStyle = .overFullScreen
-            present(PasscodeVC, animated: true)
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        let isPasscodeView = keychainManager.getItem(key: "passcode") == nil ? false : true
+//        if isPasscodeView {
+//            let PasscodeVC = PasscodeViewController()
+//            PasscodeVC.modalPresentationStyle = .overFullScreen
+//            present(PasscodeVC, animated: true)
+//        }
+//    }
     
     private func doorSetup() {
         view.addSubview(doorImageView)

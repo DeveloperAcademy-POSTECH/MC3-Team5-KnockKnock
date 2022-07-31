@@ -10,7 +10,9 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let userDefaults = UserDefaults.standard
+    let passcodeViewController = PasscodeViewController()
+    let keychainManager = KeychainManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -32,11 +34,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        let isUnlock = userDefaults.bool(forKey: "isUnLock")
+        print(isUnlock)
+        if !isUnlock {
+            self.userDefaults.set(true, forKey: "isUnLock")
+            print(userDefaults.bool(forKey: "isUnLock"))
+            let topMostViewController = UIApplication.shared.topMostViewController()
+            
+            if !(topMostViewController is PasscodeViewController) {
+                let isPasscodeView = keychainManager.getItem(key: "passcode") == nil ? false : true
+                if isPasscodeView {
+                    passcodeViewController.passcodeMode = .pass
+                    passcodeViewController.modalPresentationStyle = .overFullScreen
+                    topMostViewController?.present(passcodeViewController, animated: false)
+                }
+            } else {
+                
+                passcodeViewController.biometry()
+            }
+        }
     }
+    
+
 
     func sceneWillResignActive(_ scene: UIScene) {
+        passcodeViewController.passcodes.removeAll()
+        passcodeViewController.update()
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
@@ -47,6 +70,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
+        self.userDefaults.set(false, forKey: "isUnLock")
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
