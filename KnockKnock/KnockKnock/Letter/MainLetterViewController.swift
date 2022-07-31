@@ -41,7 +41,6 @@ class MainLetterViewController: UIViewController {
     override func viewDidLoad() {
         
         view.addSubview(letterImageView)
-//        view.layer.opacity = 0.5
         
         letterImageView.translatesAutoresizingMaskIntoConstraints = false
         letterImageView.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
@@ -50,7 +49,7 @@ class MainLetterViewController: UIViewController {
         view.addSubview(paperPlainImageView)
         paperPlainImageView.translatesAutoresizingMaskIntoConstraints = false
         paperPlainImageView.trailingAnchor.constraint(equalTo: letterImageView.trailingAnchor, constant: -15).isActive = true
-        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 15).isActive = true
+        paperPlainImageView.topAnchor.constraint(equalTo: letterImageView.topAnchor, constant: 18).isActive = true
         paperPlainImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         paperPlainImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
@@ -129,6 +128,7 @@ extension MainLetterViewController: UITextViewDelegate {
             paperPlainImageView.tintColor = .systemBlue
         }
     }
+    
     
     // 입력이 끝났을때
     func textViewDidEndEditing(_ textView: UITextView) {
