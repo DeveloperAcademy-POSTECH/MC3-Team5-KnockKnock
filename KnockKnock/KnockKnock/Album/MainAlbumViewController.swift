@@ -98,7 +98,7 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
                     DispatchQueue.main.async {
                         guard let image = image as? UIImage else { return }
                         let orientedImage = image.fixedOrientation()
-                        if let imageData = orientedImage.pngData() {
+                        if let imageData = orientedImage.jpegData(compressionQuality: 0) {
                             CoreDataManager.shared.saveAlbumCoreData(image: imageData)
                         }
                         CoreDataManager.shared.readAlbumCoreData()

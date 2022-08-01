@@ -13,7 +13,6 @@ class FrameCollectionViewCell: UICollectionViewCell {
     //Cell에 ImageView 추가
     let imageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .gray
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
