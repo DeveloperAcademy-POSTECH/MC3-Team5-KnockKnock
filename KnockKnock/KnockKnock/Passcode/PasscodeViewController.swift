@@ -191,7 +191,7 @@ class PasscodeViewController: UIViewController {
     }
     
     // 비밀번호 4자리 입력 완료
-    private func update() {
+    func update() {
         if passcodes.count == 4 {
             switch passcodeMode {
             case .pass:
@@ -234,7 +234,8 @@ class PasscodeViewController: UIViewController {
         passcodeImage4.image = UIImage(systemName: passcodes.count > 3 ? "circle.fill" : "minus")
     }
     
-    private func biometry() {
+    // 생체인증기능 가능 여부 확인후 인증 실행
+    func biometry() {
         if isPasscode! && tasks[1].isSwitchOn {
             // Touch ID와 Face ID 인증을 사용하기 위한 초기화를 합니다.
             let authContext = LAContext()
@@ -313,7 +314,34 @@ class PasscodeViewController: UIViewController {
     }
     
 }
-
+// 비밀번호 뷰 dismiss되었을때 셋팅 뷰 함수 실행하기 위한 노티피케이션
 extension Notification.Name {
     static let fatchTable = Notification.Name("fatchTable")
+}
+
+// 최상단 뷰를 불러오기 위한 코드 1
+extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        
+        if let presented = self.presentedViewController {
+            return presented.topMostViewController()
+        }
+        
+        if let navigation = self as? UINavigationController {
+            return navigation.visibleViewController?.topMostViewController() ?? navigation
+        }
+        
+        if let tab = self as? UITabBarController {
+            return tab.selectedViewController?.topMostViewController() ?? tab
+        }
+        
+        return self
+    }
+}
+
+// 최상단 뷰를 불러오기 위한 코드 2
+extension UIApplication {
+    func topMostViewController() -> UIViewController? {
+        return self.keyWindow?.rootViewController?.topMostViewController()
+    }
 }
