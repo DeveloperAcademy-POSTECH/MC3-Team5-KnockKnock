@@ -46,7 +46,6 @@ class CellDetailViewController: UIViewController {
         let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
         let success = UIAlertAction(title: "확인", style: .default) { [self] action in
             CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
-            CoreDataManager.shared.readAlbumCoreData()
             navigationController?.popViewController(animated: true)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
