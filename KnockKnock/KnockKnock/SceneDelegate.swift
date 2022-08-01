@@ -47,6 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     passcodeViewController.passcodeMode = .pass
                     passcodeViewController.modalPresentationStyle = .overFullScreen
                     topMostViewController?.present(passcodeViewController, animated: false)
+                    passcodeViewController.biometry()
                 }
             } else {
                 

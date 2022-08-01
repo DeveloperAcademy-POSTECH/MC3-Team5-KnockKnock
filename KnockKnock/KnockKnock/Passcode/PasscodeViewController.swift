@@ -41,7 +41,7 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
-//        biometry()
+        
     }
     
     // 비밀번호 상태 이미지
@@ -137,7 +137,6 @@ class PasscodeViewController: UIViewController {
             faceButton.setImage(UIImage(systemName: "faceid"), for: .normal)
             if tasks.count == 3 && tasks[1].isSwitchOn {
                 view.addSubview(faceButton)
-                biometry()
             }
         case .new, .change:
             faceButton.setTitle("취소", for: .normal)
@@ -342,6 +341,12 @@ extension UIViewController {
 // 최상단 뷰를 불러오기 위한 코드 2
 extension UIApplication {
     func topMostViewController() -> UIViewController? {
-        return self.keyWindow?.rootViewController?.topMostViewController()
+        let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .compactMap({$0 as? UIWindowScene})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+        
+        return keyWindow?.rootViewController?.topMostViewController()
     }
 }
