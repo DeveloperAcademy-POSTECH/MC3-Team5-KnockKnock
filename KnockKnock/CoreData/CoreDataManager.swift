@@ -120,6 +120,7 @@ class CoreDataManager {
         object.setValue(Date(), forKey: "date")
         object.setValue(UUID(), forKey: "id")
         object.setValue(image, forKey: "image")
+        object.setValue(UIImage(data:image)?.preparingThumbnail(of:CGSize(width:390, height:390))?.jpegData(compressionQuality:0), forKey: "thumbnail")
         
         do {
             // managedContext 내부의 변경사항 저장

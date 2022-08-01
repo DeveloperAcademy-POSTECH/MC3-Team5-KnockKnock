@@ -159,7 +159,7 @@ extension FrameViewController: CropperViewControllerDelegate {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
             }
             //CoreData에 이미지 저장
-            CoreDataManager.shared.saveFrameCoreData(image: image.jpegData(compressionQuality: 0)!)
+            CoreDataManager.shared.saveFrameCoreData(image: image.pngData()!)
         }
         self.dismiss(animated: true, completion: nil)
     }

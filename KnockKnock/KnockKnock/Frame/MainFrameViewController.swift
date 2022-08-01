@@ -80,7 +80,7 @@ class MainFrameViewController: UIViewController {
             } else { }
             
             //CoreData에 기본 이미지 추가
-            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.jpegData(compressionQuality: 0))!)
+            CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
         }
