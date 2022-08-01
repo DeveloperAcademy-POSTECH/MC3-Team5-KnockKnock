@@ -105,7 +105,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: albumImageCell.id, for: indexPath) as! albumImageCell
         
-        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as! Data))
+        cell.prepare(image:UIImage(data: CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "thumbnail") as! Data))
                      
         return cell
       }
@@ -159,7 +159,7 @@ extension FrameViewController: CropperViewControllerDelegate {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
             }
             //CoreData에 이미지 저장
-            CoreDataManager.shared.saveFrameCoreData(image: image.jpegData(compressionQuality: 0)!)
+            CoreDataManager.shared.saveFrameCoreData(image: image.pngData()!)
         }
         self.dismiss(animated: true, completion: nil)
     }
