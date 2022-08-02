@@ -59,11 +59,21 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         view.addSubview(collectionView)
         view.addSubview(cancelButton)
         
+        let label = UILabel()
+        label.text = "앨범에서 선택하기"
+        
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15).isActive = true
+        label.font = UIFont.systemFont(ofSize: 18)
+
+    
         //CollectionView AutoLayout
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor,constant: 100),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15),
@@ -75,6 +85,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         CoreDataManager.shared.readAlbumCoreData()
         collectionView.reloadData()
     }
+    
     
     //취소 버튼 함수
     @objc func cancelTapped(_ sender: Any) {
@@ -98,6 +109,18 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //CollectionView에 표시되는 Item의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if CoreDataManager.shared.albumImageArray!.count == 0 {
+            self.collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
+            let label = UILabel()
+            label.text = "앨범에 사진을 채워주세요"
+            label.font = UIFont.boldSystemFont(ofSize: 30)
+            view.addSubview(label)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -15).isActive = true
+            label.font = UIFont(name: "MapoFlowerIsland", size: 24)
+           
+        }
         return CoreDataManager.shared.albumImageArray!.count
     }
     
@@ -122,7 +145,7 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
         }
         
-        //추가중
+        //cropper이미지 피커
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.allowsEditing = false
@@ -164,3 +187,4 @@ extension FrameViewController: CropperViewControllerDelegate {
         self.dismiss(animated: true, completion: nil)
     }
 }
+

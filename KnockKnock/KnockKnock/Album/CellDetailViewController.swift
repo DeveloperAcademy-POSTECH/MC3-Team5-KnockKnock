@@ -27,6 +27,8 @@ class CellDetailViewController: UIViewController {
         
         //ImageView의 이미지에 받아온 이미지 넣기
         detailImageView.image = self.getimage
+        //이미지뷰 확대
+        detailImageView.enableZoom()
         view.addSubview(detailImageView)
         
         //NavigationBar에 삭제 버튼 생성
