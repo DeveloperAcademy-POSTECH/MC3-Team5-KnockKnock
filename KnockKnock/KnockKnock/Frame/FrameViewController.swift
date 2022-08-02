@@ -60,8 +60,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         view.addSubview(cancelButton)
         
         let label = UILabel()
-        label.text = "앨범에서 선택하기"
-        
+        label.text = "앨범에서 선택"
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -113,7 +112,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
             self.collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
             let label = UILabel()
             label.text = "앨범에 사진을 채워주세요"
-            label.font = UIFont.boldSystemFont(ofSize: 30)
+            label.layer.opacity = 0.5
             view.addSubview(label)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
