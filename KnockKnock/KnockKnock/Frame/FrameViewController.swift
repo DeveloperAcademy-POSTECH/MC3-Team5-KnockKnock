@@ -111,10 +111,15 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if CoreDataManager.shared.albumImageArray!.count == 0 {
             self.collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
-            self.collectionView.setEmptyMessage("앨범에 사진을 채워주세요")
+            let label = UILabel()
+            label.text = "앨범에 사진을 채워주세요"
+            label.font = UIFont.boldSystemFont(ofSize: 30)
+            view.addSubview(label)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -15).isActive = true
+            label.font = UIFont(name: "MapoFlowerIsland", size: 24)
            
-        } else {
-            self.collectionView.restore()
         }
         return CoreDataManager.shared.albumImageArray!.count
     }
@@ -183,23 +188,3 @@ extension FrameViewController: CropperViewControllerDelegate {
     }
 }
 
-//collectionView의 페이지가 비어있을 경우 메시지를 띄어줌
-extension UICollectionView {
-
-    func setEmptyMessage(_ message: String) {
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
-        messageLabel.text = message
-        messageLabel.textColor = .black
-        messageLabel.layer.opacity = 0.5
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = .center;
-
-        messageLabel.font = UIFont(name: "MapoFlowerIsland", size: 22)
-        messageLabel.sizeToFit()
-        self.backgroundView = messageLabel
-    }
-
-    func restore() {
-        self.backgroundView = nil
-    }
-}
