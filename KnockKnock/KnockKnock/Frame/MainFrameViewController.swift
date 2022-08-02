@@ -28,6 +28,7 @@ class MainFrameViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(frameImageView)
+        frameImageView.enableZoom()
         navigationItem.title = "액자"
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
@@ -97,3 +98,21 @@ class MainFrameViewController: UIViewController {
         frameImageView.setNeedsDisplay()
     }
 }
+
+//이미지뷰 확대 함수
+extension UIImageView {
+  func enableZoom() {
+    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(startZooming(_:)))
+    isUserInteractionEnabled = true
+    addGestureRecognizer(pinchGesture)
+  }
+
+  @objc
+  private func startZooming(_ sender: UIPinchGestureRecognizer) {
+    let scaleResult = sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)
+    guard let scale = scaleResult, scale.a > 1, scale.d > 1 else { return }
+    sender.view?.transform = scale
+    sender.scale = 1
+  }
+}
+
