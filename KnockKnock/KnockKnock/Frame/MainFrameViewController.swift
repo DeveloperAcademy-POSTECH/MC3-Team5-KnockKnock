@@ -17,6 +17,15 @@ class MainFrameViewController: UIViewController {
         frameView.contentMode = .scaleAspectFit
         return frameView
     }()
+    //액자 사진 확대를 위해 scrollView를 만들고 이미지뷰를 넣음
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.contentMode = .scaleAspectFit
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
     
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
@@ -27,18 +36,26 @@ class MainFrameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(frameImageView)
-        frameImageView.enableZoom()
+        
+        //scrollView 세팅
+        scrollView.maximumZoomScale = 4
+        scrollView.minimumZoomScale = 1
+        scrollView.addSubview(frameImageView)
+        scrollView.delegate = self
+        view.addSubview(scrollView)
         navigationItem.title = "액자"
         //NavigationBar에 설정 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         
         //frameImageView AutoLayout
         NSLayoutConstraint.activate([
+            self.scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            self.scrollView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3),
+            self.scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            self.scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             self.frameImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            self.frameImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3),
-            self.frameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            self.frameImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            self.frameImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3)
         ])
         
         readImage()
@@ -98,21 +115,33 @@ class MainFrameViewController: UIViewController {
         frameImageView.setNeedsDisplay()
     }
 }
-
-//이미지뷰 확대 함수
-extension UIImageView {
-  func enableZoom() {
-    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(startZooming(_:)))
-    isUserInteractionEnabled = true
-    addGestureRecognizer(pinchGesture)
-  }
-
-  @objc
-  private func startZooming(_ sender: UIPinchGestureRecognizer) {
-    let scaleResult = sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)
-    guard let scale = scaleResult, scale.a > 1, scale.d > 1 else { return }
-    sender.view?.transform = scale
-    sender.scale = 1
-  }
+// 스크롤뷰 줌기능 함수
+extension MainFrameViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return frameImageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        if scrollView.zoomScale > 1 {
+            if let image = frameImageView.image {
+                let ratioW = frameImageView.frame.width / image.size.width
+                let ratioH = frameImageView.frame.height / image.size.height
+                
+                let ratio = ratioW < ratioH ? ratioW : ratioH
+                let newWidth = image.size.width * ratio
+                let newHeight = image.size.height * ratio
+                let conditionLeft = newWidth*scrollView.zoomScale > frameImageView.frame.width
+                let left = 0.5 * (conditionLeft ? newWidth - frameImageView.frame.width : (scrollView.frame.width - scrollView.contentSize.width))
+                let conditioTop = newHeight*scrollView.zoomScale > frameImageView.frame.height
+                
+                let top = 0.5 * (conditioTop ? newHeight - frameImageView.frame.height : (scrollView.frame.height - scrollView.contentSize.height))
+                
+                scrollView.contentInset = UIEdgeInsets(top: top, left: left, bottom: top, right: left)
+                
+            }
+        } else {
+            scrollView.contentInset = .zero
+        }
+    }
 }
 
