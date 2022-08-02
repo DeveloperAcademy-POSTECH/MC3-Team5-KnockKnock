@@ -199,7 +199,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 if isBiometry() {
                     tasks[1].isSwitchOn = true
                 } else {
-                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등독이 되어 있지 않습니다.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등록이 되어 있지 않습니다.", preferredStyle: .alert)
                     let alertAction = UIAlertAction(title: "확인", style: .cancel)
                     alert.addAction(alertAction)
                     present(alert, animated: true)
