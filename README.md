@@ -1,4 +1,4 @@
-# MC3-Team5-KnockKnock
+# :cat: MC3 Team5 유연하냥?
 
 
 # :iphone: 똑똑 KnockKnock
@@ -40,6 +40,7 @@ import Foundation
 import AVFoundation
 import LocalAuthentication
 import PhotosUI
+
 import QCropper
 ```
 
