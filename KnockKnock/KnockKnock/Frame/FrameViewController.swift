@@ -13,7 +13,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
     var itemProviders: [NSItemProvider] = []
     
     //취소 버튼
-    private let cancelButton : UIButton = {
+    private let cancelButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
@@ -21,6 +21,14 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "앨범에서 선택"
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
     }()
     
     //CollectionView 기본 설정
@@ -58,15 +66,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(cancelButton)
-        
-        let label = UILabel()
-        label.text = "앨범에서 선택"
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15).isActive = true
-        label.font = UIFont.systemFont(ofSize: 18)
-
+        view.addSubview(titleLabel)
     
         //CollectionView AutoLayout
         NSLayoutConstraint.activate([
@@ -76,15 +76,14 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15),
-            cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15)
+            cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15),
+            
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15)
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        CoreDataManager.shared.readAlbumCoreData()
-        collectionView.reloadData()
     }
-    
     
     //취소 버튼 함수
     @objc func cancelTapped(_ sender: Any) {
@@ -95,9 +94,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
 extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     //CollectionView Cell의 Size 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        guard
-            let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
-        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
         let cellColumns = 3
         let widthOfCells = collectionView.bounds.width
         let widthOfSpacing = CGFloat(cellColumns - 1) * flowLayout.minimumInteritemSpacing
@@ -139,7 +136,7 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
         //CoreData에 이미지 저장
         CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
         
-        //CoreData에 이미지가 더 존재하는 경우 처음 이미지 삭제
+        //CoreData에 이미지가 존재하는 경우 이미지 삭제
         if CoreDataManager.shared.frameImage!.count > 0 {
             CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
         }

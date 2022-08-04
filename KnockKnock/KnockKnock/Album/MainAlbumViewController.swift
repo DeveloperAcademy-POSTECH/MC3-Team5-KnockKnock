@@ -62,9 +62,6 @@ class MainAlbumViewController: UIViewController {
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-//        CoreDataManager.shared.readAlbumCoreData()
-//        collectionView.reloadData()
     }
     
     //ImagePicker 함수

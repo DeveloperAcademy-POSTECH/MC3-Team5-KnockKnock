@@ -69,41 +69,31 @@ class MainLetterViewController: UIViewController {
         label.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
         label.font = UIFont(name: "SawarabiMincho-Regular", size: 24)
         
-        
-        
         view.addSubview(letterTextField)
         letterTextField.translatesAutoresizingMaskIntoConstraints = false
         letterTextField.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 5).isActive = true
         letterTextField.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         letterTextField.bottomAnchor.constraint(equalTo: textView.topAnchor).isActive = true
         letterTextField.font = UIFont(name: "MapoFlowerIsland", size: 22)
-        
-
     }
     
-    
-    @objc
-    func touchUpDismissModalButton(_ sender: UIButton) {
+    @objc func touchUpDismissModalButton(_ sender: UIButton) {
         if textView.text == "편지를 입력해주세요." || textView.text.count == 0 {
-            
         } else {
             self.dismiss(animated: true, completion: nil)
             letterCloseCheck = true
             RoomViewController().reloadInputViews()
         }
-        
     }
     
     func createTextView() {
         view.addSubview(textView)
-        
-        
-        
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.widthAnchor.constraint(equalToConstant: view.bounds.width - 10).isActive = true
         textView.heightAnchor.constraint(equalToConstant: view.bounds.height / 2.5).isActive = true
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        
         // 텍스트뷰 커스텀(행간)
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
@@ -112,11 +102,11 @@ class MainLetterViewController: UIViewController {
         textView.textColor = .lightGray
         textView.font = UIFont(name: "MapoFlowerIsland", size: 18)
         textView.delegate = self
+        
         // 마진
         textView.textContainer.lineFragmentPadding = 20
         textView.backgroundColor = .clear
     }
-    
 }
 
 extension MainLetterViewController: UITextViewDelegate {
@@ -129,22 +119,16 @@ extension MainLetterViewController: UITextViewDelegate {
         }
     }
     
-    
     // 입력이 끝났을때
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
             textView.textColor = .lightGray
-            
         }
     }
 }
 
-
-
-
 extension UIImage {
-    
     // 오펙 주기위한 extension
     func alpha(_ value: CGFloat) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
