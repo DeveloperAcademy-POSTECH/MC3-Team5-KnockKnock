@@ -5,6 +5,8 @@
 
 극단적인 선택으로 가족을 잃은 사람들이 고인을 기리고 추모할 수 있도록 만든 가상의 방입니다.
 
+<a href="https://apps.apple.com/kr/app/%EB%98%91%EB%98%91-knockknock/id1637051056"><img src="https://img.shields.io/badge/App Store-000000?style=flat&logo=Apple&logoColor=white"/></a>
+
 
 ## :pushpin: Features
 
