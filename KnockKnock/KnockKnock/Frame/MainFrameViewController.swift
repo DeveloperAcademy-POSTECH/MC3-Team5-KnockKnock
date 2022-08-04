@@ -101,9 +101,6 @@ class MainFrameViewController: UIViewController {
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
         }
-        
-        frameImageView.image?.didChangeValue(forKey: "image")
-        frameImageView.setNeedsDisplay()
     }
     
     //CoreData의 이미지를 불러와서 표시하는 함수
@@ -111,7 +108,6 @@ class MainFrameViewController: UIViewController {
         CoreDataManager.shared.readFrameCoreData()
         guard let image = CoreDataManager.shared.frameImage?.last else {return}
         frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
-        frameImageView.setNeedsDisplay()
     }
 }
 

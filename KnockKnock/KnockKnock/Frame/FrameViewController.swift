@@ -141,11 +141,10 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
         self.present(picker, animated: true, completion: nil)
         if let imageData = CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data {
             if let image = UIImage(data: imageData) {
-                print(image)
                 let cropper = CropperViewController(originalImage: image)
                 cropper.delegate = self
                 picker.dismiss(animated: true) {
-                    let alert = UIAlertController(title: "액자 사진 비율 안내",
+                    let alert = UIAlertController(title: "액자 비율 안내",
                                                   message: "종횡비 3:4가 가장 적합합니다.",
                                                   preferredStyle: .alert)
                     let alertAction = UIAlertAction(title: "확인", style: .default, handler: {
