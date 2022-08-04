@@ -133,15 +133,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 //CollectionView의 이미지 클릭 시 작동
 extension FrameViewController: UICollectionViewDelegate, UIImagePickerControllerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //CoreData에 이미지 저장
-        CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
-        
-        //CoreData에 이미지가 존재하는 경우 이미지 삭제
-        if CoreDataManager.shared.frameImage!.count > 0 {
-            CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-        }
-        
-        //cropper이미지 피커
+        //QCropper ImagePicker
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.allowsEditing = false
@@ -171,7 +163,6 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
 extension FrameViewController: CropperViewControllerDelegate {
     func cropperDidConfirm(_ cropper: CropperViewController, state: CropperState?) {
         cropper.dismiss(animated: true, completion: nil)
-        
         if let state = state, let image = cropper.originalImage.cropped(withCropperState: state) {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
