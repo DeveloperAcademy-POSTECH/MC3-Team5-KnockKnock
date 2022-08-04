@@ -43,8 +43,9 @@ class MainFrameViewController: UIViewController {
         scrollView.addSubview(frameImageView)
         scrollView.delegate = self
         view.addSubview(scrollView)
-        navigationItem.title = "액자"
+        
         //NavigationBar에 설정 버튼 생성
+        navigationItem.title = "액자"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         
         //frameImageView AutoLayout
@@ -57,8 +58,6 @@ class MainFrameViewController: UIViewController {
             self.frameImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
             self.frameImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/3)
         ])
-        
-        readImage()
     
         print("\(String(describing: CoreDataManager.shared.frameImage?.count))")
     }
@@ -95,16 +94,13 @@ class MainFrameViewController: UIViewController {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {
                 CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-            } else { }
+            }
             
             //CoreData에 기본 이미지 추가
             CoreDataManager.shared.saveFrameCoreData(image: (UIImage(named: "frame person")?.pngData())!)
             CoreDataManager.shared.readFrameCoreData()
             self.frameImageView.image = UIImage(data:(CoreDataManager.shared.frameImage?.last?.value(forKey: "image") as? Data)!)
         }
-        
-        frameImageView.image?.didChangeValue(forKey: "image")
-        frameImageView.setNeedsDisplay()
     }
     
     //CoreData의 이미지를 불러와서 표시하는 함수
@@ -112,9 +108,9 @@ class MainFrameViewController: UIViewController {
         CoreDataManager.shared.readFrameCoreData()
         guard let image = CoreDataManager.shared.frameImage?.last else {return}
         frameImageView.image = UIImage(data: image.value(forKey: "image") as! Data)
-        frameImageView.setNeedsDisplay()
     }
 }
+
 // 스크롤뷰 줌기능 함수
 extension MainFrameViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

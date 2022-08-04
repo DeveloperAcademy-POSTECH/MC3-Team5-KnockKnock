@@ -22,123 +22,39 @@ class RoomViewController: UIViewController {
     
     let navigationBarAppearance = UINavigationBarAppearance()
     
+    // ImageView 설정 함수
+    private func setImageView(image:UIImage, color:UIColor = .clear, alpha:CGFloat = 1.0) -> UIImageView {
+        let imageView = UIImageView(frame: .zero)
+        let myImage: UIImage = image
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = myImage
+        imageView.alpha = alpha
+        imageView.tintColor = color
+        return imageView
+    }
+    
+    // 방 화면 버튼 ImageView 정의
+    lazy var roomImageView: UIImageView = setImageView(image: UIImage(named: "roomImage")!)
+    lazy var musicImageView: UIImageView = setImageView(image: UIImage(named: "musicnote-x")!)
+    lazy var memoImageView: UIImageView = setImageView(image: UIImage(named: "memo")!)
+    lazy var albumImageView: UIImageView = setImageView(image: UIImage(named: "album")!)
+    lazy var frameImageView: UIImageView = setImageView(image: UIImage(named: "frame")!)
+    lazy var frameLayerImageView: UIImageView = setImageView(image: UIImage(named:"frame-layer")!)
+    lazy var letterImageView: UIImageView = setImageView(image: UIImage(named: "letter")!)
+    lazy var settingImageView: UIImageView = setImageView(image: UIImage(systemName: "gearshape.fill")!, color: UIColor(named: "iconColor")!)
+    lazy var noteOneImageView: UIImageView = setImageView(image: UIImage(named: "music1")!, alpha: 0.0)
+    lazy var noteTwoImageView: UIImageView = setImageView(image: UIImage(named: "music2")!, alpha: 0.0)
+    lazy var noteThreeImageView: UIImageView = setImageView(image: UIImage(named: "music3")!, alpha: 0.0)
+    
     // 편지 사진 위 투명 버튼
     let letterButton = UIButton()
     
-    // 배경화면
-    let roomImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "roomImage")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 배경음악 버튼 ImageView
-    let musicImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "musicnote-x")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 셋팅 버튼 ImageView
-    let settingImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(systemName: "gearshape.fill")!
-        imageView.tintColor = UIColor(named: "iconColor")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 메모 버튼 ImageView
-    let memoImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "memo")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 앨범 버튼 ImageView
-    let albumImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "album")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 액자 버튼 ImageView
-    let frameImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "frame")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 액자 사진 버튼 ImageView
+    // 액자 내부 사진 ImageView
     let frameHasImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        CoreDataManager.shared.readFrameCoreData()
-        if let image = CoreDataManager.shared.frameImage?.last, let frameImageData = image.value(forKey: "image") as? Data {
-            imageView.image = UIImage(data: frameImageData)
-        }
-        return imageView
-    }()
-    
-    // 액자 사진 레이어 ImageView
-    let frameLayerImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(named:"frame-layer")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    // 편지 버튼 ImageView
-    let letterImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "letter")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        return imageView
-    }()
-    
-    // 음표 1
-    let noteOneImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "music1")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        imageView.alpha = 0.0
-        return imageView
-    }()
-    
-    // 음표 2
-    let noteTwoImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "music2")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        imageView.alpha = 0.0
-        return imageView
-    }()
-    
-    // 음표 3
-    let noteThreeImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let myImage: UIImage = UIImage(named: "music3")!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = myImage
-        imageView.alpha = 0.0
         return imageView
     }()
     
@@ -218,9 +134,8 @@ class RoomViewController: UIViewController {
         }
         
         setupLayout()
-        imageInput()
         
-        // 배경화면 크기 AspectFill로 맞춤
+        // 배경화면 크기 AspectFill로 지정
         roomImageView.layer.masksToBounds = true
         roomImageView.contentMode = .scaleAspectFill
         

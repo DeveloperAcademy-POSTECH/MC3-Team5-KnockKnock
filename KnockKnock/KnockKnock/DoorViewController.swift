@@ -32,12 +32,12 @@ class DoorViewController: UIViewController {
         view.addGestureRecognizer(oneTap)
         
         // 뷰 전체에 더블탭 제스처 기능 추가
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-            tap.numberOfTapsRequired = 2
-            view.addGestureRecognizer(tap)
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+            doubleTap.numberOfTapsRequired = 2
+            view.addGestureRecognizer(doubleTap)
         
         //더블탭을 할 시 싱글탭 무시
-        oneTap.require(toFail: tap)
+        oneTap.require(toFail: doubleTap)
     }
     
     private func doorSetup() {

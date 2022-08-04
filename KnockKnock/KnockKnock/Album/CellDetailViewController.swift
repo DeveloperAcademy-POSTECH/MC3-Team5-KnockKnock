@@ -46,14 +46,11 @@ class CellDetailViewController: UIViewController {
         scrollView.delegate = self
         view.addSubview(scrollView)
         
-
-        
         //NavigationBar에 삭제 버튼 생성
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(trashTapped))
         
         //ImageView 레이아웃
         NSLayoutConstraint.activate([
-            
             scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
@@ -62,7 +59,6 @@ class CellDetailViewController: UIViewController {
             detailImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
             detailImageView.heightAnchor.constraint(equalTo: view.widthAnchor,  multiplier: 4/3),
         ])
-        
     }
     
     //앨범 사진 삭제 함수

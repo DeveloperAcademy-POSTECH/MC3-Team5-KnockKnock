@@ -41,7 +41,6 @@ class PasscodeViewController: UIViewController {
         loadTasks()
         passcodeField()
         setupNumberPad()
-        
     }
     
     // 비밀번호 상태 이미지
@@ -113,22 +112,27 @@ class PasscodeViewController: UIViewController {
         ])
     }
     
-    // 넘버 버튼
+    // 숫자패드 버튼 생성 함수
     private func setupNumberPad() {
         let buttonWidthSize = view.frame.size.width / 3
         let buttonHeightSize = buttonWidthSize / 2
         
+        // 숫자 버튼
         for n in 0..<3 {
             for m in 0..<3 {
-                let button = UIButton(frame: CGRect(x: buttonWidthSize * CGFloat(m), y: view.frame.size.height - buttonHeightSize * (4.5 - CGFloat(n)), width: buttonWidthSize, height: buttonHeightSize))
-                button.setTitleColor(.black, for: .normal)
-                button.setTitle(String((m + 1) + (n * 3)), for: .normal)
-                button.tag = (m + 1) + (n * 3)
-                button.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
-                view.addSubview(button)
+                lazy var numberButton: UIButton = {
+                    let button = UIButton(frame: CGRect(x: buttonWidthSize * CGFloat(m), y: view.frame.size.height - buttonHeightSize * (4.5 - CGFloat(n)), width: buttonWidthSize, height: buttonHeightSize))
+                    button.setTitleColor(.black, for: .normal)
+                    button.setTitle(String((m + 1) + (n * 3)), for: .normal)
+                    button.tag = (m + 1) + (n * 3)
+                    button.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
+                    return button
+                }()
+                view.addSubview(numberButton)
             }
         }
         
+        // FaceID / 취소 버튼
         let faceButton = UIButton(frame: CGRect(x: 0, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
         faceButton.setTitleColor(.black, for: .normal)
         
@@ -146,18 +150,28 @@ class PasscodeViewController: UIViewController {
         faceButton.tag = 11
         faceButton.addTarget(self, action: #selector(facePressed(_ :)), for: .touchUpInside)
         
-        let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
-        zeroButton.setTitleColor(.black, for: .normal)
-        zeroButton.setTitle("0", for: .normal)
-        zeroButton.tag = 0
-        zeroButton.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
+        // 숫자 0 버튼
+        lazy var zeroButton: UIButton = {
+            let zeroButton = UIButton(frame: CGRect(x: buttonWidthSize, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
+            zeroButton.setTitleColor(.black, for: .normal)
+            zeroButton.setTitle("0", for: .normal)
+            zeroButton.tag = 0
+            zeroButton.addTarget(self, action: #selector(numberPressed(_ :)), for: .touchUpInside)
+            return zeroButton
+        }()
+        
+        // 삭제 버튼
+        lazy var deleteButton: UIButton = {
+            let deleteButton = UIButton(frame: CGRect(x: buttonWidthSize * 2, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
+            deleteButton.setTitleColor(.label, for: .normal)
+            deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
+            deleteButton.tintColor = .black
+            deleteButton.tag = 12
+            deleteButton.addTarget(self, action: #selector(deletePressed(_ :)), for: .touchUpInside)
+            return deleteButton
+        }()
+        
         view.addSubview(zeroButton)
-        let deleteButton = UIButton(frame: CGRect(x: buttonWidthSize * 2, y: view.frame.size.height - buttonHeightSize * 1.5, width: buttonWidthSize, height: buttonHeightSize))
-        deleteButton.setTitleColor(.label, for: .normal)
-        deleteButton.setImage(UIImage(systemName: "delete.backward"), for: .normal)
-        deleteButton.tintColor = .black
-        deleteButton.tag = 12
-        deleteButton.addTarget(self, action: #selector(deletePressed(_ :)), for: .touchUpInside)
         view.addSubview(deleteButton)
     }
     
@@ -306,13 +320,10 @@ class PasscodeViewController: UIViewController {
                                relativeDuration: frameDuration) {
                 self.subTitleLabel.transform = CGAffineTransform.identity
             }
-        },
-                                completion: nil
-        )
-        
+        }, completion: nil)
     }
-    
 }
+
 // 비밀번호 뷰 dismiss되었을때 셋팅 뷰 함수 실행하기 위한 노티피케이션
 extension Notification.Name {
     static let fatchTable = Notification.Name("fatchTable")
