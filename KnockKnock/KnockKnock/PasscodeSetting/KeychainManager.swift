@@ -27,7 +27,6 @@ class KeychainManager {
         let addQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                          kSecAttrAccount: key,
                                          kSecValueData: (pwd as AnyObject).data(using: String.Encoding.utf8.rawValue) as Any]
-        
         let result: Bool = {
             let status = SecItemAdd(addQuery as CFDictionary, nil)
             if status == errSecSuccess {
@@ -39,10 +38,8 @@ class KeychainManager {
             print("addItem Error : \(status.description))")
             return false
         }()
-        
         return result
     }
-    
     
     // 키체인 읽기
     func getItem(key: Any) -> Any? {
@@ -65,7 +62,6 @@ class KeychainManager {
         return nil
     }
     
-    
     // 키체인 업데이트
     func updateItem(value: Any, key: Any) -> Bool {
         let prevQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
@@ -83,8 +79,6 @@ class KeychainManager {
         return result
     }
     
-    
-    
     // 키체인 삭제
     func deleteItem(key: String) -> Bool {
         let deleteQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
@@ -94,8 +88,5 @@ class KeychainManager {
         
         print("deleteItem Error : \(status.description)")
         return false
-    }
-    
-    
-    
+    }   
 }

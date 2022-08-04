@@ -96,7 +96,6 @@ class SettingViewController: UIViewController {
     }
 }
 
-
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,7 +113,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             return self.tasks.count
         }
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
