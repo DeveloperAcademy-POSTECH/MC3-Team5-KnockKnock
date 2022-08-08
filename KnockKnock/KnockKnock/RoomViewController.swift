@@ -280,7 +280,7 @@ class RoomViewController: UIViewController {
     // 편지 토스트 알림 함수
     @objc func rotate(_ sender: UITapGestureRecognizer) {
         if letterCloseCheck {
-            showToast(VC:self, text: "편지가 하늘에 잘 전달되었어요.")
+            showToast(VC:self, text: "편지 전달".localized())
             letterCloseCheck = false
         }
     }

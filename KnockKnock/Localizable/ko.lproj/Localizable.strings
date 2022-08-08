@@ -82,3 +82,8 @@
 
 
 // RoomViewController
+"편지 전달" = "편지가 하늘에 잘 전달되었어요.";
+
+
+// DoorViewController
+"더블탭 안내" = "방에 입장하려면 두 번 터치해주세요.";

@@ -27,7 +27,7 @@
 "앱 설명" = "Description";
 "앱 잠금" = "Lock";
 "비밀번호 설정" = "Set password";
-"Touch ID / Face ID 사용" = "Use Touch ID / Face ID";
+"Touch ID / Face ID 사용" = "Touch ID / Face ID";
 "비밀번호 변경" = "Change password";
 "Face ID 사용 불가" = "Invalid Touch ID / Face ID ";
 "Face ID 미등록 안내" = "Touch ID / Face ID is not set on your phone.";
@@ -79,3 +79,11 @@
 "액자 설명" = "Decorate the room\nwith photos of the deceased.";
 "다이어리 설명" = "Record your daily life with photos\nand look back on your mind.";
 "편지 설명" = "Feel free to write down\nthe story in your mind\nand blow it up in the sky.";
+
+
+// RoomViewController
+"편지 전달" = "The letter has delivered to the sky.";
+
+
+// DoorViewController
+"더블탭 안내" = "Touch twice to enter the room.";
