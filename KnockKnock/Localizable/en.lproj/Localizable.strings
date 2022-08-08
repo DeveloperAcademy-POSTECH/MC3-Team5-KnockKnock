@@ -5,3 +5,14 @@
   Created by HWANG-C-K on 2022/08/08.
   
 */
+
+// PasscodeViewController
+"암호 입력" = "Enter password"
+"암호를 입력해 주세요." = "Please enter your password."
+"취소" = "Cancel";
+"비밀번호 재입력" = "Invalid password. Please try again.";
+"비밀번호 확인 재입력" = "Enter password to check again.";
+"비밀번호 재진행" = "Invalid password. Please try again.";
+"Face ID 인증" = "Face ID for \"KnockKnock\""
+"Touch ID 인증" = "Touch ID for \"KnockKnock\""
+"로그인" = "Login for \"KnockKnock\""
