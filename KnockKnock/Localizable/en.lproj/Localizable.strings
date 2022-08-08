@@ -59,3 +59,14 @@
 // CellDetailViewController
 "사진 삭제" = "Delete photo";
 "사진을 삭제하시겠습니까?" = "Are you sure to delete this photo?";
+
+
+// MainMemoView
+"다이어리" = "Diary";
+"메모를 입력해주세요." = "Write your memo.";
+
+
+// MemoDetailViewController
+"제목을 입력해주세요." = "Write the title.";
+"제목을 적어주세요." = "You should write the title.";
+"완료" = "Done";
