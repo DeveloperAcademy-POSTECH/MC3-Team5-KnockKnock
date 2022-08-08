@@ -49,3 +49,13 @@
 
 // MainLetterViewController
 "편지를 입력해주세요." = "편지를 입력해주세요.";
+
+
+// MainAlbumViewController
+"앨범" = "앨범";
+"사진 추가가 완료되었습니다." = "사진 추가가 완료되었습니다.";
+
+
+// CellDetailViewController
+"사진 삭제" = "사진 삭제";
+"사진을 삭제하시겠습니까?" = "사진을 삭제하시겠습니까?";
