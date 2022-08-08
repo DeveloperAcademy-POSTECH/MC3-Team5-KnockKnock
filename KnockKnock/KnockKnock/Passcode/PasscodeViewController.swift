@@ -215,7 +215,7 @@ class PasscodeViewController: UIViewController {
                     } else {
                         passcodes.removeAll()
                         subTitleLabel.textColor = .red
-                        subTitleLabel.text = "비밀번호를 다시 입력해주세요.".localized()
+                        subTitleLabel.text = "비밀번호 재입력".localized()
                         shakeWith(duration: 0.5, angle: .pi/30, yOffset: 0.5)
                     }
                 }
@@ -224,12 +224,12 @@ class PasscodeViewController: UIViewController {
                     newPasscodes = passcodes
                     passcodes.removeAll()
                     subTitleLabel.textColor = .gray
-                    subTitleLabel.text = "확인을 위해 다시 입력해주세요.".localized()
+                    subTitleLabel.text = "비밀번호 확인 재입력".localized()
                 } else if newPasscodes != passcodes {
                     passcodes.removeAll()
                     newPasscodes.removeAll()
                     subTitleLabel.textColor = .red
-                    subTitleLabel.text = "비밀번호 등록을 다시 진행해주세요.".localized()
+                    subTitleLabel.text = "비밀번호 등록 재진행".localized()
                 } else {
                     var pwd = ""
                     for n in newPasscodes {

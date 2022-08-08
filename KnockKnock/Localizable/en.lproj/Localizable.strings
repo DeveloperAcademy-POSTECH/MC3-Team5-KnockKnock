@@ -7,12 +7,24 @@
 */
 
 // PasscodeViewController
-"암호 입력" = "Enter password"
-"암호를 입력해 주세요." = "Please enter your password."
+"암호 입력" = "Enter password";
+"암호를 입력해 주세요." = "Please enter your password.";
 "취소" = "Cancel";
 "비밀번호 재입력" = "Invalid password. Please try again.";
 "비밀번호 확인 재입력" = "Enter password to check again.";
-"비밀번호 재진행" = "Invalid password. Please try again.";
-"Face ID 인증" = "Face ID for \"KnockKnock\""
-"Touch ID 인증" = "Touch ID for \"KnockKnock\""
-"로그인" = "Login for \"KnockKnock\""
+"비밀번호 등록 재진행" = "Password do not match. Please try again.";
+"Face ID 인증" = "Face ID for \"KnockKnock\"";
+"Touch ID 인증" = "Touch ID for \"KnockKnock\"";
+"로그인" = "Login for \"KnockKnock\"";
+
+
+// SettingViewController
+"설명 다시보기" = "Replay Description";
+"앱 설명" = "Description";
+"앱 잠금" = "Lock";
+"비밀번호 설정" = "Set password";
+"Touch ID / Face ID 사용" = "Use Touch ID / Face ID";
+"비밀번호 변경" = "Change password";
+"Face ID 사용 불가" = "Invalid Touch ID / Face ID ";
+"Face ID 미등록 안내" = "Touch ID / Face ID is not set on your phone.";
+"확인" = "OK";

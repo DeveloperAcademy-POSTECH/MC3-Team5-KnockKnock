@@ -12,10 +12,10 @@ class SettingViewController: UIViewController {
     let keyChainManager = KeychainManager()
     
     // 온보딩 다시보기 셀에 사용될 배열
-    let onboardingCells: [String] = ["설명 다시보기"]
+    let onboardingCells: [String] = ["설명 다시보기".localized()]
     
     // 비밀번호 설정 셀에 사용될 배열
-    let sections: [String] = ["앱 설명", "앱 잠금"]
+    let sections: [String] = ["앱 설명".localized(), "앱 잠금".localized()]
     
     // 테이블 뷰
     let tableView: UITableView = {
@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         return tableView
     }()
     
-    var tasks = [Task(imageName: "lock", title: "비밀번호 설정", isSwitch: true, isSwitchOn: false)] {
+    var tasks = [Task(imageName: "lock", title: "비밀번호 설정".localized(), isSwitch: true, isSwitchOn: false)] {
         didSet {
             self.saveTasks()
         }
@@ -36,7 +36,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
-        title = "비밀번호 설정"
+        title = "비밀번호 설정".localized()
         view.backgroundColor = .red
         tableViewSetup()
         loadTasks()
@@ -78,7 +78,7 @@ class SettingViewController: UIViewController {
                 return Task(imageName: imageName, title: title, isSwitch: isSwitch, isSwitchOn: isSwitchOn)
             }
         } else {
-            tasks = [Task(imageName: "lock", title: "비밀번호 설정", isSwitch: true, isSwitchOn: false)]
+            tasks = [Task(imageName: "lock", title: "비밀번호 설정".localized(), isSwitch: true, isSwitchOn: false)]
         }
     }
     
@@ -87,10 +87,10 @@ class SettingViewController: UIViewController {
         var error: NSError?
         // Touch ID와 Face ID를 지원하는 기기인지 확인
         if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            print("생체 인식 사용가능")
+            print("생체 인식 사용 가능")
             return true
         } else {
-            print("생체 인식 사용불가능")
+            print("생체 인식 사용 불가능")
             return false
         }
     }
@@ -177,8 +177,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 present(registerPasscode, animated: true)
                 
                 if tasks.count == 1 {
-                    let task1 = Task(imageName: "faceid", title: "Touch ID, Face ID 사용", isSwitch: true, isSwitchOn: isBiometry())
-                    let task2 = Task(imageName: "lock.rotation", title: "비밀번호 변경", isSwitch: false, isSwitchOn: false)
+                    let task1 = Task(imageName: "faceid", title: "Touch ID / Face ID 사용".localized(), isSwitch: true, isSwitchOn: isBiometry())
+                    let task2 = Task(imageName: "lock.rotation", title: "비밀번호 변경".localized(), isSwitch: false, isSwitchOn: false)
                     tasks.append(task1)
                     tasks.append(task2)
                     tableView.reloadData()
@@ -197,8 +197,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 if isBiometry() {
                     tasks[1].isSwitchOn = true
                 } else {
-                    let alert = UIAlertController(title: "Touch ID 또는 Face ID 사용불가", message: "현재 Touch ID 또는 Face ID 등록이 되어 있지 않습니다.", preferredStyle: .alert)
-                    let alertAction = UIAlertAction(title: "확인", style: .cancel)
+                    let alert = UIAlertController(title: "Face ID 사용 불가".localized(), message: "Face ID 미등록 안내".localized(), preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "확인".localized(), style: .cancel)
                     alert.addAction(alertAction)
                     present(alert, animated: true)
                     tasks[1].isSwitchOn = false
