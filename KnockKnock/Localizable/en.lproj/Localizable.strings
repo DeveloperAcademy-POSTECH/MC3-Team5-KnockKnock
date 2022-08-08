@@ -23,6 +23,7 @@
 
 
 // SettingViewController
+"설정" = "Setting";
 "설명 다시보기" = "Replay Description";
 "앱 설명" = "Description";
 "앱 잠금" = "Lock";

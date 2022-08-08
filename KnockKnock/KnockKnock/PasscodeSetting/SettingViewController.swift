@@ -36,7 +36,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(fatchTable), name: .fatchTable, object: nil)
-        title = "비밀번호 설정".localized()
+        title = "설정".localized()
         view.backgroundColor = .red
         tableViewSetup()
         loadTasks()
