@@ -17,7 +17,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
-        button.setTitle("취소", for: .normal)
+        button.setTitle("취소".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
@@ -26,7 +26,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "앨범에서 선택"
+        label.text = "앨범에서 선택".localized()
         label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
@@ -108,7 +108,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         if CoreDataManager.shared.albumImageArray!.count == 0 {
             self.collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
             let label = UILabel()
-            label.text = "앨범에 사진을 채워주세요"
+            label.text = "먼저 앨범에 사진을 채워주세요.".localized()
             label.layer.opacity = 0.5
             view.addSubview(label)
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -144,10 +144,10 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
                 let cropper = CropperViewController(originalImage: image)
                 cropper.delegate = self
                 picker.dismiss(animated: true) {
-                    let alert = UIAlertController(title: "액자 비율 안내",
-                                                  message: "종횡비 3:4가 가장 적합합니다.",
+                    let alert = UIAlertController(title: "액자 비율 안내".localized(),
+                                                  message: "액자 비율 내용".localized(),
                                                   preferredStyle: .alert)
-                    let alertAction = UIAlertAction(title: "확인", style: .default, handler: {
+                    let alertAction = UIAlertAction(title: "확인".localized(), style: .default, handler: {
                         action in self.present(cropper, animated: true, completion: nil)
                     })
                     alert.addAction(alertAction)

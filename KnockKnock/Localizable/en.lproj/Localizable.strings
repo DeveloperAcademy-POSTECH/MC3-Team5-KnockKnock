@@ -6,10 +6,14 @@
   
 */
 
+// 공통 사용되는 문구
+"취소" = "Cancel";
+"확인" = "OK";
+
+
 // PasscodeViewController
 "암호 입력" = "Enter password";
 "암호를 입력해 주세요." = "Please enter your password.";
-"취소" = "Cancel";
 "비밀번호 재입력" = "Invalid password. Please try again.";
 "비밀번호 확인 재입력" = "Enter password to check again.";
 "비밀번호 등록 재진행" = "Password do not match. Please try again.";
@@ -27,4 +31,10 @@
 "비밀번호 변경" = "Change password";
 "Face ID 사용 불가" = "Invalid Touch ID / Face ID ";
 "Face ID 미등록 안내" = "Touch ID / Face ID is not set on your phone.";
-"확인" = "OK";
+
+
+// FrameViewController
+"앨범에서 선택" = "Choose from Album";
+"먼저 앨범에 사진을 채워주세요." = "Fill photos in Album first.";
+"액자 비율 안내" = "Ratio of Frame";
+"액자 비율 내용" = "Appropriate ratio is 3:4.";
