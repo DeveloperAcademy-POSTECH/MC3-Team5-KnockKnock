@@ -45,7 +45,7 @@ class MainFrameViewController: UIViewController {
         view.addSubview(scrollView)
         
         //NavigationBar에 설정 버튼 생성
-        navigationItem.title = "액자"
+        navigationItem.title = "액자".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(actionSheet))
         
         //frameImageView AutoLayout
@@ -67,11 +67,11 @@ class MainFrameViewController: UIViewController {
         let alert = UIAlertController(title:nil, message:nil, preferredStyle: UIAlertController.Style.actionSheet)
         
         //ActionSheet 버튼 생성 및 추가
-        let cancelAction = UIAlertAction(title:"돌아가기", style: UIAlertAction.Style.cancel, handler: nil)
-        let changeAction = UIAlertAction(title:"액자 사진 변경하기", style: .default, handler: { action in
+        let cancelAction = UIAlertAction(title:"돌아가기".localized(), style: UIAlertAction.Style.cancel, handler: nil)
+        let changeAction = UIAlertAction(title:"액자 사진 변경하기".localized(), style: .default, handler: { action in
             self.frameTapped()
         })
-        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기", style: .default, handler: {
+        let defaultAction = UIAlertAction(title:"기본 사진으로 변경하기".localized(), style: .default, handler: {
             action in self.defaultTapped()
         })
         alert.addAction(cancelAction)

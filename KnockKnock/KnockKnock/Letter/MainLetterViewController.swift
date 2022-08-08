@@ -30,7 +30,7 @@ class MainLetterViewController: UIViewController {
     
     let textView = UITextView()
     
-    let textViewPlaceHolder = "편지를 입력해주세요."
+    let textViewPlaceHolder = "편지를 입력해주세요.".localized()
 
     let letterTextField = UITextField()
     
@@ -78,7 +78,7 @@ class MainLetterViewController: UIViewController {
     }
     
     @objc func touchUpDismissModalButton(_ sender: UIButton) {
-        if textView.text == "편지를 입력해주세요." || textView.text.count == 0 {
+        if textView.text == "편지를 입력해주세요.".localized() || textView.text.count == 0 {
         } else {
             self.dismiss(animated: true, completion: nil)
             letterCloseCheck = true

@@ -38,3 +38,14 @@
 "먼저 앨범에 사진을 채워주세요." = "Fill photos in Album first.";
 "액자 비율 안내" = "Ratio of Frame";
 "액자 비율 내용" = "Appropriate ratio is 3:4.";
+
+
+// MainFrameViewController
+"액자" = "Frame";
+"돌아가기" = "Back";
+"액자 사진 변경하기" = "Change frame photo";
+"기본 사진으로 변경하기" = "Change to default image";
+
+
+// MainLetterViewController
+"편지를 입력해주세요." = "Write your letter.";
