@@ -69,7 +69,6 @@ class MemoDetailViewController: UIViewController {
         button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 10).isActive = true
     }
     
-    
     func memoTextView() {
         if memoId != nil {
             if textView.text == "메모를 입력해주세요.".localized() {

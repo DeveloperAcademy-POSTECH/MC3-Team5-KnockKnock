@@ -17,7 +17,6 @@ class MainMemoView: UIViewController {
         return tableView
     }()
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         CoreDataManager.shared.readCoreData()
@@ -41,7 +40,6 @@ class MainMemoView: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.layer.cornerRadius = 20
-        
     }
     
     private func applyConstraints() {
@@ -57,26 +55,19 @@ class MainMemoView: UIViewController {
         // 푸쉬한다
         self.navigationController?.pushViewController(memoVC, animated: true)
     }
-    
 }
 
 extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let count = CoreDataManager.shared.resultArray?.count else {
             return 0
         }
-        
         return count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 106
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as? MainTableViewCell else {
@@ -103,14 +94,10 @@ extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
         let index = resultArraySize! - indexPath.row - 1
         let cell = CoreDataManager.shared.resultArray![index]
         
-        
         let memoVC = MemoDetailViewController()
         memoVC.set(result: cell)
         navigationController?.pushViewController(memoVC, animated: true)
-        
     }
-    
-    
 }
 
 class MainTableViewCell: UITableViewCell {
@@ -144,9 +131,7 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func setUI(result: NSManagedObject) {
-        //        self.textLabel?.text = result.value(forKey: "title") as? String
         // 이곳에서 테이블 뷰 세팅
-        
         self.title.text = result.value(forKey: "title") as? String
         self.memo.text = result.value(forKey: "memo") as? String
         if let date = result.value(forKey: "date") as? Date {
@@ -154,7 +139,6 @@ class MainTableViewCell: UITableViewCell {
             
         }
         self.memoImage.image = UIImage(data: result.value(forKey: "image") as! Data)
-        
         
         self.addSubview(title)
         self.addSubview(memo)
