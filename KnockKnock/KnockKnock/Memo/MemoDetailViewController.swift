@@ -13,8 +13,8 @@ class MemoDetailViewController: UIViewController {
     let button = UIButton(type: .custom)
     let field = UITextField()
     let textView = UITextView()
-    let titleFieldPlaceHolder = "제목을 입력해주세요."
-    let textViewPlaceHolder = "메모를 입력해주세요."
+    let titleFieldPlaceHolder = "제목을 입력해주세요.".localized()
+    let textViewPlaceHolder = "메모를 입력해주세요.".localized()
     let date = NSDate() // 현재 시간 가져오기
     let formatter = DateFormatter()
     private var memoId: UUID?
@@ -28,7 +28,7 @@ class MemoDetailViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishMemo(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료".localized(), style: .plain, target: self, action: #selector(finishMemo(_:)))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         titleTextField()
@@ -72,7 +72,7 @@ class MemoDetailViewController: UIViewController {
     
     func memoTextView() {
         if memoId != nil {
-            if textView.text == "메모를 입력해주세요." {
+            if textView.text == "메모를 입력해주세요.".localized() {
                 let style = NSMutableParagraphStyle()
                 style.lineSpacing = 8
                 let attributes = [NSAttributedString.Key.paragraphStyle : style]
@@ -120,7 +120,7 @@ class MemoDetailViewController: UIViewController {
     @objc fileprivate func finishMemo(_ sender: UIButton){
         // 제목이 빈 경우 알림창 표시
         if field.text == "" {
-            let alert = UIAlertController(title: "제목을 꼭 적어주세요!", message: "", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "제목을 적어주세요.".localized(), message: "", preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(okAction)
             

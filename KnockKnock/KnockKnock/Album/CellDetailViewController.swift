@@ -64,13 +64,13 @@ class CellDetailViewController: UIViewController {
     //앨범 사진 삭제 함수
     @objc func trashTapped() {
         // alert 먼저 뜸
-        let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
-        let success = UIAlertAction(title: "확인", style: .default) { [self] action in
+        let alert = UIAlertController(title: "사진 삭제".localized(), message: "사진을 삭제하시겠습니까?".localized(), preferredStyle: .alert)
+        let success = UIAlertAction(title: "확인".localized(), style: .default) { [self] action in
             CoreDataManager.shared.deleteAlbumCoreData(object: CoreDataManager.shared.albumImageArray!.reversed()[getindex!])
             navigationController?.popViewController(animated: true)
         }
-        let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
-            print("취소 버튼이 눌림")
+        let cancel = UIAlertAction(title: "취소".localized(), style: .cancel) { action in
+            print("취소 버튼")
         }
         alert.addAction(success)
         alert.addAction(cancel)

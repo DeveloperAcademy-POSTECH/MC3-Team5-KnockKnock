@@ -50,7 +50,7 @@ class MainAlbumViewController: UIViewController {
         view.addSubview(collectionView)
         
         //NavigationBar에 ImagePicker 버튼 생성
-        navigationItem.title = "앨범"
+        navigationItem.title = "앨범".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(presentPicker))
         
         //CollectionView AutoLayout
@@ -84,7 +84,7 @@ extension MainAlbumViewController: PHPickerViewControllerDelegate {
         dismiss(animated:true)
         //사진이 추가된 경우에만 토스트 알림 띄우기
         if results.count != 0 {
-            showToast(VC:self, text: "사진 추가가 완료되었습니다.")
+            showToast(VC:self, text: "사진 추가가 완료되었습니다.".localized())
         }
         
         //가져온 사진을 CoreData에 저장

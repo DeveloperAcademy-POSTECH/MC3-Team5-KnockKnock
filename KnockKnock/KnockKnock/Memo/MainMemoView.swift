@@ -29,7 +29,7 @@ class MainMemoView: UIViewController {
         
         CoreDataManager.shared.readCoreData()
         
-        navigationItem.title = "다이어리"
+        navigationItem.title = "다이어리".localized()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goToMemoVC))
         
         view.addSubview(tableView)
@@ -187,7 +187,7 @@ class MainTableViewCell: UITableViewCell {
         title.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         
         
-        if memo.text == "메모를 입력해주세요."{
+        if memo.text == "메모를 입력해주세요.".localized() {
             memo.textColor = UIColor(named: "memoColor")
             memo.font = UIFont(name: "MapoFlowerIsland", size: 16)
             memo.text = " "

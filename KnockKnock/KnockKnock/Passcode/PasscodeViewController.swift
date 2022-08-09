@@ -32,8 +32,8 @@ class PasscodeViewController: UIViewController {
     lazy var passcodeImage4: UIImageView = setupPasscodeImage()
     
     // 비밀번호 상태 라벨
-    lazy var titleLabel: UILabel = setupPasscodeLabel(text: "암호 입력", color: .black, size: 25)
-    lazy var subTitleLabel: UILabel = setupPasscodeLabel(text: "암호를 입력해 주세요.", color: .gray, size: 15)
+    lazy var titleLabel: UILabel = setupPasscodeLabel(text: "암호 입력".localized(), color: .black, size: 25)
+    lazy var subTitleLabel: UILabel = setupPasscodeLabel(text: "암호를 입력해 주세요.".localized(), color: .gray, size: 15)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +143,7 @@ class PasscodeViewController: UIViewController {
                 view.addSubview(faceButton)
             }
         case .new, .change:
-            faceButton.setTitle("취소", for: .normal)
+            faceButton.setTitle("취소".localized(), for: .normal)
             view.addSubview(faceButton)
         }
         faceButton.tintColor = .black
@@ -215,7 +215,7 @@ class PasscodeViewController: UIViewController {
                     } else {
                         passcodes.removeAll()
                         subTitleLabel.textColor = .red
-                        subTitleLabel.text = "비밀번호 다시 입력해주세요."
+                        subTitleLabel.text = "비밀번호 재입력".localized()
                         shakeWith(duration: 0.5, angle: .pi/30, yOffset: 0.5)
                     }
                 }
@@ -224,12 +224,12 @@ class PasscodeViewController: UIViewController {
                     newPasscodes = passcodes
                     passcodes.removeAll()
                     subTitleLabel.textColor = .gray
-                    subTitleLabel.text = "확인을 위해 다시 입력해주세요."
+                    subTitleLabel.text = "비밀번호 확인 재입력".localized()
                 } else if newPasscodes != passcodes {
                     passcodes.removeAll()
                     newPasscodes.removeAll()
                     subTitleLabel.textColor = .red
-                    subTitleLabel.text = "비밀번호 등록을 다시 진행해주세요."
+                    subTitleLabel.text = "비밀번호 등록 재진행".localized()
                 } else {
                     var pwd = ""
                     for n in newPasscodes {
@@ -261,11 +261,11 @@ class PasscodeViewController: UIViewController {
                 // 스위치 문을 통해 인증 타입을 확인하여 보여줄 안내 문구 설정
                 switch authContext.biometryType {
                 case .faceID:
-                    description = "소중한 정보를 보호하기 위해서 Face ID로 인증해주세요."
+                    description = "소중한 정보를 보호하기 위해서 Face ID로 인증해주세요.".localized()
                 case .touchID:
-                    description = "소중한 정보를 보호하기 위해서 Touch ID를 인증해주세요."
+                    description = "소중한 정보를 보호하기 위해서 Touch ID를 인증해주세요.".localized()
                 case .none:
-                    description = "소중한 정보를 보호하기 위해서 로그인 해주세요"
+                    description = "소중한 정보를 보호하기 위해서 로그인 해주세요".localized()
                     break
                 default:
                     break
