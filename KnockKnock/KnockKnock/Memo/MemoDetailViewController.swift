@@ -13,22 +13,23 @@ class MemoDetailViewController: UIViewController {
     let button = UIButton(type: .custom)
     let field = UITextField()
     let textView = UITextView()
-    let titleFieldPlaceHolder = "제목을 입력해주세요."
-    let textViewPlaceHolder = "메모를 입력해주세요."
+    let titleFieldPlaceHolder = "제목을 입력해주세요.".localized()
+    let textViewPlaceHolder = "메모를 입력해주세요.".localized()
     let date = NSDate() // 현재 시간 가져오기
     let formatter = DateFormatter()
     private var memoId: UUID?
     
-    // 키보드 아무화면이나 누르면 내려가게
+    // 바깥 화면 누를 때 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
     }
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishMemo(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료".localized(), style: .plain, target: self, action: #selector(finishMemo(_:)))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         titleTextField()
@@ -36,6 +37,7 @@ class MemoDetailViewController: UIViewController {
         memoTextView()
     }
     
+    // 메모 제목 TextField
     func titleTextField() {
         field.placeholder = titleFieldPlaceHolder
         field.textAlignment = .left
@@ -49,10 +51,11 @@ class MemoDetailViewController: UIViewController {
         field.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
+    // 메모 이미지 삽입 버튼
     func createImageButton() {
         let image = UIImage(systemName: "photo", withConfiguration: UIImage.SymbolConfiguration(pointSize: view.bounds.height / 10))
         
-        // 이미지뷰가 비었을때 image 차있을 때 imageView
+        // ImageView가 비었을 때 / 차있을 때 지정
         button.setImage(imageView.image == nil ? image : imageView.image, for: .normal)
         button.imageView?.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
@@ -69,10 +72,10 @@ class MemoDetailViewController: UIViewController {
         button.topAnchor.constraint(equalTo: field.bottomAnchor, constant: 10).isActive = true
     }
     
-    
+    // 메모 내용 TextView
     func memoTextView() {
         if memoId != nil {
-            if textView.text == "메모를 입력해주세요." {
+            if textView.text == "메모를 입력해주세요.".localized() {
                 let style = NSMutableParagraphStyle()
                 style.lineSpacing = 8
                 let attributes = [NSAttributedString.Key.paragraphStyle : style]
@@ -95,7 +98,6 @@ class MemoDetailViewController: UIViewController {
         textView.delegate = self
         textView.backgroundColor = .clear
         
-        
         self.view.addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.widthAnchor.constraint(equalToConstant: view.bounds.width - 20).isActive = true
@@ -116,17 +118,15 @@ class MemoDetailViewController: UIViewController {
         imageView.image = UIImage(data: result.value(forKey: "image") as! Data)
     }
     
-    
     @objc fileprivate func finishMemo(_ sender: UIButton){
         // 제목이 빈 경우 알림창 표시
         if field.text == "" {
-            let alert = UIAlertController(title: "제목을 꼭 적어주세요!", message: "", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "제목을 적어주세요.".localized(), message: "", preferredStyle: UIAlertController.Style.alert)
             let okAction = UIAlertAction(title: "OK", style: .default)
             alert.addAction(okAction)
             
             present(alert, animated: false, completion: nil)
-        }
-        else {
+        } else {
             // 이미 저장되어 있는 메모인 경우 업데이트
             if let memoId = memoId {
                 CoreDataManager.shared.updateCoreData(id: memoId, title: field.text!, memo: textView.text, image: (imageView.image?.pngData())!)
@@ -140,7 +140,6 @@ class MemoDetailViewController: UIViewController {
     }
     
     @objc fileprivate func didTapButton(_ sender: UIButton){
-        // 객체 인스턴스 생성
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self
@@ -155,9 +154,8 @@ class MemoDetailViewController: UIViewController {
     }
 }
 
-
+// 메모 ImagePicker
 extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
@@ -170,11 +168,10 @@ extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension MemoDetailViewController: UITextViewDelegate {
-    // 클릭 되있을때
+    // 클릭되어 있을 때
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
@@ -185,7 +182,7 @@ extension MemoDetailViewController: UITextViewDelegate {
         }
     }
     
-    // 입력이 끝났을때
+    // 입력이 끝났을 때
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder

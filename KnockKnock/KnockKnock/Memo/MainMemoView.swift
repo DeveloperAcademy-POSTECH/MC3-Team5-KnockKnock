@@ -9,41 +9,44 @@ import UIKit
 import CoreData
 
 class MainMemoView: UIViewController {
+    
+    // TableView 생성
     let tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), style: .plain)
         tableView.backgroundColor = .systemBackground
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     
-    
+    // MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         CoreDataManager.shared.readCoreData()
         tableView.reloadData()
     }
     
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        CoreDataManager.shared.readCoreData()
-        
-        navigationItem.title = "다이어리"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goToMemoVC))
-        
-        view.addSubview(tableView)
-        applyConstraints()
-        
         view.backgroundColor = UIColor(named: "backGroundColor")
         
+        // 메모 CoreData 불러오기
+        CoreDataManager.shared.readCoreData()
+        
+        // 네비게이션 아이템 생성
+        navigationItem.title = "다이어리".localized()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(goToMemoVC))
+        
+        // TableView 추가
+        view.addSubview(tableView)
+        applyConstraints()
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.layer.cornerRadius = 20
-        
     }
     
+    // TableView Constraints 함수
     private func applyConstraints() {
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -51,32 +54,24 @@ class MainMemoView: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
     }
     
+    // 메모 작성 버튼 함수
     @objc fileprivate func goToMemoVC(){
-        // 객체 인스턴스 생성
         let memoVC = MemoDetailViewController()
-        // 푸쉬한다
         self.navigationController?.pushViewController(memoVC, animated: true)
     }
-    
 }
 
 extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let count = CoreDataManager.shared.resultArray?.count else {
             return 0
         }
-        
         return count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 106
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as? MainTableViewCell else {
@@ -96,23 +91,20 @@ extension MainMemoView: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // cell 클릭 create by JERRY
+    // Cell 클릭 시 해당 메모 화면으로 이동 create by JERRY
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(tableView.cellForRow(at: indexPath) as! MainTableViewCell)
         let resultArraySize = CoreDataManager.shared.resultArray?.count
         let index = resultArraySize! - indexPath.row - 1
         let cell = CoreDataManager.shared.resultArray![index]
         
-        
         let memoVC = MemoDetailViewController()
         memoVC.set(result: cell)
         navigationController?.pushViewController(memoVC, animated: true)
-        
     }
-    
-    
 }
 
+// TableView에 들어가는 메모 Cell 형식
 class MainTableViewCell: UITableViewCell {
     
     var title = UILabel()
@@ -121,7 +113,6 @@ class MainTableViewCell: UITableViewCell {
     private let memoImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleToFill
-        
         return iv
     }()
     
@@ -144,17 +135,13 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func setUI(result: NSManagedObject) {
-        //        self.textLabel?.text = result.value(forKey: "title") as? String
-        // 이곳에서 테이블 뷰 세팅
-        
+        // 테이블 뷰 세팅
         self.title.text = result.value(forKey: "title") as? String
         self.memo.text = result.value(forKey: "memo") as? String
         if let date = result.value(forKey: "date") as? Date {
             self.date.text = getStringFromDate(date: date)
-            
         }
         self.memoImage.image = UIImage(data: result.value(forKey: "image") as! Data)
-        
         
         self.addSubview(title)
         self.addSubview(memo)
@@ -180,14 +167,12 @@ class MainTableViewCell: UITableViewCell {
             memoImage.layer.cornerRadius = 10
         }
         
-        
         title.font = UIFont(name: "MapoFlowerIsland", size: 19)
         title.translatesAutoresizingMaskIntoConstraints = false
         title.topAnchor.constraint(equalTo: self.topAnchor, constant: 21).isActive = true
         title.leadingAnchor.constraint(equalTo: memoImage.trailingAnchor, constant: 14).isActive = true
         
-        
-        if memo.text == "메모를 입력해주세요."{
+        if memo.text == "메모를 입력해주세요.".localized() {
             memo.textColor = UIColor(named: "memoColor")
             memo.font = UIFont(name: "MapoFlowerIsland", size: 16)
             memo.text = " "

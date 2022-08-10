@@ -13,14 +13,22 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
     var itemProviders: [NSItemProvider] = []
     
     //취소 버튼
-    private let cancelButton : UIButton = {
+    private let cancelButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
-        button.setTitle("취소", for: .normal)
+        button.setTitle("취소".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "앨범에서 선택".localized()
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
     }()
     
     //CollectionView 기본 설정
@@ -58,16 +66,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(cancelButton)
-        
-        let label = UILabel()
-        label.text = "앨범에서 선택하기"
-        
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15).isActive = true
-        label.font = UIFont.systemFont(ofSize: 18)
-
+        view.addSubview(titleLabel)
     
         //CollectionView AutoLayout
         NSLayoutConstraint.activate([
@@ -77,15 +76,14 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             cancelButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15),
-            cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15)
+            cancelButton.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 15),
+            
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -15)
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        CoreDataManager.shared.readAlbumCoreData()
-        collectionView.reloadData()
     }
-    
     
     //취소 버튼 함수
     @objc func cancelTapped(_ sender: Any) {
@@ -96,9 +94,7 @@ class FrameViewController: UIViewController, UINavigationControllerDelegate {
 extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     //CollectionView Cell의 Size 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        guard
-            let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
-        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { fatalError() }
         let cellColumns = 3
         let widthOfCells = collectionView.bounds.width
         let widthOfSpacing = CGFloat(cellColumns - 1) * flowLayout.minimumInteritemSpacing
@@ -112,8 +108,8 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         if CoreDataManager.shared.albumImageArray!.count == 0 {
             self.collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
             let label = UILabel()
-            label.text = "앨범에 사진을 채워주세요"
-            label.font = UIFont.boldSystemFont(ofSize: 30)
+            label.text = "먼저 앨범에 사진을 채워주세요.".localized()
+            label.layer.opacity = 0.5
             view.addSubview(label)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -137,15 +133,7 @@ extension FrameViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 //CollectionView의 이미지 클릭 시 작동
 extension FrameViewController: UICollectionViewDelegate, UIImagePickerControllerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //CoreData에 이미지 저장
-        CoreDataManager.shared.saveFrameCoreData(image: (CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data)!)
-        
-        //CoreData에 이미지가 더 존재하는 경우 처음 이미지 삭제
-        if CoreDataManager.shared.frameImage!.count > 0 {
-            CoreDataManager.shared.deleteFrameCoreData(object: (CoreDataManager.shared.frameImage?.first!)!)
-        }
-        
-        //cropper이미지 피커
+        //QCropper ImagePicker
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.allowsEditing = false
@@ -153,14 +141,13 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
         self.present(picker, animated: true, completion: nil)
         if let imageData = CoreDataManager.shared.albumImageArray!.reversed()[indexPath.item].value(forKey: "image") as? Data {
             if let image = UIImage(data: imageData) {
-                print(image)
                 let cropper = CropperViewController(originalImage: image)
                 cropper.delegate = self
                 picker.dismiss(animated: true) {
-                    let alert = UIAlertController(title: "액자 사진 비율 안내",
-                                                  message: "종횡비 3:4가 가장 적합합니다.",
+                    let alert = UIAlertController(title: "액자 비율 안내".localized(),
+                                                  message: "액자 비율 내용".localized(),
                                                   preferredStyle: .alert)
-                    let alertAction = UIAlertAction(title: "확인", style: .default, handler: {
+                    let alertAction = UIAlertAction(title: "확인".localized(), style: .default, handler: {
                         action in self.present(cropper, animated: true, completion: nil)
                     })
                     alert.addAction(alertAction)
@@ -175,7 +162,6 @@ extension FrameViewController: UICollectionViewDelegate, UIImagePickerController
 extension FrameViewController: CropperViewControllerDelegate {
     func cropperDidConfirm(_ cropper: CropperViewController, state: CropperState?) {
         cropper.dismiss(animated: true, completion: nil)
-        
         if let state = state, let image = cropper.originalImage.cropped(withCropperState: state) {
             //CoreData에 이미지가 존재하는 경우 제거
             if CoreDataManager.shared.frameImage!.count > 0 {

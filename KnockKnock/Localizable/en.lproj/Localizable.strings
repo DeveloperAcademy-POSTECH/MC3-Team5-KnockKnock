@@ -1,0 +1,90 @@
+/* 
+  Localizable.strings
+  KnockKnock
+
+  Created by HWANG-C-K on 2022/08/08.
+  
+*/
+
+// 공통 사용되는 문구
+"취소" = "Cancel";
+"확인" = "OK";
+
+
+// PasscodeViewController
+"암호 입력" = "Enter password";
+"암호를 입력해 주세요." = "Please enter your password.";
+"비밀번호 재입력" = "Invalid password. Please try again.";
+"비밀번호 확인 재입력" = "Enter password to check again.";
+"비밀번호 등록 재진행" = "Password do not match. Please try again.";
+"Face ID 인증" = "Face ID for \"KnockKnock\"";
+"Touch ID 인증" = "Touch ID for \"KnockKnock\"";
+"로그인" = "Login for \"KnockKnock\"";
+
+
+// SettingViewController
+"설정" = "Setting";
+"설명 다시보기" = "Replay Description";
+"앱 설명" = "Description";
+"앱 잠금" = "Lock";
+"비밀번호 설정" = "Set password";
+"Touch ID / Face ID 사용" = "Touch ID / Face ID";
+"비밀번호 변경" = "Change password";
+"Face ID 사용 불가" = "Invalid Touch ID / Face ID ";
+"Face ID 미등록 안내" = "Touch ID / Face ID is not set on your phone.";
+
+
+// FrameViewController
+"앨범에서 선택" = "Choose from Album";
+"먼저 앨범에 사진을 채워주세요." = "Fill photos in Album first.";
+"액자 비율 안내" = "Ratio of Frame";
+"액자 비율 내용" = "Appropriate ratio is 3:4.";
+
+
+// MainFrameViewController
+"액자" = "Frame";
+"돌아가기" = "Back";
+"액자 사진 변경하기" = "Change photo";
+"기본 사진으로 변경하기" = "Change to default image";
+
+
+// MainLetterViewController
+"편지" = "Letter";
+"편지를 입력해주세요." = "Write your letter.";
+
+
+// MainAlbumViewController
+"앨범" = "Album";
+"사진 추가가 완료되었습니다." = "Photo has been added successfully.";
+
+
+// CellDetailViewController
+"사진 삭제" = "Delete photo";
+"사진을 삭제하시겠습니까?" = "Are you sure to delete this photo?";
+
+
+// MainMemoView
+"다이어리" = "Diary";
+"메모를 입력해주세요." = "Write your memo.";
+
+
+// MemoDetailViewController
+"제목을 입력해주세요." = "Write the title.";
+"제목을 적어주세요." = "You should write the title.";
+"완료" = "Done";
+
+
+// OnboardingView
+"방에 입장하기" = "Enter the room";
+"앨범 설명" = "Save photos\nand bring up memories\nwith your beloved deceased.";
+"액자 설명" = "Decorate the room\nwith photos of the deceased.";
+"다이어리 설명" = "Record your daily life with photos\nand look back on your mind.";
+"편지 설명" = "Feel free to write down\nthe story in your mind\nand blow it up in the sky.";
+
+
+// RoomViewController
+"편지 전달" = "The letter has delivered to the sky.";
+
+
+// DoorViewController
+"더블탭 안내" = "Touch twice to enter the room.";

@@ -22,7 +22,7 @@ class OnboardingController: UIPageViewController {
         button.backgroundColor = .init(red: 128/255, green: 159/255, blue: 174/255, alpha: 1)
         button.layer.cornerRadius = 14
         button.clipsToBounds = true
-        button.setTitle("방에 입장하기", for: .normal)
+        button.setTitle("방에 입장하기".localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(goToRoomButtonTapped), for: .touchUpInside)
         return button
@@ -66,15 +66,17 @@ extension OnboardingController {
 
         goToRoomButton.addTarget(self, action: #selector(goToRoomButtonTapped), for: .touchUpInside)
         let page1 = OnboardingViewController(imageName: "album",
-                                             titleText: "앨범",
-                                             subtitleText: "사진을 저장하여\n사랑하는 고인과의\n추억을 꺼내보세요")
+                                             titleText: "앨범".localized(),
+                                             subtitleText: "앨범 설명".localized())
         let page2 = OnboardingViewController(imageName: "frame",
-                                             titleText: "액자",
-                                             subtitleText: "고인의 사진을 꽂아서\n고인의 방을 꾸며주세요")
+                                             titleText: "액자".localized(),
+                                             subtitleText: "액자 설명".localized())
         let page3 = OnboardingViewController(imageName: "memo",
-                                             titleText: "다이어리",
-                                             subtitleText: "당신의 일상을 사진과 함께\n기록하고 마음을 돌아보세요")
-        let page4 = OnboardingViewController(imageName: "letter", titleText: "편지", subtitleText:"마음속에 있던 이야기를\n편지에 자유롭게 기록하고\n하늘에 날려버리세요.")
+                                             titleText: "다이어리".localized(),
+                                             subtitleText: "다이어리 설명".localized())
+        let page4 = OnboardingViewController(imageName: "letter",
+                                             titleText: "편지".localized(),
+                                             subtitleText:"편지 설명".localized())
         
         pages.append(page1)
         pages.append(page2)
