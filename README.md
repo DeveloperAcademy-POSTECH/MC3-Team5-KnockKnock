@@ -57,6 +57,7 @@ import QCropper
     - `TEST` : 테스트 코드
     - `REFACTOR` : 코드 리팩토링 (성능 개선)
     - `COMMENT` : 주석 추가
+    - `MERGE` : 브랜치 병합 관련
 
 2. Git 브랜치
     - `main` : 배포
