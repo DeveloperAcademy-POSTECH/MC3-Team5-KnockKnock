@@ -26,8 +26,8 @@
 
 ## :sparkles: Skills & Tech Stack
 
-1. 프로젝트 관리 : Miro, Notion, Github
-2. 커뮤니케이션 : Ryver, Miro, Notion
+1. 프로젝트 관리 : [Notion](https://www.notion.so/changbro/MC3-12d4bf784e8d439b83a72b8166c31b18), Miro, Github
+2. 커뮤니케이션 : Ryver
 3. 개발환경
 - OS : MacOS(M1Pro)
 - IDE : Xcode 13.4.1
